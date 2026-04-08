@@ -9,7 +9,7 @@
 
 ## 文章
 
-详见 [articles.md](articles.md) — 完整的文章索引，含两条脉络 7 篇文章的深度摘要。
+详见 [articles.md](articles.md) — 完整的文章索引，含三条脉络 10 篇文章的深度摘要。
 
 ### 脉络一：AI 时代的 Harness Engineering
 
@@ -20,6 +20,7 @@
 | 3 | [LangChain](https://blog.langchain.com/the-anatomy-of-an-agent-harness/) | Vivek Trivedy | 精确定义 + 组件清单 |
 | 4 | [Anthropic](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Prithvi Rajasekaran | GAN 三智能体 + Harness 瘦身 |
 | 5 | [HumanLayer](https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents) | Kyle | 六个杠杆 + 实战避坑 |
+| 6 | [Anthropic/Claude Platform](https://claude.com/blog/harnessing-claudes-intelligence) | Lance Martin | 三大构建模式 + BrowseComp 数据 |
 
 ### 脉络二：云原生 Harness.io
 

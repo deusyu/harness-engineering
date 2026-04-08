@@ -138,6 +138,65 @@
 
 - **金句：** "The model is probably fine. It's just a skill issue."
 
+### 6. Anthropic / Lance Martin — 三大模式与性能数据
+
+- **标题：** Harnessing Claude's intelligence
+- **链接：** [claude.com](https://claude.com/blog/harnessing-claudes-intelligence)
+- **作者：** Lance Martin (Claude Platform Team) | **日期：** 2026-04-02
+- **核心：** 三个构建模式——利用 Claude 已知知识、追问"我可以停止做什么"、谨慎设定边界。配合 BrowseComp / Pokemon 等基准数据论证
+
+- **三大模式：**
+
+| 模式 | 核心主张 |
+|------|---------|
+| Use what Claude knows | 通用工具（bash + editor）优于定制工具，随模型升级自然增强 |
+| Ask "what can I stop doing?" | 把编排、上下文管理、持久化三个决策权从 harness 交给模型 |
+| Set boundaries carefully | 缓存优化（静态前置）+ 声明式工具提供安全门控与可观测性 |
+
+- **"停止做什么"的三个层次：**
+
+| 层次 | 旧假设 | 新做法 | 数据支撑 |
+|------|--------|--------|---------|
+| 编排 | 所有工具结果回流上下文 | 给 Claude 代码执行工具，让它自己过滤/管道 | BrowseComp: Opus 4.6 过滤能力 45.3% → 61.6% |
+| 上下文管理 | 手工预加载任务指令 | Skills 渐进式披露 + context editing 移除过时内容 + 子 Agent 隔离 | BrowseComp: 子 Agent 提升 2.8% |
+| 持久化 | 依赖外部检索基础设施 | Compaction（模型自主总结）+ Memory folder（模型自主写文件） | BrowseComp: Opus 4.6 compaction 达 84%；BrowseComp-Plus: memory folder +6.8% |
+
+- **缓存优化五原则：**
+
+| 原则 | 说明 |
+|------|------|
+| 静态在前，动态在后 | 稳定内容（系统提示词、工具）放前面 |
+| 用消息传递更新 | 追加 `<system-reminder>` 而非编辑提示词 |
+| 不切换模型 | 缓存是模型特定的，切换即失效；需要便宜模型用子 Agent |
+| 谨慎管理工具 | 工具在缓存前缀中，增删会使缓存失效；用 tool search 追加 |
+| 更新断点 | 多轮应用中将断点移至最新消息，使用自动缓存 |
+
+- **声明式工具的四个价值：**
+  1. 安全门控 — 不可逆操作（如外部 API）需用户确认
+  2. 过时检查 — 写入工具检测文件自上次读取后是否被修改
+  3. UX 渲染 — 模态窗口展示问题、提供选项、阻塞等待反馈
+  4. 可观测性 — 结构化参数可记录、追踪、重放
+
+- **Pokemon 记忆进化案例：**
+  - Sonnet 3.5: 14,000 步后 31 个文件（含重复），仍在第二城镇，记忆 = NPC 对话转录
+  - Opus 4.6: 同样步数 10 个文件（按目录组织），3 枚道馆徽章，记忆 = 战术笔记 + 失败经验
+
+- **"上下文焦虑"案例：**
+  - Sonnet 4.5 接近上下文极限时提前收尾 → 加了 context reset 补偿
+  - Opus 4.5 天然消除了此行为 → context reset 变成死重
+  - 启示：harness 中的补偿机制会随模型进化变成性能瓶颈
+
+- **与其他文章的关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| 通用工具 > 定制工具 | OpenAI 原文的 bash + editor 起源 |
+| Skills 渐进式披露 | LangChain 的 Progressive Disclosure、HumanLayer 的 Skills 杠杆 |
+| Compaction + Memory folder | LangChain 的 Context Rot 解法、Anthropic #4 的 Context Anxiety |
+| 声明式工具 vs bash | HumanLayer 的 Back-Pressure 杠杆 |
+| "停止做什么" | Anthropic #4 的 Harness 瘦身原则、Fowler 的假说 |
+| 缓存优化 | 本仓库新增维度——此前文章未深入讨论 API 层成本优化 |
+
 ---
 
 ## 脉络二：云原生时代的 Harness.io（交付与平台工程）
