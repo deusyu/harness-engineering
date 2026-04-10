@@ -14,6 +14,7 @@
 
 - **标题：** Harness Engineering
 - **链接：** [martinfowler.com](https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html)
+- **前传备忘录：** [first thoughts](https://martinfowler.com/articles/exploring-gen-ai/harness-engineering-memo.html) | **翻译：** [works/fowler-harness-engineering-memo-translation.md](../works/fowler-harness-engineering-memo-translation.md)
 - **作者：** Birgitta Böckeler (Thoughtworks) | **日期：** 2026-02-17
 - **核心：** 将 OpenAI 原文提炼为三层框架（Context Engineering → Architectural Constraints → Garbage Collection Agents），提出四个前瞻假说
 - **三层框架：**
@@ -30,6 +31,13 @@
   3. 技术栈将趋向收敛（选择标准从"开发者偏好"变成"AI 友好度"）
   4. Pre-AI 和 Post-AI 应用将分裂（给遗留代码补 harness 可能不经济）
 - **犀利批评：** OpenAI 原文缺少功能正确性验证——harness 管了结构和架构，但没讲怎么测行为
+- **备忘录独有洞察（正式版未保留）：**
+  - "OpenAI 有既得利益让我们相信 AI 可维护的代码"——对数据来源的信任保留
+  - "你今天的 harness 是什么？"——务实的起步问题，审视已有实践
+  - "代码设计本身就是上下文的重要组成部分"——比三层框架更本质
+  - Harness 模板会面临和服务模板一样的分叉/同步挑战
+  - "对人类好的东西对 AI 也好"——框架易用性标准趋同
+  - 最后自嘲预言"harness"一词会被滥用
 - **延伸阅读：**
   - [Mitchell Hashimoto: My AI Adoption Journey #Step 5: Engineer the Harness](https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness)
   - [Context Engineering for Coding Agents](https://martinfowler.com/articles/context-engineering-coding-agents.html)
