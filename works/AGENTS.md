@@ -26,9 +26,14 @@
 | ⭐ [maganti-eight-years-building-ai-translation.md](maganti-eight-years-building-ai-translation.md) | Eight Years of Wanting | Lalit Maganti |
 | [langchain-continual-learning-translation.md](langchain-continual-learning-translation.md) | Continual Learning for AI Agents | LangChain / Harrison Chase |
 
+### 原创文章
+
+| 文件 | 主题 | 说明 |
+|------|------|------|
+| ⭐ [harness-engineering-chinese-interpretation.md](harness-engineering-chinese-interpretation.md) | 驭缰工程的隐秘叙事 | 15 篇核心文章的综合分析：四学派、生命周期、共演化陷阱、评估之踵、人类角色消解 |
+
 ## 作品方向参考
 
-- 一篇 Harness Engineering 的中文解读文章
 - 一个 AGENTS.md 模板（适用于中小团队）
 - 一套自定义 linter 的最小可行示例
 - 一个"从零到发布"的 Harness Engineering 实践教程
