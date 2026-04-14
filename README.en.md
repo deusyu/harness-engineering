@@ -1,5 +1,9 @@
 [中文](README.md) | English
 
+![License: MIT](https://img.shields.io/badge/license-MIT-blue)
+![Articles](https://img.shields.io/badge/articles-18-green)
+![Translations](https://img.shields.io/badge/translations-11-orange)
+
 # Harness Engineering Study Guide
 
 > A deep-dive learning archive on Harness Engineering — from concept to practice
@@ -91,34 +95,69 @@ Agents reproduce existing patterns in the repo — including bad ones. Codify "g
 
 ```
 harness-engineering/
-├── README.md           ← Chinese (primary)
-├── README.en.md        ← You are here
-├── AGENTS.md           ← Repo navigation entry (for agents)
+├── README.md              ← Chinese (primary)
+├── README.en.md           ← You are here
+├── AGENTS.md              ← Repo navigation entry (for agents)
 │
-├── concepts/           # Phase 1: Concept notes
-│   ├── AGENTS.md       #   Directory guide + content index
-│   ├── 00-overview.md  #   Overview of all six concepts
-│   ├── 01-...          #   Repo as source of truth
-│   ├── 02-...          #   Mechanical enforcement
-│   └── 03-...          #   Entropy & garbage collection
+├── concepts/              # Phase 1: Concept notes (7 articles)
+│   ├── 00-overview.md     #   Overview of all six concepts
+│   ├── 01-repo-as-...     #   Repo as source of truth
+│   ├── 02-mechanical-...  #   Mechanical enforcement
+│   ├── 03-entropy-...     #   Entropy & garbage collection
+│   ├── 04-agent-...       #   Agent readability
+│   ├── 05-throughput-...  #   Throughput changes merge philosophy
+│   └── 06-harness-...     #   Harness definition (Fowler control-theory extension)
 │
-├── thinking/           # Phase 2: Independent thinking & questioning
-├── practice/           # Phase 3: Hands-on experiments
-├── feedback/           # Phase 4: Lessons learned & iterations
-├── works/              # Phase 5: Shareable outputs
-├── prompts/            # Validated prompts collection
-└── references/         # External resource index
+├── thinking/              # Phase 2: Independent analysis (5 articles)
+├── practice/              # Phase 3: Hands-on experiments (1 Ralph Demo)
+├── feedback/              # Phase 4: Lessons learned (1 article)
+├── works/                 # Phase 5: Shareable outputs (11 translations)
+├── prompts/               # Validated prompts collection
+└── references/            # External resource index (18 articles with deep summaries)
 ```
 
 Each subdirectory has its own `AGENTS.md` explaining its purpose and conventions — a direct practice of the "progressive disclosure" principle from the original article.
 
 ## 🚀 Learning Path
 
-- [ ] **Phase 1: Understand core concepts** — Read `concepts/`, break down the six concepts
-- [ ] **Phase 2: Form your own opinions** — Write critiques and extensions in `thinking/`
-- [ ] **Phase 3: Pick a small project to practice** — Build from scratch with AI agents in `practice/`
-- [ ] **Phase 4: Record feedback & iterations** — Document pitfalls and fixes in `feedback/`
-- [ ] **Phase 5: Produce shareable work** — Distill into articles or tools in `works/`
+- [x] **Phase 1: Understand core concepts** — 7 concept notes covering OpenAI's six concepts + Fowler's control-theory extension
+- [x] **Phase 2: Form your own opinions** — 5 independent analyses (ongoing)
+- [x] **Phase 3: Pick a small project to practice** — Ralph Demo completed (321s, $0.31)
+- [x] **Phase 4: Record feedback & iterations** — 1 article (ongoing)
+- [x] **Phase 5: Produce shareable work** — 11 professional translations
+
+## 📚 Research Library
+
+15 core articles + 3 extended readings across three knowledge tracks:
+
+| Track | Coverage | Perspectives |
+|-------|----------|-------------|
+| AI-Era Harness Engineering | 15 articles | OpenAI → Fowler → Anthropic → LangChain → Stanford |
+| Cloud-Native Harness.io | 3 articles | CI/CD platform architecture (same name, different meaning) |
+| Extended Reading | 3 articles | Mitchell Hashimoto, Context Engineering, Human-Agent collaboration |
+
+See [references/articles.md](references/articles.md) — each article includes core thesis, key data, and cross-article connections.
+
+## 📖 Translations
+
+<details>
+<summary><b>11 Chinese translations of key articles</b> (click to expand)</summary>
+
+| Translation | Original Author | Source |
+|-------------|----------------|--------|
+| ⭐ [Eight Years of Wanting](works/maganti-eight-years-building-ai-translation.md) | Lalit Maganti | Personal blog |
+| [Inside the Scaffold](works/inside-the-scaffold-paper-translation.md) | Benjamin Rombaut | Huawei / arXiv |
+| [Meta-Harness](works/meta-harness-paper-translation.md) | Yoonho Lee et al. | Stanford / arXiv |
+| [Harness Engineering (full)](works/fowler-harness-engineering-full-translation.md) | Birgitta Böckeler | Martin Fowler |
+| [Harness Engineering (memo)](works/fowler-harness-engineering-memo-translation.md) | Birgitta Böckeler | Martin Fowler |
+| [Encoding Team Standards](works/fowler-encoding-team-standards-translation.md) | Rahul Garg | Martin Fowler |
+| [Feedback Flywheel](works/fowler-feedback-flywheel-translation.md) | Rahul Garg | Martin Fowler |
+| [Scaling Managed Agents](works/anthropic-managed-agents-translation.md) | Lance Martin et al. | Anthropic |
+| [Agent Evaluation Checklist](works/langchain-agent-evaluation-checklist-translation.md) | LangChain Team | LangChain |
+| [Agent-driven Development](works/github-agent-driven-development-translation.md) | Tyler McGoffin | GitHub |
+| [Continual Learning](works/langchain-continual-learning-translation.md) | Harrison Chase | LangChain |
+
+</details>
 
 ## 🔗 Related Projects & Resources
 
@@ -149,23 +188,12 @@ The "Ralph Wiggum Loop" is the core implementation pattern of Harness Engineerin
 | Steer With Signals, Not Scripts | Humans Steer — add signs, not scripts |
 | Let Ralph Ralph | Agents Execute — sit on the loop, not in it |
 
-### Anthropic Official — Harness Design in Practice
+### Community & Extended
 
 | Resource | Description |
 |----------|-------------|
-| [Harness design for long-running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Anthropic Labs: GAN-inspired three-agent architecture (Planner→Generator→Evaluator), sprint contracts, Context Anxiety fix, harness simplification as models improve |
-
-### Efficiency Paradox & Capability Evolution
-
-| Resource | Description |
-|----------|-------------|
-| [Why AI Codes Faster But Delivery Hasn't Changed](https://yousali.com/posts/20260303-ai-coding-efficiency-to-evolution/) | 16,667-word deep dive: Theory of Constraints on efficiency paradox, Spec/Rule/Skill separation, verification loops, concurrency strategies. "AI is today's NCX-10" |
-
-### Community Resources
-
-| Resource | Description |
-|----------|-------------|
-| [vibe-coding-cn](https://github.com/tukuaiai/vibe-coding-cn) | Chinese Vibe Coding community guide — great repo organization reference |
+| [vibe-coding-cn](https://github.com/tukuaiai/vibe-coding-cn) | Chinese Vibe Coding community guide |
+| [Mitchell Hashimoto: Engineer the Harness](https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness) | Another origin of the "Harness" concept |
 
 ## 🤝 Contributing
 

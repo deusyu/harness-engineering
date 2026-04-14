@@ -306,6 +306,119 @@
 | 安全边界解耦 | HumanLayer 的 MCP 信任边界 |
 | 多大脑多双手 | OpenAI 原文的并发 + 吞吐量理念 |
 
+### 8. Fowler / Rahul Garg — 编码团队标准：缩减 AI 辅助开发的摩擦
+
+- **标题：** Encoding Team Standards
+- **系列：** Patterns for Reducing Friction in AI-Assisted Development
+- **链接：** [martinfowler.com](https://martinfowler.com/articles/reduce-friction-ai/encoding-team-standards.html)
+- **翻译：** [works/fowler-encoding-team-standards-translation.md](../works/fowler-encoding-team-standards-translation.md)
+- **作者：** Rahul Garg (Thoughtworks) | **日期：** 2026-04-01
+- **核心：** 将团队隐性编码标准显式化为可机器执行的规范，从自然语言 → 示例 → 自动化检查三层渐进
+- **关键洞察：**
+  - 团队标准分三类：语言/框架惯用法、项目特有约定、架构决策
+  - 编码路径：口头约定 → AGENTS.md/prompts 中的自然语言描述 → 带示例的结构化指令 → lint 规则/自动化检查
+  - 不是所有标准都值得完全自动化——按违反频率和影响决定投资
+- **与其他文章关联：** Fowler #2 的 Guides×Sensors 框架的实操手册；HumanLayer 的 AGENTS.md 杠杆的深化
+
+### 9. Fowler / Rahul Garg — 反馈飞轮：缩减 AI 辅助开发的摩擦
+
+- **标题：** Feedback Flywheel
+- **系列：** Patterns for Reducing Friction in AI-Assisted Development
+- **链接：** [martinfowler.com](https://martinfowler.com/articles/reduce-friction-ai/feedback-flywheel.html)
+- **翻译：** [works/fowler-feedback-flywheel-translation.md](../works/fowler-feedback-flywheel-translation.md)
+- **作者：** Rahul Garg (Thoughtworks) | **日期：** 2026-04-01
+- **核心：** 构建从 AI 失败中持续学习的反馈闭环——观察失败 → 根因分析 → 编码修复 → 验证效果 → 迭代
+- **关键洞察：**
+  - 反馈飞轮四步：发现模式 → 诊断根因 → 系统性修复（而非一次性补丁）→ 衡量改善
+  - 与 Encoding Team Standards 形成闭环：标准编码 → 违反检测 → 反馈 → 标准演进
+  - 团队级别的 harness 不是一次性设计，而是持续演进的活系统
+- **与其他文章关联：** Anthropic #4 的"每个 harness 组件编码一个假设"理念的运营化；YDD 的安灯绳验证闭环
+
+### 10. LangChain — 智能体评估就绪清单
+
+- **标题：** Agent Evaluation Readiness Checklist
+- **链接：** [blog.langchain.com](https://blog.langchain.com/agent-evaluation-readiness-checklist/)
+- **翻译：** [works/langchain-agent-evaluation-checklist-translation.md](../works/langchain-agent-evaluation-checklist-translation.md)
+- **作者：** LangChain 团队 | **日期：** 2026-04-08
+- **核心：** 从零到一构建智能体评估体系的分阶段清单——定义 → 数据集 → 评估器 → 实验 → 持续集成
+- **关键洞察：**
+  - 评估五阶段：定义成功标准 → 构建评估数据集 → 选择评估器 → 运行实验 → CI 集成
+  - 数据集构建方法论：从生产日志中提取真实案例，比合成数据更有价值
+  - LLM-as-judge 的校准：需要人类标注作为锚点，定期重新校准
+  - 评估不是一次性的，而是随智能体演进持续更新的
+- **与其他文章关联：** Fowler #2 的 Sensors 维度的系统化实操；Anthropic #4 的 Evaluator 角色的方法论基础
+
+### 11. Meta-Harness 论文 — 自动化 Harness 优化
+
+- **标题：** Meta-Harness: End-to-End Optimization of Model Harnesses
+- **链接：** [arxiv.org](https://arxiv.org/abs/2603.28052)
+- **翻译：** [works/meta-harness-paper-translation.md](../works/meta-harness-paper-translation.md)
+- **作者：** Yoonho Lee, Roshen Nair 等 (Stanford, KRAFTON, MIT) | **日期：** 2026-03-30
+- **核心：** 用编码智能体作为提议器，通过文件系统访问完整搜索历史（代码+轨迹+分数），自动搜索最优 Harness
+- **关键洞察：**
+  - 外循环搜索：提议器检查先前 Harness 的源代码和执行轨迹，进行因果推理后提出改进
+  - 文本分类任务上比 ACE 高 7.7pp，上下文 token 减少 4×
+  - IMO 难度数学问题上，发现的检索 Harness 跨 5 个留出模型泛化，平均提升 4.7pp
+  - TerminalBench-2 上超越手工工程化的 Terminus-KIRA
+  - 核心发现：完整执行轨迹访问 > 压缩摘要 > 仅标量分数（消融实验）
+- **与其他文章关联：** Anthropic #7 的 meta-harness 概念的学术实现；Fowler #2 的 Sensors 的极致自动化——连 harness 本身的设计也变成可搜索的
+
+### 12. GitHub / Tyler McGoffin — 智能体驱动开发实战
+
+- **标题：** Agent-driven development in Copilot Applied Science
+- **链接：** [github.blog](https://github.blog/ai-and-ml/github-copilot/agent-driven-development-in-copilot-applied-science/)
+- **翻译：** [works/github-agent-driven-development-translation.md](../works/github-agent-driven-development-translation.md)
+- **作者：** Tyler McGoffin (GitHub Copilot Applied Science) | **日期：** 2026-03-31
+- **核心：** 用编码智能体构建智能体，自动化自身工作的实战叙述；Copilot SDK + MCP + Skills 的具体使用模式
+- **关键洞察：**
+  - 智能体驱动开发的三阶段演进：手动 → 半自动 → 全自动
+  - 关键经验：好的提示词比好的代码更重要；智能体需要明确的约束和验证循环
+  - Copilot CLI 作为日常工具的实际工作流
+- **与其他文章关联：** OpenAI 原文的"工程师不再写代码"理念的一线实践验证
+
+### 13. Inside the Scaffold 论文 — 编码智能体脚手架的源代码级分类法
+
+- **标题：** Inside the Scaffold: A Source-Code Taxonomy of Coding Agent Architectures
+- **链接：** [arxiv.org](https://arxiv.org/html/2604.03515v1)
+- **翻译：** [works/inside-the-scaffold-paper-translation.md](../works/inside-the-scaffold-paper-translation.md)
+- **作者：** Benjamin Rombaut (Huawei Canada) | **日期：** 2026-04-04
+- **核心：** 对 13 个开源编码智能体的脚手架代码进行源代码级分析，提出 12 维度 × 3 层次的架构分类法
+- **关键洞察：**
+  - 五种循环原语（ReAct、生成-测试-修复、计划-执行、多次重试、树搜索）是可组合的构建块，11/13 智能体组合多种原语
+  - 维度在外部约束主导处收敛（工具类别、编辑格式、执行隔离），在开放设计问题处发散（上下文压缩、状态管理、多模型路由）
+  - 工具数量从 0（Aider）到 37（Moatless Tools），但底层能力类别趋同：读取、搜索、编辑、执行
+  - 上下文压缩涵盖七种策略：截断、摘要、滑动窗口、事件溯源、浓缩、选择性包含、无压缩
+- **与其他文章关联：** 为 Fowler #2 的 Guides×Sensors 框架提供了 13 个实际系统的实证数据；Meta-Harness 论文搜索空间的具体化——展示了 harness 设计选择的巨大多样性
+
+### 14. ⭐ Lalit Maganti — 渴望八年，用 AI 三个月造出来
+
+- **标题：** Eight years of wanting, three months of building with AI
+- **链接：** [lalitm.com](https://lalitm.com/post/building-syntaqlite-ai/)
+- **翻译：** [works/maganti-eight-years-building-ai-translation.md](../works/maganti-eight-years-building-ai-translation.md)
+- **作者：** Lalit Maganti | **日期：** 2026-04-05
+- **核心：** 资深工程师（Chrome/Android 性能团队）用 AI 编码智能体从零构建 syntaqlite（SQLite 开发工具）的完整复盘——250 小时，3 个月，坦诚记录 AI 的帮助与局限
+- **关键洞察：**
+  - AI 是实现的力量倍增器，但不能替代设计——缺乏品味、历史感和用户直觉
+  - 实际经验：AI 在 well-constrained 的任务上卓越（测试编写、重构、API 实现），在需要判断力的任务上失败（架构决策、API 设计、性能优化）
+  - "vibe coding" 对严肃项目不可行——必须理解 AI 生成的每一行代码
+  - 模型能力进化的真实感受：Claude 3.5 → Sonnet 4.5 → Gemini 2.5 Pro 的逐步改善
+  - **与我们的实践高度一致**
+- **与其他文章关联：** YDD 的"洗衣机悖论"的一手证据——省出的时间投入到了更高层的设计工作中；Anthropic #4 的"每个 harness 组件编码一个假设"的个人体验版
+
+### 15. LangChain / Harrison Chase — 智能体的持续学习
+
+- **标题：** Continual learning for AI agents
+- **链接：** [blog.langchain.com](https://blog.langchain.com/continual-learning-for-ai-agents/)
+- **翻译：** [works/langchain-continual-learning-translation.md](../works/langchain-continual-learning-translation.md)
+- **作者：** Harrison Chase (LangChain CEO) | **日期：** 2026-04-05
+- **核心：** 智能体的学习发生在三个层次：模型权重、Harness、上下文——理解区别改变你构建持续改进系统的方式
+- **关键洞察：**
+  - 三层学习：模型层（微调/RL）→ Harness 层（提示词/工具/编排逻辑演进）→ 上下文层（运行时记忆/少样本示例）
+  - Harness 层学习最被低估：通过分析执行轨迹迭代改进 harness，而非仅改模型
+  - 上下文层学习最灵活：用户级记忆、后台整合、跨会话学习
+  - Deep Agents 框架支持生产级持续学习
+- **与其他文章关联：** Meta-Harness 论文的 harness 层自动化学习的框架化阐述；Fowler #9 反馈飞轮在智能体层面的体现
+
 ---
 
 ## 脉络二：云原生时代的 Harness.io（交付与平台工程）

@@ -9,7 +9,7 @@
 
 ## 文章
 
-详见 [articles.md](articles.md) — 完整的文章索引，含三条脉络 10 篇文章的深度摘要。
+详见 [articles.md](articles.md) — 完整的文章索引，含三条脉络 18 篇文章的深度摘要。
 
 ### 脉络一：AI 时代的 Harness Engineering
 
@@ -22,6 +22,14 @@
 | 5 | [HumanLayer](https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents) | Kyle | 六个杠杆 + 实战避坑 |
 | 6 | [Anthropic/Claude Platform](https://claude.com/blog/harnessing-claudes-intelligence) | Lance Martin | 三大构建模式 + BrowseComp 数据 |
 | 7 | [Anthropic/Managed Agents](https://www.anthropic.com/engineering/managed-agents) | Lance Martin 等 | Meta-harness + 基础设施解耦 |
+| 8 | [Fowler/Encoding Team Standards](https://martinfowler.com/articles/reduce-friction-ai/encoding-team-standards.html) | Rahul Garg | 团队标准显式化三层路径 |
+| 9 | [Fowler/Feedback Flywheel](https://martinfowler.com/articles/reduce-friction-ai/feedback-flywheel.html) | Rahul Garg | 从 AI 失败中持续学习的反馈闭环 |
+| 10 | [LangChain/Agent Evaluation Checklist](https://blog.langchain.com/agent-evaluation-readiness-checklist/) | LangChain 团队 | 智能体评估五阶段清单 |
+| 11 | [Meta-Harness 论文](https://arxiv.org/abs/2603.28052) | Yoonho Lee 等 (Stanford) | 自动化 Harness 搜索优化 |
+| 12 | [GitHub/Agent-driven Development](https://github.blog/ai-and-ml/github-copilot/agent-driven-development-in-copilot-applied-science/) | Tyler McGoffin | 智能体驱动开发实战 |
+| 13 | [Inside the Scaffold 论文](https://arxiv.org/html/2604.03515v1) | Benjamin Rombaut (Huawei) | 13 个编码智能体脚手架源代码分类法 |
+| 14 | ⭐ [Eight years of wanting](https://lalitm.com/post/building-syntaqlite-ai/) | Lalit Maganti | AI 构建真实项目的坦诚复盘 |
+| 15 | [Continual learning for AI agents](https://blog.langchain.com/continual-learning-for-ai-agents/) | Harrison Chase | 三层学习：模型/Harness/上下文 |
 
 ### 脉络二：云原生 Harness.io
 
