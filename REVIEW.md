@@ -264,6 +264,22 @@
 - `practice/*` 是否满足目录约定
 - `prompts/deep-research-tracker.md` 中的资料基线是否与 `references/articles.md` 同步
 
+### 落地状态（2026-04-22 更新）
+
+`scripts/check-consistency.sh` 已落地，覆盖三条最高频的"数字漂移"检查：
+
+| 检查 | 范围 | 状态 |
+|------|------|------|
+| C1 | `articles.md` 编号 1..N 连续 | ✅ 已落地 |
+| C2 | `articles.md` 的 N 与 README badge × 2 + `deep-research-tracker.md` 头部 + `references/AGENTS.md` 概览同步（含 `<!-- check-consistency: skip-count -->` 豁免） | ✅ 已落地 |
+| C3 | `concepts/`、`thinking/`、`feedback/` 的 `*.md` 数与 README "X 篇"声明一致 | ✅ 已落地 |
+| — | Phase 状态一致性（README ↔ AGENTS） | ⏳ 未落地，留待 v2 |
+| — | `practice/*` 目录约定检查 | ⏳ 未落地（依赖 P1-2 决策） |
+| — | `works/` / `references/` 的篇数声明（结构复杂，分类多元） | ⏳ 未落地，留待 v2 |
+
+**启用方式：** `git config core.hooksPath .githooks`（pre-commit hook 在涉及上述受控文件时自动触发）。
+**手动执行：** `bash scripts/check-consistency.sh`。
+
 ## 7. 本次 Review 的结论
 
 当前仓库的主要问题不是“内容缺失”，而是“内容越来越多后，索引和约定开始漂移”。

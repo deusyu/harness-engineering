@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# pre-commit — run scripts/check-consistency.sh when the staged diff touches
+# any file that participates in the count/drift contract.
+#
+# Activate with:  git config core.hooksPath .githooks
+# Bypass once with:  git commit --no-verify   (use sparingly; investigate first)
+
+set -u
+
+# Files whose change can break consistency. Keep in sync with
+# scripts/check-consistency.sh sources.
+WATCHED_REGEX='^(references/(articles\.md|AGENTS\.md)|README\.md|README\.en\.md|prompts/deep-research-tracker\.md|(concepts|thinking|feedback)/[^/]+\.md)$'
+
+staged=$(git diff --cached --name-only --diff-filter=ACMRD)
+if ! echo "$staged" | grep -qE "$WATCHED_REGEX"; then
+  exit 0
+fi
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+SCRIPT="$REPO_ROOT/scripts/check-consistency.sh"
+
+if [ ! -x "$SCRIPT" ]; then
+  echo "pre-commit: $SCRIPT not found or not executable; skipping check"
+  exit 0
+fi
+
+if ! bash "$SCRIPT"; then
+  cat <<'EOF'
+
+────────────────────────────────────────────────────────────
+pre-commit blocked: consistency checks failed.
+
+Fix the entries listed above, restage, and recommit.
+If you intentionally need to land a transient mismatch, add
+  <!-- check-consistency: skip-count -->
+to the offending file (only valid for C2 count claims), or
+bypass once with:  git commit --no-verify
+────────────────────────────────────────────────────────────
+EOF
+  exit 1
+fi
+
+exit 0

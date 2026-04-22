@@ -194,6 +194,22 @@ harness-engineering/
 | [vibe-coding-cn](https://github.com/tukuaiai/vibe-coding-cn) | 中文 Vibe Coding 社区指南 |
 | [Mitchell Hashimoto: Engineer the Harness](https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness) | "Harness" 概念的另一个起源 |
 
+## 🛠️ 开发须知
+
+仓库自带一致性检查脚本 `scripts/check-consistency.sh`，守护数量类漂移（文章数、各目录篇数、下游引用同步）。
+
+**首次 clone 后启用 pre-commit hook：**
+
+```bash
+git config core.hooksPath .githooks
+```
+
+启用后，每次 commit 涉及 README / articles.md / 各目录文章数 时会自动跑检查；不涉及则不打扰。
+
+**手动跑：** `bash scripts/check-consistency.sh`
+
+详情见根 `AGENTS.md` 的"机械化检查"段。
+
 ## 🤝 参与贡献
 
 欢迎通过 Issue 和 PR 参与：

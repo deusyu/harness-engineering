@@ -30,3 +30,14 @@
 
 每个子目录都有自己的 AGENTS.md，说明该目录的用途、内容组织方式和写作约定。
 从任何一个目录开始，都能找到下一步该看什么。
+
+## 机械化检查
+
+`scripts/check-consistency.sh` 守护"漂移"问题：
+
+- **C1** — `references/articles.md` 编号 1..N 连续
+- **C2** — N 与下游 4 处声明同步（README badge × 2、`prompts/deep-research-tracker.md` 头部、`references/AGENTS.md` 概览）。文件含 `<!-- check-consistency: skip-count -->` 时豁免
+- **C3** — `concepts/`、`thinking/`、`feedback/` 的 `*.md` 实际数与 README 中"X 篇"声明一致
+
+执行：`bash scripts/check-consistency.sh`（仓库根目录）
+启用 pre-commit 阻断：`git config core.hooksPath .githooks`
