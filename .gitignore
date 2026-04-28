@@ -6,3 +6,5 @@ dist/
 .DS_Store
 .gstack/
 CLAUDE.md
+.baoyu-skills/
+translate/
