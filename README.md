@@ -198,7 +198,13 @@ harness-engineering/
 
 ## 🛠️ 开发须知
 
-仓库自带一致性检查脚本 `scripts/check-consistency.sh`，守护数量类漂移：`references/articles.md` 文章数、其下游 4 处引用（README × 2 badges、`prompts/deep-research-tracker.md` 头部、`references/AGENTS.md` 概览），以及 `concepts/` / `thinking/` / `feedback/` 三个目录的篇数。`works/` 目前不在覆盖范围（结构仍在演化）。
+仓库自带一致性检查脚本 `scripts/check-consistency.sh`，守护数量类漂移，覆盖六层校验：
+
+- **C1-C2** — `references/articles.md` 文章数 + 下游 4 处引用（README × 2 badges、`prompts/deep-research-tracker.md` 头部、`references/AGENTS.md` 概览）
+- **C3** — `concepts/` / `thinking/` / `feedback/` 三个目录的 `*.md` 实际数与 README "X 篇" 声明一致
+- **C4** — `works/*-translation.md` 文件数与各处翻译计数声明一致（badges、表格摘要、Phase 5 注释、AGENTS 快照、表格行数）
+- **C5** — README 结构树的 `concepts/` 子树列出每一个 `concepts/*.md` 文件
+- **C6** — `references/articles.md` 末尾"不计入 N 篇"的 N 与 C1 权威值一致
 
 **首次 clone 后启用 pre-commit hook：**
 
@@ -206,7 +212,7 @@ harness-engineering/
 git config core.hooksPath .githooks
 ```
 
-启用后，每次 commit 涉及 README、`references/articles.md`、`references/AGENTS.md`、`prompts/deep-research-tracker.md`、或 `concepts/` / `thinking/` / `feedback/` 中的 `*.md` 时会自动跑检查；不涉及则不打扰。
+启用后，每次 commit 涉及 README、`AGENTS.md`、`references/articles.md`、`references/AGENTS.md`、`prompts/deep-research-tracker.md`、或 `concepts/` / `thinking/` / `feedback/` / `works/` 中的 `*.md` 时会自动跑检查；不涉及则不打扰。
 
 **手动跑：** `bash scripts/check-consistency.sh`
 

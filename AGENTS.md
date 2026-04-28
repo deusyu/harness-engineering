@@ -36,8 +36,11 @@
 `scripts/check-consistency.sh` 守护"漂移"问题：
 
 - **C1** — `references/articles.md` 编号 1..N 连续
-- **C2** — N 与下游 4 处声明同步（README badge × 2、`prompts/deep-research-tracker.md` 头部、`references/AGENTS.md` 概览）。文件含 `<!-- check-consistency: skip-count -->` 时豁免
+- **C2** — N 与下游 4 处声明同步（README badge × 2、`prompts/deep-research-tracker.md` 头部、`references/AGENTS.md` 概览）。文件含独立行 `<!-- check-consistency: skip-count -->` 时豁免
 - **C3** — `concepts/`、`thinking/`、`feedback/` 的 `*.md` 实际数与 README 中"X 篇"声明一致
+- **C4** — `works/*-translation.md` 文件数 ≡ 翻译计数所有声明（badges、`<details>` 摘要、Phase 5 注释、本文件 Phase 5 快照、READMEs 表格行数）
+- **C5** — README 结构树中 `concepts/` 子树的 item 行数 ≡ `concepts/*.md` 文件数（防止"计数对了但树漏了"）
+- **C6** — `references/articles.md` 末尾"不计入 N 篇"中的 N ≡ C1 权威值
 
 执行：`bash scripts/check-consistency.sh`（仓库根目录）
 启用 pre-commit 阻断：`git config core.hooksPath .githooks`

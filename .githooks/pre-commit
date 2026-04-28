@@ -9,7 +9,7 @@ set -u
 
 # Files whose change can break consistency. Keep in sync with
 # scripts/check-consistency.sh sources.
-WATCHED_REGEX='^(references/(articles\.md|AGENTS\.md)|README\.md|README\.en\.md|prompts/deep-research-tracker\.md|(concepts|thinking|feedback)/[^/]+\.md)$'
+WATCHED_REGEX='^(references/(articles\.md|AGENTS\.md)|README\.md|README\.en\.md|AGENTS\.md|prompts/deep-research-tracker\.md|(concepts|thinking|feedback|works)/[^/]+\.md)$'
 
 staged=$(git diff --cached --name-only --diff-filter=ACMRD)
 if ! echo "$staged" | grep -qE "$WATCHED_REGEX"; then
