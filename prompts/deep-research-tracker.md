@@ -66,7 +66,7 @@
 **核心文章 19 篇，分布于三条脉络：**
 
 - **脉络一 — AI 时代 Harness Engineering（16 篇）：**
-  - OpenAI "Harness engineering"（原点，2026-02-11）/ "An open-source spec for Codex orchestration: Symphony"（2026-03-08，任务跟踪器作为控制平面）
+  - OpenAI "Harness engineering"（原点，2026-02-11）/ "An open-source spec for Codex orchestration: Symphony"（2026-04-27，任务跟踪器作为控制平面）
   - Fowler/Böckeler "Harness engineering for coding agent users"（2026-04-02）+ 前传备忘录（2026-02-17）
   - LangChain "The Anatomy of an Agent Harness"（2026-03）/ "Continual Learning for AI Agents"（2026-04-05）/ "Agent Evaluation Readiness Checklist"
   - Anthropic "Harness design for long-running application development"（2026-03-24）

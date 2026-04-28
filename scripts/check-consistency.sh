@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
 # check-consistency.sh — guard against drift between articles.md and downstream caches.
 #
-# Six checks:
+# Seven checks:
 #   C1 — articles.md heading numbering is contiguous 1..N
 #   C2 — that N matches every downstream count claim
 #        (README.md / README.en.md / prompts/deep-research-tracker.md / references/AGENTS.md)
-#        Files containing "<!-- check-consistency: skip-count -->" are exempted.
+#        Files containing a standalone "<!-- check-consistency: skip-count -->" line
+#        are exempted (C2 only — C4/C7 ignore the marker).
 #   C3 — *.md count (excluding AGENTS.md) matches the README "X 篇" claim for
 #        concepts/, thinking/, feedback/.
 #   C4 — works/*-translation.md file count matches every translation count claim
 #        (README badges, table summaries, table row counts, Phase 5 mentions, AGENTS snapshot).
 #   C5 — README structure tree's concepts/ subtree exposes every concepts/*.md file.
 #   C6 — articles.md tracked-products exclusion note ("不计入 N 篇") matches AUTHORITY.
+#   C7 — per-track counts (脉络一/二/三) declared in articles.md header agree with
+#        every downstream restatement (README × 2, references/AGENTS.md, deep-research-tracker.md).
 #
 # Usage:  bash scripts/check-consistency.sh        (run from repo root)
 # Exits 0 on all-pass, 1 on any failure.
@@ -108,11 +111,9 @@ echo "[C4] translation count claims match works/*-translation.md file count"
 TRANSLATIONS=$(find works -maxdepth 1 -type f -name '*-translation.md' | wc -l | tr -d ' ')
 
 check_against() {
+  # NOTE: deliberately does NOT honor has_skip_mark — the skip marker is
+  # documented as opt-out for C2 article counts only. C4/C7 must always run.
   local file="$1" pattern="$2" label="$3" expected="$4"
-  if has_skip_mark "$file"; then
-    echo "  $(yellow SKIP) — $label ($file): skip-count marker present"
-    return
-  fi
   local found
   found=$(grep -oE "$pattern" "$file" | head -1 | grep -oE '[0-9]+' | head -1 || true)
   if [ -z "$found" ]; then
@@ -187,6 +188,38 @@ else
     echo "  $(red FAIL) — references/articles.md: 不计入 $EXCLUDED 篇, AUTHORITY says $AUTHORITY"
     FAIL=1
   fi
+fi
+
+# ─── C7 ────────────────────────────────────────────────────────────────
+# Per-track counts. The articles.md authoritative header declares the split
+# (脉络一 N1 + 脉络二 N2 + 脉络三 N3); every site that re-states the split
+# must agree. README "Research Library" tables, references/AGENTS.md track
+# headings, and prompts/deep-research-tracker.md track lines are the four
+# downstream caches.
+echo "[C7] per-track counts match articles.md authority"
+TRACK1=$(grep -oE '脉络一 [0-9]+' references/articles.md | head -1 | grep -oE '[0-9]+' | head -1 || true)
+TRACK2=$(grep -oE '脉络二 [0-9]+' references/articles.md | head -1 | grep -oE '[0-9]+' | head -1 || true)
+TRACK3=$(grep -oE '脉络三 [0-9]+' references/articles.md | head -1 | grep -oE '[0-9]+' | head -1 || true)
+if [ -z "$TRACK1" ] || [ -z "$TRACK2" ] || [ -z "$TRACK3" ]; then
+  echo "  $(red FAIL) — references/articles.md header missing per-track counts (脉络一/二/三)"
+  FAIL=1
+else
+  echo "  authority: 脉络一=$TRACK1, 脉络二=$TRACK2, 脉络三=$TRACK3"
+  # README research library table
+  check_against "README.md"    'AI 时代的 Harness Engineering \| [0-9]+ 篇' "README.md 脉络一" "$TRACK1"
+  check_against "README.md"    '云原生 Harness\.io \| [0-9]+ 篇'           "README.md 脉络二" "$TRACK2"
+  check_against "README.md"    '效率悖论与能力进化 \| [0-9]+ 篇'           "README.md 脉络三" "$TRACK3"
+  check_against "README.en.md" 'AI-Era Harness Engineering \| [0-9]+ articles?'   "README.en.md 脉络一" "$TRACK1"
+  check_against "README.en.md" 'Cloud-Native Harness\.io \| [0-9]+ articles?'     "README.en.md 脉络二" "$TRACK2"
+  check_against "README.en.md" 'Efficiency Paradox[^|]*\| [0-9]+ articles?'       "README.en.md 脉络三" "$TRACK3"
+  # references/AGENTS.md track headings
+  check_against "references/AGENTS.md" '脉络一：AI 时代的 Harness Engineering（[0-9]+ 篇' "references/AGENTS.md 脉络一" "$TRACK1"
+  check_against "references/AGENTS.md" '脉络二：云原生 Harness\.io（[0-9]+ 篇'           "references/AGENTS.md 脉络二" "$TRACK2"
+  check_against "references/AGENTS.md" '脉络三：效率悖论与能力进化（[0-9]+ 篇'           "references/AGENTS.md 脉络三" "$TRACK3"
+  # prompts/deep-research-tracker.md track summary lines
+  check_against "prompts/deep-research-tracker.md" '脉络一 — AI 时代 Harness Engineering（[0-9]+ 篇' "deep-research-tracker.md 脉络一" "$TRACK1"
+  check_against "prompts/deep-research-tracker.md" '脉络二 — 云原生 Harness\.io（[0-9]+ 篇'         "deep-research-tracker.md 脉络二" "$TRACK2"
+  check_against "prompts/deep-research-tracker.md" '脉络三 — 效率悖论（[0-9]+ 篇'                   "deep-research-tracker.md 脉络三" "$TRACK3"
 fi
 
 # ─── Summary ───────────────────────────────────────────────────────────

@@ -5,7 +5,7 @@ sourceRequestedUrl: "https://openai.com/index/open-source-codex-orchestration-sy
 sourceAuthor: "Alex Kotliarskyi, Victor Zhu, and Zach Brock"
 sourceCoverImage: "https://images.ctfassets.net/kftzwdyauwt9/1lLb8Tk8Ht0kZC0UzoJysb/bac9e34838a4f94afd44b1c9adfa8780/Symphony_SEO_card__1_.png?w=1600&h=900&fit=fill"
 sourceSiteName: "OpenAI"
-sourcePublishedAt: "2026-03-08"
+sourcePublishedAt: "2026-04-27"
 sourceSummary: |-
   Learn how Symphony, an open-source spec for Codex orchestration, turns issue trackers into always-on agent systems—boosting engineering output and reducing context switching.
 sourceAdapter: "generic"

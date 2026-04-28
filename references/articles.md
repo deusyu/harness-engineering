@@ -436,7 +436,7 @@
 - **标题：** An open-source spec for Codex orchestration: Symphony
 - **链接：** [openai.com](https://openai.com/index/open-source-codex-orchestration-symphony/)
 - **翻译：** [works/openai-codex-symphony-translation.md](../works/openai-codex-symphony-translation.md)
-- **作者：** Alex Kotliarskyi, Victor Zhu, Zach Brock | **日期：** 2026-03-08
+- **作者：** Alex Kotliarskyi, Victor Zhu, Zach Brock | **日期：** 2026-04-27
 - **核心：** 把 Linear 这类问题跟踪器变成智能体编排的控制平面——每个打开的 ticket 映射一个智能体工作区，Symphony 保证未完成任务始终有智能体在跑。Symphony 本体只是一份 `SPEC.md`+`WORKFLOW.md`，参考实现用 Elixir，作者鼓励使用者把 spec 交给自己的编码智能体生成本地实现。
 - **关键洞察：**
   - **从交互式会话到 ticket 级编排**：人类瓶颈不在写代码，而在管理 3-5 个并发 Codex 会话的上下文切换；把 issue tracker 当状态机后，瓶颈转移到智能体的目标空间

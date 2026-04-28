@@ -41,6 +41,7 @@
 - **C4** — `works/*-translation.md` 文件数 ≡ 翻译计数所有声明（badges、`<details>` 摘要、Phase 5 注释、本文件 Phase 5 快照、READMEs 表格行数）
 - **C5** — README 结构树中 `concepts/` 子树的 item 行数 ≡ `concepts/*.md` 文件数（防止"计数对了但树漏了"）
 - **C6** — `references/articles.md` 末尾"不计入 N 篇"中的 N ≡ C1 权威值
+- **C7** — 三脉络 per-track 计数（脉络一/二/三）在 4 处下游声明保持一致：READMEs 资料库表、`references/AGENTS.md` 三脉络小标题、`prompts/deep-research-tracker.md` 三脉络明细
 
 执行：`bash scripts/check-consistency.sh`（仓库根目录）
 启用 pre-commit 阻断：`git config core.hooksPath .githooks`

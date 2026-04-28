@@ -129,12 +129,13 @@ Each subdirectory has its own `AGENTS.md` explaining its purpose and conventions
 
 ## 📚 Research Library
 
-16 core articles + 3 extended readings across three knowledge tracks:
+19 articles across three knowledge tracks + 3 extended readings:
 
 | Track | Coverage | Perspectives |
 |-------|----------|-------------|
 | AI-Era Harness Engineering | 16 articles | OpenAI → Fowler → Anthropic → LangChain → Stanford |
-| Cloud-Native Harness.io | 3 articles | CI/CD platform architecture (same name, different meaning) |
+| Cloud-Native Harness.io | 2 articles | CI/CD platform architecture (same name, different meaning) |
+| Efficiency Paradox & Capability Evolution | 1 article | YDD systematic teardown: TOC + Spec/Rule/Skill |
 | Extended Reading | 3 articles | Mitchell Hashimoto, Context Engineering, Human-Agent collaboration |
 
 See [references/articles.md](references/articles.md) — each article includes core thesis, key data, and cross-article connections.
