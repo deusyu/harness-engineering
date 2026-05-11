@@ -538,6 +538,36 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 
 ---
 
+## 中文转译 / 二手资料（不计入文章数）
+
+> 这里收录的是**他人已发布的中文译介或二手综述**——本仓库做了归档但**不视为一手文献**。
+> 本段不参与 `### N. ...` 的全局编号，不计入 19 篇文章总数；与上方编号正文严格区分，避免污染脉络计数。
+> 收录标准：内容与 Harness Engineering 直接相关、来源可追溯到具名作者 / 译者、且对本仓库已有一手文献有补充或对照价值。
+
+### Akshay Pachaar — The Anatomy of an Agent Harness（中译版）
+
+- **类型：** X Article 综述科普 + 第三方中译，非一手文献
+- **英文原文：** [x.com/i/article/2040732084843782144](https://x.com/i/article/2040732084843782144)
+- **中译来源：** [@dotey 转推](https://x.com/dotey/status/2053601852261110201) | **中译落盘：** [works/dotey-pachaar-anatomy-zh-cn-repost.md](../works/dotey-pachaar-anatomy-zh-cn-repost.md)
+- **原作者：** Akshay Pachaar（@akshay_pachaar） | **译者：** 宝玉（@dotey） | **日期：** 2026-04-06
+- **内容定位：** 把 Anthropic、OpenAI、Perplexity、LangChain 的工程实践揉成「12 组件 + 7 决策」的入门速记卡。综述科普性质，无新一手数据。
+- **12 组件清单：** 编排循环 / 工具 / 记忆 / 上下文管理 / 提示词构建 / 输出解析 / 状态管理 / 错误处理 / 护栏与安全 / 验证循环 / 子智能体编排，加一段把它们串起来的"循环走一遍"流程。
+- **7 决策卡：** 单 vs 多智能体 / ReAct vs 先规划后执行 / 上下文管理策略 / 验证循环设计 / 权限与安全架构 / 工具范围 / Harness 厚度。
+- **与本仓库一手文献的对照关系：**
+
+| 本文主张 | 本仓库已收的一手出处 |
+|---------|------|
+| Agent = Model + Harness 公式（"如果你不是模型，你就是 Harness"） | #3 LangChain / Vivek Trivedy（同名英文原文，本文大量引用） |
+| 12 组件中的「上下文管理」「记忆」「错误处理」 | #4 Anthropic / Prithvi（Context Anxiety）、#3 Context Rot、#10 LangChain Eval |
+| 「六大类工具」「Pokemon 记忆案例」 | #6 Anthropic / Lance Martin |
+| 「Boris Cherny: 让模型验证自己的工作 → 质量提升 2-3×」 | 本文新数据点，未在 #6 文章里直接出现 |
+| 「TerminalBench：仅改 Harness，排名变动 20+ 位」 | #3 LangChain Trivedy 的 TerminalBench 2.0 数据点 |
+| 「房子盖好后脚手架要拆」（协同进化） | #4 Anthropic Harness 瘦身原则、Fowler 的 harness 假设 |
+
+- **为什么不进编号正文：** 本文是综述科普，不是一手文献。19 篇编号文章分别对应 OpenAI / Fowler / Anthropic / LangChain 等团队的一手工程博客或论文；将综述纳入会污染「19 篇一手」的语义边界与一致性脚本（C1/C2/C6）的语义。归到本段保留对照价值即可。
+
+---
+
 ## 已跟踪产品 / 项目（不计入文章数）
 
 > 这里收录的是**开源产品 / 框架 / 工具**，不是文章。本段不参与"### N. ..." 的全局编号，不计入 19 篇的文章总数。

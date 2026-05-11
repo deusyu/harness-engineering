@@ -27,6 +27,15 @@
 | [langchain-continual-learning-translation.md](langchain-continual-learning-translation.md) | Continual Learning for AI Agents | LangChain / Harrison Chase |
 | [openai-codex-symphony-translation.md](openai-codex-symphony-translation.md) | An Open-Source Spec for Codex Orchestration: Symphony | OpenAI / Kotliarskyi, Zhu, Brock |
 
+### 中文转译 / 二手资料
+
+> 这一区收录**他人已发布的中译版**（非本仓库原创翻译），不计入上方"翻译"表的统计与 README badge。
+> 文件命名以 `*-zh-cn-repost.md` 结尾，主动避开 `scripts/check-consistency.sh` C4 的 `*-translation.md` 计数 glob。
+
+| 文件 | 原文 / 来源 | 中译者 |
+|------|------|------|
+| [dotey-pachaar-anatomy-zh-cn-repost.md](dotey-pachaar-anatomy-zh-cn-repost.md) | The Anatomy of an Agent Harness（Akshay Pachaar 的 X Article） | 宝玉（@dotey） |
+
 ### 原创文章
 
 | 文件 | 主题 | 说明 |
