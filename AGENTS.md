@@ -13,13 +13,14 @@
 | `practice/` | 动手实践 | 小项目实验，验证文章中的方法论 |
 | `feedback/` | 反馈记录 | 实践中的踩坑、修正、迭代心得 |
 | `works/` | 作品输出 | 可展示的成果（文章、工具、模板等） |
+| `tools/` | 工具具像化 | 降低 6 维复杂度的杠杆库（带主张，不是 awesome-list） |
 | `prompts/` | 提示词积累 | 学习过程中验证有效的提示词 |
 | `references/` | 外部资源 | 相关文章、仓库、工具的索引 |
 
 ## 学习路线（进度）
 
 - [x] Phase 1：理解核心概念（concepts/，8 篇）
-- [x] Phase 2：形成自己的观点（thinking/，6 篇，持续中）
+- [x] Phase 2：形成自己的观点（thinking/，8 篇，持续中）
 - [x] Phase 3：选一个小项目实践（practice/，1 个 Ralph Demo）
 - [x] Phase 4：记录反馈迭代（feedback/，1 篇，持续中）
 - [x] Phase 5：输出可展示的作品（works/，12 篇翻译 + 1 篇原创）
