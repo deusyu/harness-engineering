@@ -236,7 +236,6 @@ git config core.hooksPath .githooks
 | 渠道 | 链接 |
 |------|------|
 | GitHub | [@deusyu](https://github.com/deusyu) |
-| X (Twitter) | [@0xdeusyu](https://x.com/0xdeusyu) |
 | Telegram | [@DeusThink](https://t.me/DeusThink) |
 | Telegram 交流群 | [@talkdeusyu](https://t.me/talkdeusyu) |
 | Telegram 频道 | [@lovedesuyu](https://t.me/lovedesuyu) |
