@@ -212,7 +212,6 @@ Contributions via Issues and PRs are welcome:
 | Channel | Link |
 |---------|------|
 | GitHub | [@deusyu](https://github.com/deusyu) |
-| X (Twitter) | [@0xdeusyu](https://x.com/0xdeusyu) |
 | Telegram | [@DeusThink](https://t.me/DeusThink) |
 | Telegram Group | [@talkdeusyu](https://t.me/talkdeusyu) |
 | Telegram Channel | [@lovedesuyu](https://t.me/lovedesuyu) |
