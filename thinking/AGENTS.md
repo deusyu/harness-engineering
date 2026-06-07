@@ -22,6 +22,9 @@
 | [software-project-complexity-in-the-ai-era.md](software-project-complexity-in-the-ai-era.md) | AI 时代的软件项目复杂度 | 6 维（上下文压力 / 可提示性 / 探索收敛 / 状态纠缠 / 暗知识 / 验证成本）+ 胶囊化分母 + 重构/复刻终局指标 |
 | [subagent-is-child-runtime.md](subagent-is-child-runtime.md) | Subagent 是 child runtime | 与 Claude Code 架构逆向互证：subagent = tool-call-triggered child session + context projection + evidence-return contract |
 | [why-this-project-exists.md](why-this-project-exists.md) | 为什么有这个项目 | 项目宗旨：把 Harness Engineering 从"概念集合"变成"可复刻的产品构建方法论"——借用《诡秘之主》"学徒途径"隐喻 |
+| [target-and-harness-in-agent-first-repos.md](target-and-harness-in-agent-first-repos.md) | Target 与 Harness 的仓库边界 | AI Agent 时代的 repo 会从“代码/内容仓库”演化成“目标系统 + 驭缰系统”的复合体 |
+| [harness-and-skills-two-dimensional-agent-design.md](harness-and-skills-two-dimensional-agent-design.md) | Harness 与 Skills 的二维设计 | 个人 Agent 系统应横向用 harness 管理领域，纵向用 skills 沉淀可复用工作流 |
+| [agent-native-research-project-structure.md](agent-native-research-project-structure.md) | Agent-Native 科研项目结构 | 面向会议论文的科研项目应由 management graph、epistemic graph 与 production artifacts 共同驱动 |
 
 ## 写作方向参考
 
