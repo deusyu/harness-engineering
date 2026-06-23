@@ -108,7 +108,7 @@ harness-engineering/
 │   ├── 06-harness-...     #   Harness 精确定义（Fowler 控制论扩展）
 │   └── 07-spec-as-product.md #   约束即产品（Symphony 延伸）
 │
-├── thinking/              # Phase 2：独立思考与质疑（12 篇）
+├── thinking/              # Phase 2：独立思考与质疑（13 篇）
 ├── practice/              # Phase 3：小项目实验（1 个 Ralph Demo）
 ├── feedback/              # Phase 4：踩坑与迭代心得（1 篇）
 ├── works/                 # Phase 5：可展示的作品（13 篇翻译 + 1 篇原创 + 2 篇外部中文收录）
@@ -122,7 +122,7 @@ harness-engineering/
 ## 🚀 学习路线
 
 - [x] **Phase 1：理解核心概念** — 8 篇概念笔记，覆盖 OpenAI 六大概念 + Fowler 控制论扩展 + Symphony 约束即产品
-- [x] **Phase 2：形成自己的观点** — 12 篇独立思考（持续中）
+- [x] **Phase 2：形成自己的观点** — 13 篇独立思考（持续中）
 - [x] **Phase 3：选一个小项目实践** — Ralph Demo 完成（321 秒，$0.31）
 - [x] **Phase 4：记录反馈迭代** — 1 篇（持续中）
 - [x] **Phase 5：输出可展示的作品** — 13 篇专业翻译 + 1 篇原创综合分析 + 2 篇外部中文收录

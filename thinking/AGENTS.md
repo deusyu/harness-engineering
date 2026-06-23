@@ -25,6 +25,7 @@
 | [target-and-harness-in-agent-first-repos.md](target-and-harness-in-agent-first-repos.md) | Target 与 Harness 的仓库边界 | AI Agent 时代的 repo 会从“代码/内容仓库”演化成“目标系统 + 驭缰系统”的复合体 |
 | [harness-and-skills-two-dimensional-agent-design.md](harness-and-skills-two-dimensional-agent-design.md) | Harness 与 Skills 的二维设计 | 个人 Agent 系统应横向用 harness 管理领域，纵向用 skills 沉淀可复用工作流 |
 | [agent-native-research-project-structure.md](agent-native-research-project-structure.md) | Agent-Native 科研项目结构 | 面向会议论文的科研项目应由 management graph、epistemic graph 与 production artifacts 共同驱动 |
+| [agent-development-repo-structure.md](agent-development-repo-structure.md) | Agent 开发仓库结构 | Agent repo 应同时承载 agent target、development harness 与 evaluation memory |
 
 ## 写作方向参考
 
