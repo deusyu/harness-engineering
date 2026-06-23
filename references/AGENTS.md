@@ -9,10 +9,10 @@
 
 ## 文章
 
-详见 [articles.md](articles.md) — 完整的文章索引，含三条脉络 **20 篇文章 + 1 项已跟踪产品** 的深度摘要。
+详见 [articles.md](articles.md) — 完整的文章索引，含三条脉络 **21 篇文章 + 1 项已跟踪产品** 的深度摘要。
 权威计数与编号规则以 `articles.md` 头部为准；本表是它的概览缓存。
 
-### 脉络一：AI 时代的 Harness Engineering（17 篇）
+### 脉络一：AI 时代的 Harness Engineering（18 篇）
 
 | # | 文章 | 作者 | 核心贡献 |
 |---|------|------|---------|
@@ -33,19 +33,20 @@
 | 15 | [Continual learning for AI agents](https://blog.langchain.com/continual-learning-for-ai-agents/) | Harrison Chase | 三层学习：模型/Harness/上下文 |
 | 16 | [OpenAI Symphony](https://openai.com/index/open-source-codex-orchestration-symphony/) | Kotliarskyi 等 | 任务跟踪器作为控制平面 + SPEC/WORKFLOW 即产品 |
 | 17 | [Claude Code Architecture](https://vrungta.substack.com/p/claude-code-architecture-reverse) | Vikash Rungta | Claude Code 运行外壳、TAOR 循环、工具原语、权限与上下文管理的外部逆向分析 |
+| 18 | [Harness 系列文章之 7：关于 subagent](https://x.com/dongxi_nlp/status/2068922428516892998) | 马东锡 NLP | Subagent = tool call 入口 + child runtime；区分 session/context/subagent 与 evidence 回流 |
 
 ### 脉络二：云原生 Harness.io（2 篇）
 
 | # | 文章 | 核心贡献 |
 |---|------|---------|
-| 18 | [Harness.io 官方](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops) | CI/CD 平台全局架构 |
-| 19 | [Google Cloud Architecture](https://docs.cloud.google.com/architecture/partners/harness-cicd-pipeline-for-rag-app) | Harness + GCP 部署 RAG |
+| 19 | [Harness.io 官方](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops) | CI/CD 平台全局架构 |
+| 20 | [Google Cloud Architecture](https://docs.cloud.google.com/architecture/partners/harness-cicd-pipeline-for-rag-app) | Harness + GCP 部署 RAG |
 
 ### 脉络三：效率悖论与能力进化（1 篇）
 
 | # | 文章 | 核心贡献 |
 |---|------|---------|
-| 20 | [YDD / Miss-you](https://yousali.com/posts/20260303-ai-coding-efficiency-to-evolution/) | 效率悖论的系统性拆解：约束理论 + Spec/Rule/Skill + 验证闭环 + 并发 |
+| 21 | [YDD / Miss-you](https://yousali.com/posts/20260303-ai-coding-efficiency-to-evolution/) | 效率悖论的系统性拆解：约束理论 + Spec/Rule/Skill + 验证闭环 + 并发 |
 
 ### 已跟踪产品 / 项目（不计入文章数）
 

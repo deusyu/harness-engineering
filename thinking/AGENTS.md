@@ -20,6 +20,7 @@
 | [harness-for-solo-developers.md](harness-for-solo-developers.md) | 个人开发者的 Harness | 六大概念的适用性分析：直接可用 vs 需要降级 vs 不适用 |
 | [guides-sensors-meets-claude-code-harness.md](guides-sensors-meets-claude-code-harness.md) | Böckeler 框架 vs claude-code-harness v4.2 | 产品级实现暴露的五个张力：Advisor 装不进 2×2、guardrail 融合前馈反馈、行为 Harness 是结构性绕过、追上游占 95% 维护成本、harness 必带价值观锁定 |
 | [software-project-complexity-in-the-ai-era.md](software-project-complexity-in-the-ai-era.md) | AI 时代的软件项目复杂度 | 6 维（上下文压力 / 可提示性 / 探索收敛 / 状态纠缠 / 暗知识 / 验证成本）+ 胶囊化分母 + 重构/复刻终局指标 |
+| [subagent-is-child-runtime.md](subagent-is-child-runtime.md) | Subagent 是 child runtime | 与 Claude Code 架构逆向互证：subagent = tool-call-triggered child session + context projection + evidence-return contract |
 | [why-this-project-exists.md](why-this-project-exists.md) | 为什么有这个项目 | 项目宗旨：把 Harness Engineering 从"概念集合"变成"可复刻的产品构建方法论"——借用《诡秘之主》"学徒途径"隐喻 |
 
 ## 写作方向参考

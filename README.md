@@ -1,7 +1,7 @@
 中文 | [English](README.en.md)
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
-![Articles](https://img.shields.io/badge/articles-20-green)
+![Articles](https://img.shields.io/badge/articles-21-green)
 ![Translations](https://img.shields.io/badge/translations-13-orange)
 
 # Harness Engineering 学习指南
@@ -108,13 +108,13 @@ harness-engineering/
 │   ├── 06-harness-...     #   Harness 精确定义（Fowler 控制论扩展）
 │   └── 07-spec-as-product.md #   约束即产品（Symphony 延伸）
 │
-├── thinking/              # Phase 2：独立思考与质疑（8 篇）
+├── thinking/              # Phase 2：独立思考与质疑（9 篇）
 ├── practice/              # Phase 3：小项目实验（1 个 Ralph Demo）
 ├── feedback/              # Phase 4：踩坑与迭代心得（1 篇）
-├── works/                 # Phase 5：可展示的作品（13 篇翻译 + 1 篇原创）
+├── works/                 # Phase 5：可展示的作品（13 篇翻译 + 1 篇原创 + 2 篇外部中文收录）
 ├── tools/                 # 工具具像化：降低 6 维复杂度的杠杆库
 ├── prompts/               # 验证有效的提示词积累
-└── references/            # 外部资源索引（20 篇文章深度摘要）
+└── references/            # 外部资源索引（21 篇文章深度摘要）
 ```
 
 每个子目录都有自己的 `AGENTS.md`，说明该目录的用途和写作约定。这本身就是原文「渐进式披露」的实践。
@@ -122,18 +122,18 @@ harness-engineering/
 ## 🚀 学习路线
 
 - [x] **Phase 1：理解核心概念** — 8 篇概念笔记，覆盖 OpenAI 六大概念 + Fowler 控制论扩展 + Symphony 约束即产品
-- [x] **Phase 2：形成自己的观点** — 8 篇独立思考（持续中）
+- [x] **Phase 2：形成自己的观点** — 9 篇独立思考（持续中）
 - [x] **Phase 3：选一个小项目实践** — Ralph Demo 完成（321 秒，$0.31）
 - [x] **Phase 4：记录反馈迭代** — 1 篇（持续中）
-- [x] **Phase 5：输出可展示的作品** — 13 篇专业翻译 + 1 篇原创综合分析
+- [x] **Phase 5：输出可展示的作品** — 13 篇专业翻译 + 1 篇原创综合分析 + 2 篇外部中文收录
 
 ## 📚 研究资料库
 
-跨三条知识脉络 20 篇文章 + 3 篇延伸阅读：
+跨三条知识脉络 21 篇文章 + 3 篇延伸阅读：
 
 | 脉络 | 覆盖 | 核心视角 |
 |------|------|---------|
-| AI 时代的 Harness Engineering | 17 篇 | OpenAI → Fowler → Anthropic → LangChain → Stanford → Claude Code 逆向 |
+| AI 时代的 Harness Engineering | 18 篇 | OpenAI → Fowler → Anthropic → LangChain → Stanford → Claude Code 逆向 → Subagent runtime |
 | 云原生 Harness.io | 2 篇 | CI/CD 平台架构（同名不同义的参照） |
 | 效率悖论与能力进化 | 1 篇 | YDD 系统性拆解：约束理论 + Spec/Rule/Skill |
 | 延伸阅读 | 3 篇 | Mitchell Hashimoto、Context Engineering、人机协作 |

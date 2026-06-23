@@ -37,6 +37,14 @@
 |------|------|------|
 | [dotey-pachaar-anatomy-zh-cn-repost.md](dotey-pachaar-anatomy-zh-cn-repost.md) | The Anatomy of an Agent Harness（Akshay Pachaar 的 X Article） | 宝玉（@dotey） |
 
+### 中文原文收录 / 社区文章
+
+> 这一区收录中文社区对 Harness Engineering 的原创短文或帖子原文。它们不是本仓库原创，也不计入上方"翻译"表的统计与 README badge。
+
+| 文件 | 原文 / 来源 | 作者 |
+|------|------|------|
+| [dongxi-subagent-original.md](dongxi-subagent-original.md) | Harness 系列文章之 7：关于 subagent（X status） | 马东锡 NLP（@dongxi_nlp） |
+
 ### 原创文章
 
 | 文件 | 主题 | 说明 |

@@ -61,11 +61,11 @@
 > 它必须自包含，因为搜索器无法访问 `references/articles.md`。
 >
 > **维护纪律：** 当 `references/articles.md` 新增/删除条目时，**同一次提交中**必须同步更新本节。两份内容的口径（脉络划分、篇数、产品/项目清单）应保持完全一致。
-> 本节最近一次同步：2026-06-11（与 `articles.md` 当前内容对齐：20 篇文章 + 1 项已跟踪产品）。
+> 本节最近一次同步：2026-06-23（与 `articles.md` 当前内容对齐：21 篇文章 + 1 项已跟踪产品）。
 
-**核心文章 20 篇，分布于三条脉络：**
+**核心文章 21 篇，分布于三条脉络：**
 
-- **脉络一 — AI 时代 Harness Engineering（17 篇）：**
+- **脉络一 — AI 时代 Harness Engineering（18 篇）：**
   - OpenAI "Harness engineering"（原点，2026-02-11）/ "An open-source spec for Codex orchestration: Symphony"（2026-04-27，任务跟踪器作为控制平面）
   - Fowler/Böckeler "Harness engineering for coding agent users"（2026-04-02）+ 前传备忘录（2026-02-17）
   - LangChain "The Anatomy of an Agent Harness"（2026-03）/ "Continual Learning for AI Agents"（2026-04-05）/ "Agent Evaluation Readiness Checklist"
@@ -79,6 +79,7 @@
   - "Inside the Scaffold" 论文（编码智能体脚手架的源代码级分类法）
   - Lalit Maganti "渴望八年，用 AI 三个月造出来"
   - Vikash Rungta "Claude Code Architecture (Reverse Engineered)"（2025-11-01，Claude Code 运行外壳、TAOR 循环、工具原语、权限与上下文管理的外部逆向分析）
+  - 马东锡 NLP "Harness 系列文章之 7：关于 subagent"（2026-06-22，subagent = tool call 入口 + child runtime，区分 session/context/subagent，与 Claude Code 逆向互证）
 - **脉络二 — 云原生 Harness.io（2 篇）：** Harness.io 官方全局架构 / Google Cloud 集成场景
 - **脉络三 — 效率悖论（1 篇）：** YDD/Miss-you "效率悖论的系统性拆解"（2026-03-03）
 
@@ -164,7 +165,7 @@
 ### 请分析：
 
 1. **优先级排序**：哪些内容最值得我们收录？考虑因素：
-   - 对**已有约 20 篇文章 + 已收录开源产品**（完整清单见 Prompt A 的"已知内容"段落或 `references/articles.md`）的补充价值
+   - 对**已有约 21 篇文章 + 已收录开源产品**（完整清单见 Prompt A 的"已知内容"段落或 `references/articles.md`）的补充价值
    - 对 thinking/ 中已有洞见的验证或挑战（含 cross-article-insights 的 8 个洞见 + guides-sensors-meets-claude-code-harness 的 5 个张力）
    - 对开放问题清单的回答程度
 

@@ -10,7 +10,7 @@
 > **下游引用都是本文的冗余缓存：** 根 `README.md` / `README.en.md` 的 badge、`prompts/deep-research-tracker.md` 的去重清单、`references/AGENTS.md` 的概览表。
 > 新增/删除文章时，必须**同一次提交**更新本文 + 所有下游缓存。
 >
-> 当前规模：**20 篇文章**（脉络一 17 + 脉络二 2 + 脉络三 1）+ **1 项已跟踪产品**（不计入文章数）。最近一次同步：2026-06-11。
+> 当前规模：**21 篇文章**（脉络一 18 + 脉络二 2 + 脉络三 1）+ **1 项已跟踪产品**（不计入文章数）。最近一次同步：2026-06-23。
 
 ## 脉络一：AI 时代的 Harness Engineering（大模型护栏与认知工程）
 
@@ -475,18 +475,44 @@
 
 > 注：Chachamaru127 / claude-code-harness 早期曾占据 #16 文章位，现已迁至本文末尾的"已跟踪产品 / 项目"段落（不计入文章数）。
 
+### 18. 马东锡 NLP — Harness 系列文章之 7：关于 subagent
+
+- **标题：** Harness 系列文章之 7：关于 subagent
+- **链接：** [x.com](https://x.com/dongxi_nlp/status/2068922428516892998)
+- **原文收录：** [works/dongxi-subagent-original.md](../works/dongxi-subagent-original.md)
+- **作者：** 马东锡 NLP (@dongxi_nlp) | **日期：** 2026-06-22
+- **核心：** 把 subagent 从"小号智能体"重新定义为 parent session 通过一次 tool call 拉起的 managed child runtime：外层是 `spawn_agent` / `/delegate` tool call，内层是新的 child session 和被选择过的 context projection。
+
+- **关键洞察：**
+  - **Tool call outside, runtime inside：** subagent 的启动入口是 tool call；tool call 之后，Harness 的世界状态里多了一个 child runtime。
+  - **Session ≠ Context：** session 是 runtime container，包含 thread、transcript、tools、permissions、resources、status、artifacts；context 是某次 model call 可见的 projection。
+  - **Shared resources 不等于 shared transcript：** child 可以继承 tools、skills、AGENTS.md、MCP servers、cwd、sandbox、permissions，但不自动继承 parent 的完整对话历史。
+  - **三种投影策略：** fresh child、forked child、partial fork 分别对应不同上下文继承强度；partial fork 是避免 parent history 噪声的实用中间态。
+  - **更多 agents = 更多 runtime state：** 多智能体不是免费并行，Harness 必须追踪谁在工作、知道什么、改了什么、何时完成，以及结果如何变成 evidence。
+
+- **与其他文章关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| child session 与 context projection | #7 Anthropic Managed Agents 的 Session/Harness/Sandbox 解耦 |
+| subagent 作为上下文隔离机制 | #17 Claude Code 架构逆向中的隔离 TAOR 循环与 summary return |
+| fresh/forked/partial fork | #6 Anthropic/Claude Platform 的 context editing、sub-agent 隔离与缓存前缀管理 |
+| evidence 回流与 runtime state | #16 OpenAI Symphony 的任务跟踪器控制平面、#13 Inside the Scaffold 的委托分类 |
+
+- **本仓库笔记：** [thinking/subagent-is-child-runtime.md](../thinking/subagent-is-child-runtime.md)
+
 ---
 
 ## 脉络二：云原生时代的 Harness.io（交付与平台工程）
 
-### 18. Harness.io 官方 — 全局架构
+### 19. Harness.io 官方 — 全局架构
 
 - **标题：** Understanding CI/CD Platforms: The backbone of modern DevOps
 - **链接：** [harness.io](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops)
 - **核心：** 标准 CI/CD 平台介绍。8 大组件：SCM → Build → Test → Code Quality → Security Scan → Artifact → Deploy → Monitor
 - **Harness 差异化：** 统一管线、Test Intelligence 智能测试、最少脚本、Policy-as-Code 治理
 
-### 19. Google Cloud Architecture — 前沿场景结合
+### 20. Google Cloud Architecture — 前沿场景结合
 
 - **标题：** Harness CI/CD pipeline for RAG applications
 - **链接：** [docs.cloud.google.com](https://docs.cloud.google.com/architecture/partners/harness-cicd-pipeline-for-rag-app)
@@ -499,7 +525,7 @@
 
 ## 脉络三：效率悖论与能力进化
 
-### 20. YDD / Miss-you — 效率悖论的系统性拆解
+### 21. YDD / Miss-you — 效率悖论的系统性拆解
 
 - **标题：** 为什么 AI 写代码更快但交付没变，以及我怎么把它扳回来的
 - **链接：** [yousali.com](https://yousali.com/posts/20260303-ai-coding-efficiency-to-evolution/)
@@ -567,7 +593,7 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 ## 中文转译 / 二手资料（不计入文章数）
 
 > 这里收录的是**他人已发布的中文译介或二手综述**——本仓库做了归档但**不视为一手文献**。
-> 本段不参与 `### N. ...` 的全局编号，不计入 20 篇文章总数；与上方编号正文严格区分，避免污染脉络计数。
+> 本段不参与 `### N. ...` 的全局编号，不计入 21 篇文章总数；与上方编号正文严格区分，避免污染脉络计数。
 > 收录标准：内容与 Harness Engineering 直接相关、来源可追溯到具名作者 / 译者、且对本仓库已有一手文献有补充或对照价值。
 
 ### Akshay Pachaar — The Anatomy of an Agent Harness（中译版）
@@ -590,13 +616,13 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 | 「TerminalBench：仅改 Harness，排名变动 20+ 位」 | #3 LangChain Trivedy 的 TerminalBench 2.0 数据点 |
 | 「房子盖好后脚手架要拆」（协同进化） | #4 Anthropic Harness 瘦身原则、Fowler 的 harness 假设 |
 
-- **为什么不进编号正文：** 本文是综述科普，不是一手文献。20 篇编号文章分别对应 OpenAI / Fowler / Anthropic / LangChain 等团队的一手工程博客、论文或外部逆向分析；将综述纳入会污染「20 篇一手/准一手」的语义边界与一致性脚本（C1/C2/C6）的语义。归到本段保留对照价值即可。
+- **为什么不进编号正文：** 本文是综述科普，不是一手文献。21 篇编号文章分别对应 OpenAI / Fowler / Anthropic / LangChain 等团队的一手工程博客、论文、外部逆向分析或中文社区原创分析；将综述纳入会污染「21 篇一手/准一手」的语义边界与一致性脚本（C1/C2/C6）的语义。归到本段保留对照价值即可。
 
 ---
 
 ## 已跟踪产品 / 项目（不计入文章数）
 
-> 这里收录的是**开源产品 / 框架 / 工具**，不是文章。本段不参与"### N. ..." 的全局编号，不计入 20 篇的文章总数。
+> 这里收录的是**开源产品 / 框架 / 工具**，不是文章。本段不参与"### N. ..." 的全局编号，不计入 21 篇的文章总数。
 > 触发"产品级实现案例"的判定通常是：有可运行代码、有版本号、被本仓库 thinking/ 或 works/ 单独分析。
 
 ### ⭐ Chachamaru127 — claude-code-harness v4.2 "Hokage"（产品级实现案例）
