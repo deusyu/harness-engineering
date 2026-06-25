@@ -210,7 +210,7 @@ harness-engineering/
 
 ## 🛠️ 开发须知
 
-仓库自带一致性检查脚本 `scripts/check-consistency.sh`，守护数量类漂移，覆盖七层校验：
+仓库自带一致性检查脚本 `scripts/check-consistency.sh`，守护数量类漂移，覆盖八层校验：
 
 - **C1-C2** — `references/articles.md` 文章数 + 下游 4 处引用（README × 2 badges、`prompts/deep-research-tracker.md` 头部、`references/AGENTS.md` 概览）
 - **C3** — `concepts/` / `thinking/` / `feedback/` 三个目录的 `*.md` 实际数与 README "X 篇" 声明一致
@@ -218,6 +218,7 @@ harness-engineering/
 - **C5** — README 结构树的 `concepts/` 子树列出每一个 `concepts/*.md` 文件
 - **C6** — `references/articles.md` 末尾"不计入 N 篇"的 N 与 C1 权威值一致
 - **C7** — 三脉络（脉络一/二/三）的 per-track 计数在 4 处下游声明（READMEs 资料库表 × 2、`references/AGENTS.md` 三脉络小标题、`prompts/deep-research-tracker.md` 三脉络明细）保持一致
+- **C8** — 翻译流水线本地守卫：当 `translate/<...>/sources/<slug>/source-full.md` 已抓取，对应 `01-analysis.md` 不得再声称"仅摘要页 / 建议补抓全文"。`translate/` 已 gitignore，故 CI 与干净 clone 上自动 SKIP，仅在本地有过程稿时触发
 
 **首次 clone 后启用 pre-commit hook：**
 

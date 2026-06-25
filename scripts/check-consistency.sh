@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # check-consistency.sh — guard against drift between articles.md and downstream caches.
 #
-# Seven checks:
+# Eight checks:
 #   C1 — articles.md heading numbering is contiguous 1..N
 #   C2 — that N matches every downstream count claim
 #        (README.md / README.en.md / prompts/deep-research-tracker.md / references/AGENTS.md)
@@ -15,6 +15,9 @@
 #   C6 — articles.md tracked-products exclusion note ("不计入 N 篇") matches AUTHORITY.
 #   C7 — per-track counts (脉络一/二/三) declared in articles.md header agree with
 #        every downstream restatement (README × 2, references/AGENTS.md, deep-research-tracker.md).
+#   C8 — local translate-pipeline guard: a 01-analysis.md must not keep claiming
+#        "abstract-only / fetch full text later" once sources/<slug>/source-full.md
+#        exists. translate/ is gitignored, so this SKIPs on CI / clean clones.
 #
 # Usage:  bash scripts/check-consistency.sh        (run from repo root)
 # Exits 0 on all-pass, 1 on any failure.
@@ -220,6 +223,38 @@ else
   check_against "prompts/deep-research-tracker.md" '脉络一 — AI 时代 Harness Engineering（[0-9]+ 篇' "deep-research-tracker.md 脉络一" "$TRACK1"
   check_against "prompts/deep-research-tracker.md" '脉络二 — 云原生 Harness\.io（[0-9]+ 篇'         "deep-research-tracker.md 脉络二" "$TRACK2"
   check_against "prompts/deep-research-tracker.md" '脉络三 — 效率悖论（[0-9]+ 篇'                   "deep-research-tracker.md 脉络三" "$TRACK3"
+fi
+
+# ─── C8 ────────────────────────────────────────────────────────────────
+# Local translate-pipeline guard: a translation's 01-analysis.md must not keep
+# claiming "abstract-only / fetch the full text later" once the full-text source
+# (source-full.md) has actually been captured and the works-ready translation
+# was produced from it. Catches the analysis↔works-ready drift that let two
+# arXiv analyses lie about being abstract-only while the full paper was translated.
+#
+# translate/ is gitignored, so this check SKIPs cleanly on CI checkouts (and any
+# clone without local pipeline drafts) — it only fires where the drafts exist.
+echo "[C8] translate analysis files don't falsely claim abstract-only when full text exists"
+shopt -s nullglob
+analyses=(translate/*/translations/*/01-analysis.md)
+if [ "${#analyses[@]}" -eq 0 ]; then
+  echo "  $(yellow SKIP) — no translate/ candidate drafts present (CI checkout or clean clone)"
+else
+  c8_checked=0
+  for analysis in "${analyses[@]}"; do
+    slug=$(basename "$(dirname "$analysis")")
+    base=${analysis%%/translations/*}
+    fulltext="$base/sources/$slug/source-full.md"
+    [ -f "$fulltext" ] || continue
+    c8_checked=$((c8_checked + 1))
+    if grep -qE '非全文|补抓[^。]*全文|只抓[^。]*摘要|只是摘要页' "$analysis"; then
+      echo "  $(red FAIL) — $analysis: still claims abstract-only, but $fulltext exists"
+      FAIL=1
+    else
+      echo "  $(green PASS) — $slug: analysis consistent with captured full text"
+    fi
+  done
+  [ "$c8_checked" -eq 0 ] && echo "  $(yellow SKIP) — no slug has a source-full.md to check against"
 fi
 
 # ─── Summary ───────────────────────────────────────────────────────────
