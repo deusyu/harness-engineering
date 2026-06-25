@@ -61,11 +61,11 @@
 > 它必须自包含，因为搜索器无法访问 `references/articles.md`。
 >
 > **维护纪律：** 当 `references/articles.md` 新增/删除条目时，**同一次提交中**必须同步更新本节。两份内容的口径（脉络划分、篇数、产品/项目清单）应保持完全一致。
-> 本节最近一次同步：2026-06-25（与 `articles.md` 当前内容对齐：28 篇文章 + 1 项已跟踪产品）。
+> 本节最近一次同步：2026-06-25（与 `articles.md` 当前内容对齐：30 篇文章 + 1 项已跟踪产品）。
 
-**核心文章 28 篇，分布于三条脉络：**
+**核心文章 30 篇，分布于三条脉络：**
 
-- **脉络一 — AI 时代 Harness Engineering（25 篇）：**
+- **脉络一 — AI 时代 Harness Engineering（27 篇）：**
   - OpenAI "Harness engineering"（原点，2026-02-11）/ "An open-source spec for Codex orchestration: Symphony"（2026-04-27，任务跟踪器作为控制平面）
   - Fowler/Böckeler "Harness engineering for coding agent users"（2026-04-02）+ 前传备忘录（2026-02-17）
   - LangChain "The Anatomy of an Agent Harness"（2026-03）/ "Continual Learning for AI Agents"（2026-04-05）/ "Agent Evaluation Readiness Checklist"
@@ -87,6 +87,8 @@
   - Anthropic 工程团队 "An update on recent Claude Code quality reports"（2026-04-23，三起独立变更叠加成质量退化的第一手复盘）
   - Agentic Harness Engineering 论文（arXiv 2604.25850，复旦/北大/奇绩，可观测性驱动的 Harness 自动演化 + 可证伪契约）
   - Overeager Coding Agents 论文（arXiv 2605.18583，越界动作测量 + 提示声明授权反而降低边界推断）
+  - Chris Parsons "How I Use AI to Code"（2026-05，四要素 Harness + 从批准者到训练者 + 反馈是新瓶颈；含译者注，2026 数据未独立核实）
+  - LangChain / Palash Shah "How we built LangSmith Engine"（2026-05-19，用智能体改进智能体，trace→轨迹骨架 + screener/investigator 两阶段闭环）
 - **脉络二 — 云原生 Harness.io（2 篇）：** Harness.io 官方全局架构 / Google Cloud 集成场景
 - **脉络三 — 效率悖论（1 篇）：** YDD/Miss-you "效率悖论的系统性拆解"（2026-03-03）
 

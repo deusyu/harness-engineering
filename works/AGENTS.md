@@ -34,6 +34,8 @@
 | [anthropic-postmortem-translation.md](anthropic-postmortem-translation.md) | An update on recent Claude Code quality reports | Anthropic 工程团队 |
 | [arxiv-agentic-harness-engineering-translation.md](arxiv-agentic-harness-engineering-translation.md) | Agentic Harness Engineering (论文) | 复旦/北大/奇绩 · Jiahang Lin 等 / arXiv |
 | [arxiv-overeager-coding-agents-translation.md](arxiv-overeager-coding-agents-translation.md) | Overeager Coding Agents (论文) | Yubin Qu 等 / arXiv |
+| [chris-ai-code-translation.md](chris-ai-code-translation.md) | How I Use AI to Code | Chris Parsons / 个人博客 |
+| [langsmith-engine-translation.md](langsmith-engine-translation.md) | How we built LangSmith Engine | LangChain / Palash Shah |
 
 ### 中文转译 / 二手资料
 

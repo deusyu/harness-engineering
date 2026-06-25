@@ -10,7 +10,7 @@
 > **下游引用都是本文的冗余缓存：** 根 `README.md` / `README.en.md` 的 badge、`prompts/deep-research-tracker.md` 的去重清单、`references/AGENTS.md` 的概览表。
 > 新增/删除文章时，必须**同一次提交**更新本文 + 所有下游缓存。
 >
-> 当前规模：**28 篇文章**（脉络一 25 + 脉络二 2 + 脉络三 1）+ **1 项已跟踪产品**（不计入文章数）。最近一次同步：2026-06-25。
+> 当前规模：**30 篇文章**（脉络一 27 + 脉络二 2 + 脉络三 1）+ **1 项已跟踪产品**（不计入文章数）。最近一次同步：2026-06-25。
 
 ## 脉络一：AI 时代的 Harness Engineering（大模型护栏与认知工程）
 
@@ -671,16 +671,65 @@
 
 ---
 
+### 26. Chris Parsons — 我是如何用 AI 写代码的
+
+- **标题：** How I Use AI to Code
+- **链接：** [chrismdp.com](https://chrismdp.com/coding-with-ai/)
+- **中文译文：** [works/chris-ai-code-translation.md](../works/chris-ai-code-translation.md)
+- **作者：** Chris Parsons | **日期：** 2026-05（更新版）
+- **核心：** 资深从业者的一手实践复盘。硬区分 Vibe Coding 与"智能体化工程"，提出"从批准者到训练者"的角色转变，归纳四要素 Harness（常驻指令 / skill files / 验证循环 / 反馈循环），并主张"spec the problem, not the solution"。带 7 条带注解脚注（a16z、Karpathy、METR/MIT、Greenblatt serial speed-up 等）。
+
+- **关键洞察：**
+  - **Vibe Coding ≠ 智能体化工程：** 前者不真正检查结果，后者是"有分寸地判断哪些 diff 需要你的眼睛"。
+  - **从批准者到训练者：** 资深工程师的工作不再是审查输出，而是训练 AI——把判断花在哪里本身是资深技能。
+  - **四要素 Harness：** 常驻指令、skill files、验证循环、反馈循环；没有反馈循环脚手架会腐化。
+  - **反馈是新瓶颈：** 编码本身更快了，但审查/验证/集成/返工变慢，慢工作吞没快工作。
+  - **译者注：** 文中 2026 数据/产品断言来自原文及脚注，译者未独立核实（见译文顶部说明）。
+
+- **与其他文章关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| 四要素 Harness | #2 Fowler、#5 HumanLayer 六杠杆、概念 2/3 |
+| 反馈循环防腐化 | #9 Fowler 反馈飞轮、#19 Fowler Sensors |
+| 反馈瓶颈 / serial speed-up | #28 YDD 效率悖论 |
+
+---
+
+### 27. LangChain / Palash Shah — 我们如何构建 LangSmith Engine
+
+- **标题：** How we built LangSmith Engine: our agent for improving agents
+- **链接：** [langchain.com](https://www.langchain.com/blog/how-we-built-langsmith-engine-our-agent-for-improving-agents)
+- **中文译文：** [works/langsmith-engine-translation.md](../works/langsmith-engine-translation.md)
+- **作者：** Palash Shah | **日期：** 2026-05-19
+- **核心：** "用智能体改进智能体"的工程复盘。把 trace 压缩成轨迹骨架，用 screener（Haiku 子智能体）/ investigator 两阶段分工，CLI 作为统一接口，构成 issue → evaluator → 回归样本的闭环；issue 创建与 fix 生成分离。
+
+- **关键洞察：**
+  - **trace → 轨迹骨架：** 压缩运行轨迹再交给智能体，是"运行时 → 可观测 → 自动改进"链条的关键一步。
+  - **两阶段分工：** screener 先筛、investigator 再深挖，控制成本与上下文。
+  - **闭环：** issue → evaluator → regression example，把一次性诊断变成可回归的适应度函数。
+  - **创建与修复分离：** issue 创建和 fix 生成解耦，连接 repo 做 code-aware fix。
+
+- **与其他文章关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| 用智能体改进智能体 / meta-harness | #7 Anthropic Meta-Harness、#24 Agentic Harness Engineering |
+| evaluator 作为适应度函数 | #10 LangChain 评估清单、#2 Fowler Sensors |
+| 运行时 → 可观测 → 改进链条 | #21 ADLC、#22 Deep Agents 解释器 |
+
+---
+
 ## 脉络二：云原生时代的 Harness.io（交付与平台工程）
 
-### 26. Harness.io 官方 — 全局架构
+### 28. Harness.io 官方 — 全局架构
 
 - **标题：** Understanding CI/CD Platforms: The backbone of modern DevOps
 - **链接：** [harness.io](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops)
 - **核心：** 标准 CI/CD 平台介绍。8 大组件：SCM → Build → Test → Code Quality → Security Scan → Artifact → Deploy → Monitor
 - **Harness 差异化：** 统一管线、Test Intelligence 智能测试、最少脚本、Policy-as-Code 治理
 
-### 27. Google Cloud Architecture — 前沿场景结合
+### 29. Google Cloud Architecture — 前沿场景结合
 
 - **标题：** Harness CI/CD pipeline for RAG applications
 - **链接：** [docs.cloud.google.com](https://docs.cloud.google.com/architecture/partners/harness-cicd-pipeline-for-rag-app)
@@ -693,7 +742,7 @@
 
 ## 脉络三：效率悖论与能力进化
 
-### 28. YDD / Miss-you — 效率悖论的系统性拆解
+### 30. YDD / Miss-you — 效率悖论的系统性拆解
 
 - **标题：** 为什么 AI 写代码更快但交付没变，以及我怎么把它扳回来的
 - **链接：** [yousali.com](https://yousali.com/posts/20260303-ai-coding-efficiency-to-evolution/)
@@ -761,7 +810,7 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 ## 中文转译 / 二手资料（不计入文章数）
 
 > 这里收录的是**他人已发布的中文译介或二手综述**——本仓库做了归档但**不视为一手文献**。
-> 本段不参与 `### N. ...` 的全局编号，不计入 28 篇文章总数；与上方编号正文严格区分，避免污染脉络计数。
+> 本段不参与 `### N. ...` 的全局编号，不计入 30 篇文章总数；与上方编号正文严格区分，避免污染脉络计数。
 > 收录标准：内容与 Harness Engineering 直接相关、来源可追溯到具名作者 / 译者、且对本仓库已有一手文献有补充或对照价值。
 
 ### Akshay Pachaar — The Anatomy of an Agent Harness（中译版）
@@ -790,7 +839,7 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 
 ## 已跟踪产品 / 项目（不计入文章数）
 
-> 这里收录的是**开源产品 / 框架 / 工具**，不是文章。本段不参与"### N. ..." 的全局编号，不计入 28 篇的文章总数。
+> 这里收录的是**开源产品 / 框架 / 工具**，不是文章。本段不参与"### N. ..." 的全局编号，不计入 30 篇的文章总数。
 > 触发"产品级实现案例"的判定通常是：有可运行代码、有版本号、被本仓库 thinking/ 或 works/ 单独分析。
 
 ### ⭐ Chachamaru127 — claude-code-harness v4.2 "Hokage"（产品级实现案例）

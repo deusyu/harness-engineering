@@ -9,10 +9,10 @@
 
 ## 文章
 
-详见 [articles.md](articles.md) — 完整的文章索引，含三条脉络 **28 篇文章 + 1 项已跟踪产品** 的深度摘要。
+详见 [articles.md](articles.md) — 完整的文章索引，含三条脉络 **30 篇文章 + 1 项已跟踪产品** 的深度摘要。
 权威计数与编号规则以 `articles.md` 头部为准；本表是它的概览缓存。
 
-### 脉络一：AI 时代的 Harness Engineering（25 篇）
+### 脉络一：AI 时代的 Harness Engineering（27 篇）
 
 | # | 文章 | 作者 | 核心贡献 |
 |---|------|------|---------|
@@ -41,19 +41,21 @@
 | 23 | [Anthropic/质量回归复盘](https://www.anthropic.com/engineering/april-23-postmortem) | Anthropic 工程团队 | 三起独立变更叠加成质量退化 + 变更治理清单（第一手反例） |
 | 24 | [Agentic Harness Engineering 论文](https://arxiv.org/html/2604.25850v4) | Jiahang Lin 等（复旦/北大/奇绩） | 可观测性驱动的 Harness 自动演化 + 每次编辑即可证伪契约 |
 | 25 | [Overeager Coding Agents 论文](https://arxiv.org/html/2605.18583v1) | Yubin Qu 等 | 越界动作测量 + 提示声明授权反而降低边界推断 |
+| 26 | [How I Use AI to Code](https://chrismdp.com/coding-with-ai/) | Chris Parsons | 四要素 Harness + 从批准者到训练者 + 反馈是新瓶颈 |
+| 27 | [How we built LangSmith Engine](https://www.langchain.com/blog/how-we-built-langsmith-engine-our-agent-for-improving-agents) | Palash Shah | 用智能体改进智能体 + trace→轨迹骨架 + screener/investigator 两阶段闭环 |
 
 ### 脉络二：云原生 Harness.io（2 篇）
 
 | # | 文章 | 核心贡献 |
 |---|------|---------|
-| 26 | [Harness.io 官方](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops) | CI/CD 平台全局架构 |
-| 27 | [Google Cloud Architecture](https://docs.cloud.google.com/architecture/partners/harness-cicd-pipeline-for-rag-app) | Harness + GCP 部署 RAG |
+| 28 | [Harness.io 官方](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops) | CI/CD 平台全局架构 |
+| 29 | [Google Cloud Architecture](https://docs.cloud.google.com/architecture/partners/harness-cicd-pipeline-for-rag-app) | Harness + GCP 部署 RAG |
 
 ### 脉络三：效率悖论与能力进化（1 篇）
 
 | # | 文章 | 核心贡献 |
 |---|------|---------|
-| 28 | [YDD / Miss-you](https://yousali.com/posts/20260303-ai-coding-efficiency-to-evolution/) | 效率悖论的系统性拆解：约束理论 + Spec/Rule/Skill + 验证闭环 + 并发 |
+| 30 | [YDD / Miss-you](https://yousali.com/posts/20260303-ai-coding-efficiency-to-evolution/) | 效率悖论的系统性拆解：约束理论 + Spec/Rule/Skill + 验证闭环 + 并发 |
 
 ### 已跟踪产品 / 项目（不计入文章数）
 

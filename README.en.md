@@ -1,8 +1,8 @@
 [中文](README.md) | English
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
-![Articles](https://img.shields.io/badge/articles-28-green)
-![Translations](https://img.shields.io/badge/translations-20-orange)
+![Articles](https://img.shields.io/badge/articles-30-green)
+![Translations](https://img.shields.io/badge/translations-22-orange)
 
 # Harness Engineering Study Guide
 
@@ -112,10 +112,10 @@ harness-engineering/
 ├── thinking/              # Phase 2: Independent analysis (9 articles)
 ├── practice/              # Phase 3: Hands-on experiments (1 Ralph Demo)
 ├── feedback/              # Phase 4: Lessons learned (1 article)
-├── works/                 # Phase 5: Shareable outputs (20 translations + 1 original + 2 external Chinese captures)
+├── works/                 # Phase 5: Shareable outputs (22 translations + 1 original + 2 external Chinese captures)
 ├── tools/                 # Tools that reduce the 6 complexity dimensions
 ├── prompts/               # Validated prompts collection
-└── references/            # External resource index (28 articles with deep summaries)
+└── references/            # External resource index (30 articles with deep summaries)
 ```
 
 Each subdirectory has its own `AGENTS.md` explaining its purpose and conventions — a direct practice of the "progressive disclosure" principle from the original article.
@@ -126,15 +126,15 @@ Each subdirectory has its own `AGENTS.md` explaining its purpose and conventions
 - [x] **Phase 2: Form your own opinions** — 9 independent analyses (ongoing)
 - [x] **Phase 3: Pick a small project to practice** — Ralph Demo completed (321s, $0.31)
 - [x] **Phase 4: Record feedback & iterations** — 1 article (ongoing)
-- [x] **Phase 5: Produce shareable work** — 20 professional translations + 1 original synthesis + 2 external Chinese captures
+- [x] **Phase 5: Produce shareable work** — 22 professional translations + 1 original synthesis + 2 external Chinese captures
 
 ## 📚 Research Library
 
-28 articles across three knowledge tracks + 3 extended readings:
+30 articles across three knowledge tracks + 3 extended readings:
 
 | Track | Coverage | Perspectives |
 |-------|----------|-------------|
-| AI-Era Harness Engineering | 25 articles | OpenAI → Fowler → Anthropic → LangChain → Stanford → Claude Code reverse engineering → Subagent runtime → Sensors/SPDD/ADLC → Out-of-scope & quality postmortem |
+| AI-Era Harness Engineering | 27 articles | OpenAI → Fowler → Anthropic → LangChain → Stanford → Claude Code reverse engineering → Subagent runtime → Sensors/SPDD/ADLC → Out-of-scope & quality postmortem → Practice recap & Engine |
 | Cloud-Native Harness.io | 2 articles | CI/CD platform architecture (same name, different meaning) |
 | Efficiency Paradox & Capability Evolution | 1 article | YDD systematic teardown: TOC + Spec/Rule/Skill |
 | Extended Reading | 3 articles | Mitchell Hashimoto, Context Engineering, Human-Agent collaboration |
@@ -144,7 +144,7 @@ See [references/articles.md](references/articles.md) — each article includes c
 ## 📖 Translations
 
 <details>
-<summary><b>20 Chinese translations of key articles</b> (click to expand)</summary>
+<summary><b>22 Chinese translations of key articles</b> (click to expand)</summary>
 
 | Translation | Original Author | Source |
 |-------------|----------------|--------|
@@ -168,6 +168,8 @@ See [references/articles.md](references/articles.md) — each article includes c
 | [Claude Code Quality Postmortem](works/anthropic-postmortem-translation.md) | Anthropic Eng | Anthropic |
 | [Agentic Harness Engineering (paper)](works/arxiv-agentic-harness-engineering-translation.md) | Jiahang Lin et al. | Fudan / arXiv |
 | [Overeager Coding Agents (paper)](works/arxiv-overeager-coding-agents-translation.md) | Yubin Qu et al. | arXiv |
+| [How I Use AI to Code](works/chris-ai-code-translation.md) | Chris Parsons | Personal blog |
+| [How We Built LangSmith Engine](works/langsmith-engine-translation.md) | Palash Shah | LangChain |
 
 </details>
 

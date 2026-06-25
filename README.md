@@ -1,8 +1,8 @@
 中文 | [English](README.en.md)
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
-![Articles](https://img.shields.io/badge/articles-28-green)
-![Translations](https://img.shields.io/badge/translations-20-orange)
+![Articles](https://img.shields.io/badge/articles-30-green)
+![Translations](https://img.shields.io/badge/translations-22-orange)
 
 # Harness Engineering 学习指南
 
@@ -111,10 +111,10 @@ harness-engineering/
 ├── thinking/              # Phase 2：独立思考与质疑（9 篇）
 ├── practice/              # Phase 3：小项目实验（1 个 Ralph Demo）
 ├── feedback/              # Phase 4：踩坑与迭代心得（1 篇）
-├── works/                 # Phase 5：可展示的作品（20 篇翻译 + 1 篇原创 + 2 篇外部中文收录）
+├── works/                 # Phase 5：可展示的作品（22 篇翻译 + 1 篇原创 + 2 篇外部中文收录）
 ├── tools/                 # 工具具像化：降低 6 维复杂度的杠杆库
 ├── prompts/               # 验证有效的提示词积累
-└── references/            # 外部资源索引（28 篇文章深度摘要）
+└── references/            # 外部资源索引（30 篇文章深度摘要）
 ```
 
 每个子目录都有自己的 `AGENTS.md`，说明该目录的用途和写作约定。这本身就是原文「渐进式披露」的实践。
@@ -125,15 +125,15 @@ harness-engineering/
 - [x] **Phase 2：形成自己的观点** — 9 篇独立思考（持续中）
 - [x] **Phase 3：选一个小项目实践** — Ralph Demo 完成（321 秒，$0.31）
 - [x] **Phase 4：记录反馈迭代** — 1 篇（持续中）
-- [x] **Phase 5：输出可展示的作品** — 20 篇专业翻译 + 1 篇原创综合分析 + 2 篇外部中文收录
+- [x] **Phase 5：输出可展示的作品** — 22 篇专业翻译 + 1 篇原创综合分析 + 2 篇外部中文收录
 
 ## 📚 研究资料库
 
-跨三条知识脉络 28 篇文章 + 3 篇延伸阅读：
+跨三条知识脉络 30 篇文章 + 3 篇延伸阅读：
 
 | 脉络 | 覆盖 | 核心视角 |
 |------|------|---------|
-| AI 时代的 Harness Engineering | 25 篇 | OpenAI → Fowler → Anthropic → LangChain → Stanford → Claude Code 逆向 → Subagent runtime → 传感器/SPDD/ADLC → 越界与质量复盘 |
+| AI 时代的 Harness Engineering | 27 篇 | OpenAI → Fowler → Anthropic → LangChain → Stanford → Claude Code 逆向 → Subagent runtime → 传感器/SPDD/ADLC → 越界与质量复盘 → 实践复盘与 Engine |
 | 云原生 Harness.io | 2 篇 | CI/CD 平台架构（同名不同义的参照） |
 | 效率悖论与能力进化 | 1 篇 | YDD 系统性拆解：约束理论 + Spec/Rule/Skill |
 | 延伸阅读 | 3 篇 | Mitchell Hashimoto、Context Engineering、人机协作 |
@@ -143,7 +143,7 @@ harness-engineering/
 ## 📖 翻译作品
 
 <details>
-<summary><b>20 篇核心文章的中文翻译</b>（点击展开）</summary>
+<summary><b>22 篇核心文章的中文翻译</b>（点击展开）</summary>
 
 | 作品 | 原作者 | 来源 |
 |------|--------|------|
@@ -167,6 +167,8 @@ harness-engineering/
 | [Claude Code 质量回归复盘](works/anthropic-postmortem-translation.md) | Anthropic 工程团队 | Anthropic |
 | [Agentic Harness Engineering 论文](works/arxiv-agentic-harness-engineering-translation.md) | Jiahang Lin 等 | 复旦 / arXiv |
 | [过度积极的编码智能体 论文](works/arxiv-overeager-coding-agents-translation.md) | Yubin Qu 等 | arXiv |
+| [我是如何用 AI 写代码的](works/chris-ai-code-translation.md) | Chris Parsons | 个人博客 |
+| [我们如何构建 LangSmith Engine](works/langsmith-engine-translation.md) | Palash Shah | LangChain |
 
 </details>
 
