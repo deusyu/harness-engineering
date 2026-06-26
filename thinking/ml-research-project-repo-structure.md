@@ -241,6 +241,15 @@ baseline 是否公平？
       result-to-figure.yaml
       promises.yaml
       handoff-log.md
+    archive/
+      lab/
+      paper/
+      bridge/
+      handoffs/
+    gc/
+      retention-policy.yaml
+      compaction-log.md
+      tombstones.yaml
 ```
 
 这不是第一天必须全部实现的模板。
@@ -1283,14 +1292,25 @@ memory/
     result-to-figure.yaml
     promises.yaml
     handoff-log.md
+  archive/
+    lab/
+    paper/
+    bridge/
+    handoffs/
+  gc/
+    retention-policy.yaml
+    compaction-log.md
+    tombstones.yaml
 ```
 
-这三块的职责是：
+这些目录的核心职责是：
 
 ```text
 memory/lab/     记实验推进状态
 memory/paper/   记文章推进状态
 memory/bridge/  记实验事实如何进入文章
+memory/archive/ 记不再影响当前行动的历史索引
+memory/gc/      记 active memory 如何压缩、归档、遗忘
 ```
 
 ### memory/current-status.md
@@ -1445,6 +1465,138 @@ lab/research/evidence.yaml
 - 哪些假设不能当事实；
 - 下一步最小动作。
 
+### memory/gc/：记忆遗忘机制
+
+`memory/` 不是永久事实库。
+
+它是工作记忆、控制面板和当前上下文缓存。长期项目如果只允许增量写入，不允许遗忘，会出现两个问题：
+
+```text
+stale memory poisoning
+  过期状态还留在 memory/，Agent 读了以后按旧事实行动。
+
+memory overload
+  所有历史都堆在 current-status / status boards 里，最后没人知道什么是当前有效信息。
+```
+
+所以 `memory/` 必须有遗忘协议。
+
+核心原则是：
+
+```text
+遗忘 memory，不等于删除事实。
+```
+
+真正的长期事实源应该在：
+
+```text
+lab/research/       claim / evidence / negative result
+lab/artifacts/      result / model / sample index
+lab/experiments/    experiment definition
+deliverables/       paper / rebuttal / release
+DECISIONS.md        关键决策
+```
+
+`memory/` 只保存“现在要用来推进项目的状态”。遗忘的意思是：
+
+```text
+从 active working memory 中移除；
+必要时压缩进长期事实源；
+保留最小 tombstone 或 archive；
+防止旧状态继续误导 Agent。
+```
+
+一个可操作的 memory 生命周期可以是：
+
+```text
+active     当前正在影响行动的记忆
+warm       最近完成，但可能还要回看
+archived   已经不影响当前行动，只保留索引
+forgotten  已被确认无价值，或已被长期事实源吸收
+```
+
+`memory/gc/retention-policy.yaml` 规定什么时候应该压缩或遗忘：
+
+```yaml
+rules:
+  completed_run_queue_items:
+    after: 14d
+    action: archive_summary
+
+  resolved_blockers:
+    after: 7d
+    action: compact_to_handoff_log
+
+  stale_active_experiments:
+    after: 30d_without_update
+    action: require_review
+
+  paper_table_status:
+    after: table_committed_to_paper
+    action: keep_pointer_only
+
+  rebuttal_promises:
+    after: camera_ready_done
+    action: move_to_archive
+```
+
+`memory/gc/compaction-log.md` 记录每次压缩：
+
+```text
+2026-06-26
+- Compacted resolved infra blockers from memory/lab/blockers.yaml.
+- Durable facts moved to lab/research/negative-results.md and DECISIONS.md.
+- Active memory now only keeps unresolved blockers.
+```
+
+`memory/gc/tombstones.yaml` 防止已经遗忘的事项被反复复活：
+
+```yaml
+- id: ACT-021
+  forgotten_at: 2026-06-26
+  reason: "experiment rerun completed and evidence recorded"
+  durable_record:
+    - lab/research/evidence.yaml#EVD-014
+    - lab/artifacts/result-index.yaml#ART-008
+```
+
+不同 memory 区域的遗忘规则不同。
+
+`memory/lab/` 应该遗忘运行噪音：
+
+```text
+run 已完成 -> result summary 写入 lab/experiments/
+evidence 已登记 -> 从 active-experiments 移除
+blocker 已解决 -> compact 到 handoff-log 或 DECISIONS.md
+失败路线有研究意义 -> 移到 lab/research/negative-results.md
+```
+
+`memory/paper/` 应该遗忘草稿状态：
+
+```text
+section 已稳定 -> 只保留 current status
+table 已进论文 -> 只保留 evidence pointer
+reviewer risk 已处理 -> archive，不继续污染 active risks
+rebuttal promise 已兑现 -> tombstone + archive
+```
+
+`memory/bridge/` 最不能轻易遗忘，因为它连接实验和文章：
+
+```text
+claim-to-evidence.yaml    尽量长期保留
+evidence-to-table.yaml    至少保留到投稿 / camera-ready 后
+result-to-figure.yaml     至少保留到 artifact release 后
+promises.yaml             承诺完成后 archive + tombstone
+handoff-log.md            可定期压缩
+```
+
+一句话：
+
+```text
+memory 的遗忘，不是 rm 文件；
+而是 active -> compact -> archive/tombstone 的状态迁移。
+```
+
 ---
 
 ## 11. 核心链路：从 Claim 到 Paper Table
@@ -1544,76 +1696,16 @@ ML research 项目里，有些节点不应该让 Agent 自动越过。
 
 ---
 
-## 14. 最小可行版本
+## 14. 第一版先守住什么
 
-第一版不用全量目录。
+第一版不用全量目录，也不需要把所有 board 和 ledger 都一次性填满。
 
-最小可行 ML research repo 可以是：
-
-```text
-<my_ml_research_repo>/
-  README.md
-  AGENTS.md
-  PROJECT.md
-  DECISIONS.md
-
-  lab/
-    code/
-      src/
-      configs/
-      scripts/
-      tests/
-
-    experiments/
-
-    infra/
-      inventory.yaml
-      paths/
-      environments/
-      launch/
-      probes/
-      private/
-
-    research/
-      METHOD.md
-      claims.yaml
-      evidence.yaml
-      experiment-ledger.yaml
-      negative-results.md
-
-    data/
-      cards/
-      splits/
-      manifests/
-
-    artifacts/
-      result-index.yaml
-
-  deliverables/
-    paper/
-
-  memory/
-    current-status.md
-    lab/
-      active-experiments.yaml
-      run-queue.yaml
-      infra-status.yaml
-      data-status.yaml
-    paper/
-      manuscript-status.md
-      table-status.yaml
-      figure-status.yaml
-    bridge/
-      claim-to-evidence.yaml
-      evidence-to-table.yaml
-      handoff-log.md
-```
-
-如果只能先守住三件事：
+但它必须从第一天就守住四个不变量：
 
 1. **claim/evidence 链路**：每个实验必须知道自己服务哪个 claim；
 2. **infra/path 可复现**：每个实验必须知道在哪个 target、哪个环境、哪个逻辑路径下跑；
-3. **current-status 可接续**：任何人或 Agent 三天后回来都知道下一步是什么。
+3. **current-status 可接续**：任何人或 Agent 三天后回来都知道下一步是什么；
+4. **memory 可遗忘**：active memory 不能无限增长，完成、过期、失效的状态必须被 compact / archive / tombstone。
 
 ---
 
