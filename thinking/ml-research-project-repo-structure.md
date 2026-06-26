@@ -14,9 +14,7 @@ train.py
 
 ```text
 ml-research repo
-  = code system
-  + infra system
-  + research ledger
+  = lab system
   + human-facing deliverables
   + project memory
 ```
@@ -24,22 +22,17 @@ ml-research repo
 更具体地说：
 
 ```text
-code/          怎么跑
-infra/         在哪里跑
-research/      为什么跑、证明什么
+lab/           生成证据的实验系统
 deliverables/  给人看的最终表达
-data/          数据资产与数据契约
-runs/          运行时产生的日志
-artifacts/     可追溯的大产物索引
-memory/        当前项目推进状态
+memory/        管理实验事实如何走向文章
 ```
 
 这个结构的目标，不是为了让目录看起来整齐，而是为了让整个研究项目围绕一条证据链运转：
 
 ```text
 research claim
-  -> code experiment
-  -> infra target
+  -> lab experiment
+  -> lab infra target
   -> run logs
   -> artifact index
   -> evidence ledger
@@ -65,123 +58,142 @@ baseline 是否公平？
 一个较完整的 diffusion / ML research repo 可以长这样：
 
 ```text
-my-diffusion-project/
+<my_ml_research_repo>/
   README.md
   AGENTS.md
   PROJECT.md
   DECISIONS.md
 
-  code/
-    src/
-      my_method/
-        models/
-        diffusion/
-        data/
-        training/
-        sampling/
-        evaluation/
-        metrics/
-        utils/
+  lab/
+    code/
+      src/
+        my_method/
+          models/
+          diffusion/
+          data/
+          training/
+          sampling/
+          evaluation/
+          metrics/
+          utils/
 
-    configs/
-      defaults.yaml
-      model/
-      data/
-      train/
-      eval/
-      sampler/
-      experiment/
-      baseline/
-      benchmark/
-      infra/
-
-    scripts/
-      train.py
-      sample.py
-      evaluate.py
-      compare_baselines.py
-      prepare_data.py
-      submit_job.py
-      collect_results.py
-
-    baselines/
-      wrappers/
       configs/
-      reproduction/
+        defaults.yaml
+        model/
+        data/
+        train/
+        eval/
+        sampler/
+        experiment/
+        baseline/
+        benchmark/
+        infra/
 
-    benchmarks/
-      tasks/
-      metrics/
-      protocols/
-      runners/
+      scripts/
+        train.py
+        sample.py
+        evaluate.py
+        compare_baselines.py
+        prepare_data.py
+        submit_job.py
+        collect_results.py
+
+      baselines/
+        wrappers/
+        configs/
+        reproduction/
+
+      benchmarks/
+        tasks/
+        metrics/
+        protocols/
+        runners/
+
+      tests/
+        unit/
+        smoke/
+        regression/
 
     experiments/
       E001-baseline-reproduction/
       E002-main-method/
       E003-ablation-no-x/
 
-    tests/
-      unit/
-      smoke/
-      regression/
-
-  infra/
-    README.md
-    inventory.yaml
-    targets/
-      local-mac.template.yaml
-      workstation.template.yaml
-      gpu-server.template.yaml
-      cluster.template.yaml
-    paths/
-      logical-paths.yaml
-      path-map.template.yaml
-    environments/
-      uv/
-        pyproject.toml
-        uv.lock
-      conda/
-        cuda121-torch.yml
-        cuda124-torch.yml
-      docker/
-        Dockerfile
-        compose.yaml
-    schedulers/
-      local/
-      slurm/
-      runai/
-      tmux/
-    launch/
-      train.template.sh
-      eval.template.sh
-      sample.template.sh
-      submit.template.sh
-    storage/
-      datasets.yaml
-      checkpoints.yaml
-      artifacts.yaml
-      logs.yaml
-    probes/
-      check_cuda.py
-      check_dataset.py
-      smoke_train.py
-      smoke_sample.py
-    private/
+    infra/
       README.md
+      inventory.yaml
+      targets/
+        local-mac.template.yaml
+        workstation.template.yaml
+        gpu-server.template.yaml
+        cluster.template.yaml
+      paths/
+        logical-paths.yaml
+        path-map.template.yaml
+      environments/
+        uv/
+          pyproject.toml
+          uv.lock
+        conda/
+          cuda121-torch.yml
+          cuda124-torch.yml
+        docker/
+          Dockerfile
+          compose.yaml
+      schedulers/
+        local/
+        slurm/
+        runai/
+        tmux/
+      launch/
+        train.template.sh
+        eval.template.sh
+        sample.template.sh
+        submit.template.sh
+      storage/
+        datasets.yaml
+        checkpoints.yaml
+        artifacts.yaml
+        logs.yaml
+      probes/
+        check_cuda.py
+        check_dataset.py
+        smoke_train.py
+        smoke_sample.py
+      private/
+        README.md
 
-  research/
-    METHOD.md
-    DATASET.md
-    BENCHMARK.md
-    claims.yaml
-    hypotheses.yaml
-    evidence.yaml
-    baselines.yaml
-    experiment-ledger.yaml
-    ablation-matrix.yaml
-    comparison-matrix.yaml
-    negative-results.md
-    reviewer-risks.md
+    research/
+      METHOD.md
+      DATASET.md
+      BENCHMARK.md
+      claims.yaml
+      hypotheses.yaml
+      evidence.yaml
+      baselines.yaml
+      experiment-ledger.yaml
+      ablation-matrix.yaml
+      comparison-matrix.yaml
+      negative-results.md
+      reviewer-risks.md
+
+    data/
+      cards/
+      splits/
+      manifests/
+      preprocessing/
+      checksums/
+
+    runs/
+      README.md
+      .gitignore
+
+    artifacts/
+      README.md
+      model-index.yaml
+      result-index.yaml
+      sample-index.yaml
+      .gitignore
 
   deliverables/
     paper/
@@ -207,36 +219,28 @@ my-diffusion-project/
     project-page/
     artifact-release/
 
-  data/
-    cards/
-    splits/
-    manifests/
-    preprocessing/
-    checksums/
-
-  runs/
-    README.md
-    .gitignore
-
-  artifacts/
-    README.md
-    model-index.yaml
-    result-index.yaml
-    sample-index.yaml
-    .gitignore
-
   memory/
     current-status.md
     phase-dashboard.yaml
-    boards/
-      claims.yaml
-      experiments.yaml
-      evidence.yaml
-      infra.yaml
-      risks.yaml
-      actions.yaml
-      decisions.yaml
-      handoffs.yaml
+    lab/
+      active-experiments.yaml
+      run-queue.yaml
+      infra-status.yaml
+      data-status.yaml
+      blockers.yaml
+    paper/
+      manuscript-status.md
+      table-status.yaml
+      figure-status.yaml
+      section-status.yaml
+      reviewer-risks.yaml
+      rebuttal-status.yaml
+    bridge/
+      claim-to-evidence.yaml
+      evidence-to-table.yaml
+      result-to-figure.yaml
+      promises.yaml
+      handoff-log.md
 ```
 
 这不是第一天必须全部实现的模板。
@@ -244,11 +248,9 @@ my-diffusion-project/
 第一天最重要的是把层级关系想清楚：
 
 ```text
-code/          机器执行层
-infra/         运行基底层
-research/      研究证据层
-deliverables/  人类表达层
-memory/        项目状态层
+lab/           证据生成层：代码、实验、基础设施、数据、运行、产物、研究账本
+deliverables/  人类表达层：论文、review、rebuttal、slides、项目页、release
+memory/        状态控制层：实验状态、文章状态、实验到文章的桥接状态
 ```
 
 ---
@@ -275,7 +277,7 @@ memory/        项目状态层
 
 ```text
 进入项目后先读哪里？
-哪些目录是 code、infra、research、deliverables、memory？
+哪些目录是 lab、deliverables、memory？
 改代码后必须跑哪些 smoke checks？
 新增实验后必须写回哪些 ledger？
 哪些信息不能提交进公开 repo？
@@ -286,7 +288,7 @@ memory/        项目状态层
 
 ```text
 进入时：
-AGENTS.md -> memory/current-status.md -> research/claims.yaml -> relevant code/config/experiment
+AGENTS.md -> memory/current-status.md -> lab/research/claims.yaml -> relevant lab/code config or lab/experiments entry
 
 离开时：
 update experiment/result -> update evidence -> update memory/current-status.md -> report validation
@@ -323,9 +325,9 @@ ML research 项目里，很多决定会在后期变成暗知识：
 
 ---
 
-## 3. code/：机器可执行的研究系统
+## 3. lab/code/：机器可执行的研究系统
 
-`code/` 是工程主体。凡是可以被运行、测试、复现、提交到服务器的东西，都应该在这里。
+`lab/code/` 是工程主体。凡是可以被运行、测试、复现、提交到服务器的东西，都应该在这里。
 
 它回答：
 
@@ -336,14 +338,14 @@ baseline 如何接入？
 benchmark 如何评估？
 ```
 
-### code/src/
+### lab/code/src/
 
 `src/` 放核心算法和训练逻辑。
 
 对 diffusion project，可以拆成：
 
 ```text
-code/src/my_method/
+lab/code/src/my_method/
   models/       # UNet, DiT, VAE, text encoder adapters
   diffusion/    # noise schedule, denoising objective, sampler internals
   data/         # dataset, transforms, dataloader
@@ -362,7 +364,7 @@ code/src/my_method/
 4. **checkpoint 要可 resume。** 只保存权重不够，optimizer、scheduler、epoch、global step、scaler 都要可恢复。
 5. **shape 和数据契约要显式。** diffusion 项目里的 tensor shape、latent space、conditioning 格式非常容易变成隐式假设。
 
-### code/configs/
+### lab/code/configs/
 
 `configs/` 是实验组合层。
 
@@ -371,7 +373,7 @@ code/src/my_method/
 建议拆成：
 
 ```text
-code/configs/
+lab/code/configs/
   defaults.yaml
   model/
   data/
@@ -402,7 +404,7 @@ E004-low-data-regime.yaml
 
 缺一项，复现链就不完整。
 
-### code/scripts/
+### lab/code/scripts/
 
 `scripts/` 是可执行入口。
 
@@ -420,7 +422,7 @@ collect_results.py
 
 这些脚本应该稳定、薄、可组合。不要把一次性实验逻辑写死在脚本里；一次性变化应该通过 config 表达。
 
-### code/baselines/
+### lab/code/baselines/
 
 `baselines/` 单独治理 baseline。
 
@@ -429,7 +431,7 @@ baseline 是论文可信度的核心，不应该散落在 notebook、外部 repo
 建议包含：
 
 ```text
-code/baselines/
+lab/code/baselines/
   wrappers/        # 统一调用接口
   configs/         # baseline-specific configs
   reproduction/    # 复现原论文/官方数字的记录
@@ -449,7 +451,7 @@ code/baselines/
 
 > baseline 不是“能跑就行”，而是要能证明比较是公平的。
 
-### code/benchmarks/
+### lab/code/benchmarks/
 
 如果项目提出新 benchmark，`benchmarks/` 会成为核心代码产物。
 
@@ -472,14 +474,14 @@ benchmarks/
 
 如果 benchmark 规则只写在论文里，不写成代码和 protocol，后续很难复现。
 
-### code/experiments/
+### lab/experiments/
 
-`code/experiments/` 放可复现实验定义，不是最终结果仓库。
+`lab/experiments/` 放可复现实验定义，不是最终结果仓库。
 
 每个实验目录可以有：
 
 ```text
-code/experiments/E002-main-method/
+lab/experiments/E002-main-method/
   experiment-card.md
   config.yaml
   expected-outputs.yaml
@@ -499,9 +501,9 @@ code/experiments/E002-main-method/
 预计产出哪张表或图？
 ```
 
-实验目录不是为了替代 `research/evidence.yaml`，而是给“怎么跑”一个稳定入口。
+实验目录不是为了替代 `lab/research/evidence.yaml`，而是给“怎么跑”一个稳定入口。
 
-### code/tests/
+### lab/code/tests/
 
 `tests/` 保障代码本身不坏。
 
@@ -527,9 +529,9 @@ tests/
 
 ---
 
-## 4. infra/：运行基底和计算目标
+## 4. lab/infra/：运行基底和计算目标
 
-`infra/` 回答：
+`lab/infra/` 回答：
 
 ```text
 这个项目在哪里跑？
@@ -541,7 +543,7 @@ tests/
 当前 target 能不能跑？
 ```
 
-把它叫 `infra/`，而不是 `envs/`，是因为这里的问题远远超过 Python 环境。
+把它叫 `lab/infra/`，而不是 `envs/`，是因为这里的问题远远超过 Python 环境。
 
 一个 ML 项目可能同时有：
 
@@ -556,7 +558,7 @@ tests/
 
 这些都属于 infra。
 
-### infra/inventory.yaml
+### lab/infra/inventory.yaml
 
 记录计算目标清单。
 
@@ -591,7 +593,7 @@ targets:
 
 公开 repo 中建议用逻辑名，不要提交真实内网地址、账号或 token。
 
-### infra/targets/
+### lab/infra/targets/
 
 `targets/` 描述不同类型机器的模板。
 
@@ -614,7 +616,7 @@ targets/
 - 适合运行哪些实验；
 - 禁止事项。
 
-### infra/paths/
+### lab/infra/paths/
 
 `paths/` 解决路径差异。
 
@@ -634,20 +636,20 @@ logical_paths:
 公开 repo 里放：
 
 ```text
-infra/paths/path-map.template.yaml
+lab/infra/paths/path-map.template.yaml
 ```
 
 真实路径可以放在 gitignored 的：
 
 ```text
-infra/private/local-mac.yaml
-infra/private/gpu-server-a.yaml
-infra/private/cluster-b.yaml
+lab/infra/private/local-mac.yaml
+lab/infra/private/gpu-server-a.yaml
+lab/infra/private/cluster-b.yaml
 ```
 
 如果项目是完全私有的，也可以记录真实路径。但如果将来要开源、投稿 artifact、或多人协作，最好从一开始就区分 template 和 private overlay。
 
-### infra/environments/
+### lab/infra/environments/
 
 这里才是原来狭义的 `envs/`。
 
@@ -680,7 +682,7 @@ torch / CUDA 组合是什么？
 - 可重建比“我机器上能跑”重要；
 - 如果多服务器环境不同，要显式记录差异。
 
-### infra/schedulers/ 和 infra/launch/
+### lab/infra/schedulers/ 和 lab/infra/launch/
 
 `schedulers/` 记录调度方式：
 
@@ -713,7 +715,7 @@ experiment config
   + path map
 ```
 
-### infra/storage/
+### lab/infra/storage/
 
 `storage/` 记录数据、checkpoint、artifact、log 的存储策略。
 
@@ -737,7 +739,7 @@ ML 项目通常有大量不能进 git 的东西：
 
 这些不进 git，但必须有索引和路径策略。
 
-### infra/probes/
+### lab/infra/probes/
 
 `probes/` 是 infra 的传感器。
 
@@ -761,7 +763,7 @@ dataset manifest 能读吗？
 
 这比文档里写“服务器可用”可靠。
 
-### infra/private/
+### lab/infra/private/
 
 `private/` 是 gitignored 的真实机器 overlay。
 
@@ -783,9 +785,9 @@ dataset manifest 能读吗？
 
 ---
 
-## 5. research/：研究事实和证据账本
+## 5. lab/research/：研究事实和证据账本
 
-`research/` 不是论文目录，也不是代码目录。
+`lab/research/` 不是论文目录，也不是代码目录。
 
 它是研究是否成立的账本，回答：
 
@@ -799,7 +801,7 @@ dataset manifest 能读吗？
 reviewer 可能攻击哪里？
 ```
 
-### research/METHOD.md
+### lab/research/METHOD.md
 
 描述新方法。
 
@@ -812,7 +814,7 @@ reviewer 可能攻击哪里？
 - 已知限制；
 - 需要哪些实验支持。
 
-### research/DATASET.md
+### lab/research/DATASET.md
 
 如果项目提出新数据集，`DATASET.md` 是数据集的研究说明。
 
@@ -827,7 +829,7 @@ reviewer 可能攻击哪里？
 - 许可和使用限制；
 - 为什么这个数据集能支撑研究问题。
 
-### research/BENCHMARK.md
+### lab/research/BENCHMARK.md
 
 如果项目提出新 benchmark，`BENCHMARK.md` 描述 benchmark 的任务和协议。
 
@@ -841,7 +843,7 @@ reviewer 可能攻击哪里？
 - 防止 overfitting 的设计；
 - 与已有 benchmark 的区别。
 
-### research/claims.yaml
+### lab/research/claims.yaml
 
 这是核心文件。
 
@@ -867,7 +869,7 @@ reviewer 可能攻击哪里？
 
 没有 claim ID，实验和论文就很容易脱节。
 
-### research/hypotheses.yaml
+### lab/research/hypotheses.yaml
 
 记录尚未被证明的研究假设。
 
@@ -878,7 +880,7 @@ hypothesis 是待验证的研究判断；
 claim 是准备写进论文、需要证据支持的主张。
 ```
 
-### research/evidence.yaml
+### lab/research/evidence.yaml
 
 记录证据。
 
@@ -904,7 +906,7 @@ data split
 metric
 ```
 
-### research/baselines.yaml
+### lab/research/baselines.yaml
 
 记录 baseline 状态。
 
@@ -920,7 +922,7 @@ metric
 
 Baseline 状态应该直接影响 reviewer risk。
 
-### research/experiment-ledger.yaml
+### lab/research/experiment-ledger.yaml
 
 连接实验和研究对象。
 
@@ -940,7 +942,7 @@ Baseline 状态应该直接影响 reviewer risk。
   result_summary: null
 ```
 
-### research/ablation-matrix.yaml
+### lab/research/ablation-matrix.yaml
 
 记录 ablation 维度。
 
@@ -950,7 +952,7 @@ Baseline 状态应该直接影响 reviewer risk。
 论文里说 component X 很重要，但其实没有控制其他变量。
 ```
 
-### research/comparison-matrix.yaml
+### lab/research/comparison-matrix.yaml
 
 记录方法对比矩阵。
 
@@ -966,7 +968,7 @@ Baseline 状态应该直接影响 reviewer risk。
 - status；
 - paper table。
 
-### research/negative-results.md
+### lab/research/negative-results.md
 
 记录负结果和失败路线。
 
@@ -987,7 +989,7 @@ Baseline 状态应该直接影响 reviewer risk。
 下一步是 drop、narrow，还是 rerun？
 ```
 
-### research/reviewer-risks.md
+### lab/research/reviewer-risks.md
 
 记录 reviewer 可能攻击的问题。
 
@@ -1041,11 +1043,11 @@ paper/
 
 ```text
 deliverables/paper/table
-  -> research/evidence.yaml
-  -> artifacts/result-index.yaml
-  -> runs/
-  -> code/experiments/
-  -> code/configs/
+  -> lab/research/evidence.yaml
+  -> lab/artifacts/result-index.yaml
+  -> lab/runs/
+  -> lab/experiments/
+  -> lab/code/configs/
   -> commit
 ```
 
@@ -1089,13 +1091,13 @@ rebuttal/
 
 放 presentation、talk、poster。
 
-Slides 经常会生成新的图和简化叙事。它们同样应该引用 research/evidence，而不是产生孤立数字。
+Slides 经常会生成新的图和简化叙事。它们同样应该引用 lab/research/evidence，而不是产生孤立数字。
 
 ### deliverables/project-page/
 
 项目主页、demo 页面、可视化说明。
 
-如果项目包含 diffusion samples，project page 很容易变成选择性展示。最好让展示样例连接到 artifacts/sample-index.yaml。
+如果项目包含 diffusion samples，project page 很容易变成选择性展示。最好让展示样例连接到 lab/artifacts/sample-index.yaml。
 
 ### deliverables/artifact-release/
 
@@ -1111,14 +1113,14 @@ Slides 经常会生成新的图和简化叙事。它们同样应该引用 resear
 
 ---
 
-## 7. data/：数据资产与数据契约
+## 7. lab/data/：数据资产与数据契约
 
-`data/` 不一定存原始数据，尤其大数据通常不进 git。
+`lab/data/` 不一定存原始数据，尤其大数据通常不进 git。
 
 它应该存数据说明和可复现契约：
 
 ```text
-data/
+lab/data/
   cards/
   splits/
   manifests/
@@ -1126,7 +1128,7 @@ data/
   checksums/
 ```
 
-### data/cards/
+### lab/data/cards/
 
 Dataset card。
 
@@ -1141,29 +1143,29 @@ Dataset card。
 - 使用限制；
 - 与研究问题的关系。
 
-### data/splits/
+### lab/data/splits/
 
 固定 train / val / test 划分。
 
 如果 split 不固定，baseline comparison 就不可信。
 
-### data/manifests/
+### lab/data/manifests/
 
 记录文件列表、样本 ID、版本。
 
 Manifest 是跨服务器复现的关键。不同服务器上的真实路径可以不同，但 manifest 应该一致。
 
-### data/preprocessing/
+### lab/data/preprocessing/
 
 记录预处理流程。
 
 预处理如果只存在于一次性脚本或 notebook，后续很难解释实验差异。
 
-### data/checksums/
+### lab/data/checksums/
 
 用于确认不同服务器上的数据一致。
 
-这和 `infra/paths/` 配合：
+这和 `lab/infra/paths/` 配合：
 
 ```text
 same logical dataset
@@ -1173,14 +1175,14 @@ same logical dataset
 
 ---
 
-## 8. runs/：运行时日志，不做长期事实源
+## 8. lab/runs/：运行时日志，不做长期事实源
 
-`runs/` 是训练和评估过程产生的临时运行记录，通常 gitignored。
+`lab/runs/` 是训练和评估过程产生的临时运行记录，通常 gitignored。
 
 它可以包含：
 
 ```text
-runs/
+lab/runs/
   2026-06-23_E002_seed0/
     stdout.log
     train.log
@@ -1189,26 +1191,26 @@ runs/
     samples/
 ```
 
-但长期要保留的结论不应该只躺在 `runs/`。
+但长期要保留的结论不应该只躺在 `lab/runs/`。
 
 关键结果应该汇总到：
 
 ```text
-code/experiments/E###/result-summary.md
-research/evidence.yaml
-artifacts/result-index.yaml
+lab/experiments/E###/result-summary.md
+lab/research/evidence.yaml
+lab/artifacts/result-index.yaml
 ```
 
 否则三个月后你会有一堆日志，但不知道哪些可信、哪些进了论文。
 
 ---
 
-## 9. artifacts/：大产物索引
+## 9. lab/artifacts/：大产物索引
 
-`artifacts/` 通常不直接存大文件，而是存索引。
+`lab/artifacts/` 通常不直接存大文件，而是存索引。
 
 ```text
-artifacts/
+lab/artifacts/
   model-index.yaml
   result-index.yaml
   sample-index.yaml
@@ -1234,7 +1236,7 @@ artifacts/
 - id: CKPT-018
   experiment: E002-main-method
   run: RUN-2026-06-23-001
-  config: code/configs/experiment/E002-main-method.yaml
+  config: lab/code/configs/experiment/E002-main-method.yaml
   commit: abc1234
   storage: logical:checkpoint_root/E002/seed0/step100000.pt
   sha256: "..."
@@ -1252,25 +1254,43 @@ checkpoint -> experiment -> config -> commit -> dataset split -> claim
 
 ---
 
-## 10. memory/：项目推进状态
+## 10. memory/：项目状态控制面板
 
 `memory/` 是给人和 Agent 接续项目用的。
 
-它不替代 `research/`，而是记录当前项目推进状态：
+它不替代 `lab/`，也不替代 `deliverables/`。它只记录项目当前状态，以及实验事实如何走向文章。
 
 ```text
 memory/
   current-status.md
   phase-dashboard.yaml
-  boards/
-    claims.yaml
-    experiments.yaml
-    evidence.yaml
-    infra.yaml
-    risks.yaml
-    actions.yaml
-    decisions.yaml
-    handoffs.yaml
+  lab/
+    active-experiments.yaml
+    run-queue.yaml
+    infra-status.yaml
+    data-status.yaml
+    blockers.yaml
+  paper/
+    manuscript-status.md
+    table-status.yaml
+    figure-status.yaml
+    section-status.yaml
+    reviewer-risks.yaml
+    rebuttal-status.yaml
+  bridge/
+    claim-to-evidence.yaml
+    evidence-to-table.yaml
+    result-to-figure.yaml
+    promises.yaml
+    handoff-log.md
+```
+
+这三块的职责是：
+
+```text
+memory/lab/     记实验推进状态
+memory/paper/   记文章推进状态
+memory/bridge/  记实验事实如何进入文章
 ```
 
 ### memory/current-status.md
@@ -1307,11 +1327,31 @@ high_risks:
 active_infra_target: gpu_server_a
 ```
 
-### memory/boards/actions.yaml
+### memory/lab/
 
-任务板，但 action 不应该是孤立 todo。
+`memory/lab/` 记录实验系统当前推进到哪。
 
-每个 action 应该连接到 claim、experiment、risk 或 infra blocker：
+它不存实验真相；实验定义、证据和产物仍然属于：
+
+```text
+lab/experiments/
+lab/research/
+lab/artifacts/
+```
+
+典型文件包括：
+
+```text
+active-experiments.yaml   哪些实验在跑、哪个 seed、哪个 target
+run-queue.yaml            接下来要提交哪些 job
+infra-status.yaml         哪些机器可用、哪些 target blocked
+data-status.yaml          split / manifest / checksum 是否 ready
+blockers.yaml             当前阻塞实验推进的问题
+```
+
+每个实验状态应该连接到 claim、experiment、risk 或 infra blocker。
+
+例如：
 
 ```yaml
 - id: ACT-021
@@ -1324,11 +1364,9 @@ active_infra_target: gpu_server_a
   blocker: "cluster_b dataset path not validated"
 ```
 
-### memory/boards/infra.yaml
+`infra-status.yaml` 可以记录当前 infra 状态：
 
-记录当前 infra 状态。
-
-它不替代 `infra/`，而是记录项目推进中的 infra 事实：
+它不替代 `lab/infra/`，而是记录项目推进中的 infra 可用性：
 
 ```yaml
 active_target: gpu_server_a
@@ -1339,10 +1377,53 @@ blocked_targets:
   - cluster_b
 open_infra_risks:
   - RSK-007
-last_probe_report: infra/reports/probe-2026-06-23.md
+last_probe_report: lab/infra/reports/probe-2026-06-23.md
 ```
 
-### memory/boards/decisions.yaml
+### memory/paper/
+
+`memory/paper/` 记录文章当前推进到哪。
+
+它不存论文正文；论文正文仍然属于：
+
+```text
+deliverables/paper/
+```
+
+典型文件包括：
+
+```text
+manuscript-status.md      当前 paper 阶段：outline / draft / internal review / submission
+table-status.yaml         每张表是否有 evidence 支撑
+figure-status.yaml        每张图是否有 source artifact
+section-status.yaml       每节是否 complete / stale / needs evidence
+reviewer-risks.yaml       reviewer 可能攻击哪里
+rebuttal-status.yaml      投稿后 rebuttal 状态
+```
+
+### memory/bridge/
+
+`memory/bridge/` 是最关键的连接层。
+
+它记录实验事实如何进入文章：
+
+```text
+claim-to-evidence.yaml    每个 claim 被哪些 evidence 支持
+evidence-to-table.yaml    哪些 evidence 进入了哪张 table
+result-to-figure.yaml     哪些 result / sample 进入了哪张 figure
+promises.yaml             rebuttal 或 camera-ready 承诺
+handoff-log.md            人或 Agent 的交接记录
+```
+
+`memory/bridge/` 不应该复制 `lab/research/evidence.yaml` 的全部内容。它只记录投影关系：
+
+```text
+lab/research/evidence.yaml
+  -> memory/bridge/evidence-to-table.yaml
+  -> deliverables/paper/tables/
+```
+
+### decisions 和 handoffs
 
 记录关键选择。
 
@@ -1354,10 +1435,6 @@ last_probe_report: infra/reports/probe-2026-06-23.md
 - 改训练预算；
 - 改投稿目标；
 - 某台服务器不再跑主实验。
-
-### memory/boards/handoffs.yaml
-
-记录交接。
 
 每次 Agent 或人结束一个阶段，应该留下：
 
@@ -1378,13 +1455,13 @@ last_probe_report: infra/reports/probe-2026-06-23.md
 
 ```text
 CLM-002: 新方法在低数据 regime 下提升 FID
-  -> research/claims.yaml
-  -> code/experiments/E004-low-data/
-  -> code/configs/experiment/E004-low-data.yaml
-  -> infra target: gpu_server_a
-  -> runs/2026-06-23_E004_seed{0,1,2}
-  -> artifacts/result-index.yaml
-  -> research/evidence.yaml
+  -> lab/research/claims.yaml
+  -> lab/experiments/E004-low-data/
+  -> lab/code/configs/experiment/E004-low-data.yaml
+  -> lab infra target: gpu_server_a
+  -> lab/runs/2026-06-23_E004_seed{0,1,2}
+  -> lab/artifacts/result-index.yaml
+  -> lab/research/evidence.yaml
   -> deliverables/paper/tables/table2.tex
 ```
 
@@ -1392,13 +1469,13 @@ CLM-002: 新方法在低数据 regime 下提升 FID
 
 | 层 | 负责的问题 |
 |---|---|
-| `research/claims.yaml` | 为什么要跑 |
-| `code/experiments/` | 怎么定义实验 |
-| `code/configs/` | 实验参数是什么 |
-| `infra/` | 在哪里跑、怎么跑 |
-| `runs/` | 运行时发生了什么 |
-| `artifacts/` | 产物在哪里 |
-| `research/evidence.yaml` | 结果证明了什么 |
+| `lab/research/claims.yaml` | 为什么要跑 |
+| `lab/experiments/` | 怎么定义实验 |
+| `lab/code/configs/` | 实验参数是什么 |
+| `lab/infra/` | 在哪里跑、怎么跑 |
+| `lab/runs/` | 运行时发生了什么 |
+| `lab/artifacts/` | 产物在哪里 |
+| `lab/research/evidence.yaml` | 结果证明了什么 |
 | `deliverables/paper/` | 如何表达给读者 |
 
 这能防止一个常见问题：
@@ -1415,17 +1492,17 @@ CLM-002: 新方法在低数据 regime 下提升 FID
 
 ```text
 提出 hypothesis / claim
-  -> 设计 experiment card
-  -> 绑定 config
-  -> 选择 infra target
-  -> 跑 probe
+  -> 在 lab/experiments/ 设计 experiment card
+  -> 绑定 lab/code/configs/ 里的 config
+  -> 选择 lab/infra/ target
+  -> 跑 lab/infra/probes/
   -> 提交训练 / 评估
-  -> 收集 run logs
-  -> 登记 artifacts
+  -> 收集 lab/runs/ logs
+  -> 登记 lab/artifacts/
   -> 写 result summary
-  -> 更新 evidence
+  -> 更新 lab/research/evidence.yaml
   -> 更新 claim status
-  -> 投影到 paper table / figure
+  -> 通过 memory/bridge/ 投影到 paper table / figure
   -> 更新 memory/current-status.md
 ```
 
@@ -1433,9 +1510,10 @@ CLM-002: 新方法在低数据 regime 下提升 FID
 
 ```text
 failure
-  -> negative-results.md
-  -> risks.yaml
-  -> actions.yaml
+  -> lab/research/negative-results.md
+  -> memory/lab/blockers.yaml
+  -> memory/paper/reviewer-risks.yaml
+  -> memory/bridge/claim-to-evidence.yaml
   -> maybe revise hypothesis
 ```
 
@@ -1462,7 +1540,7 @@ ML research 项目里，有些节点不应该让 Agent 自动越过。
 - artifact release；
 - 公开 checkpoint / dataset。
 
-这些 gate 应该写进 `AGENTS.md`、`memory/phase-dashboard.yaml` 或 `infra/launch` 流程，而不是每次靠临时提醒。
+这些 gate 应该写进 `AGENTS.md`、`memory/phase-dashboard.yaml` 或 `lab/infra/launch` 流程，而不是每次靠临时提醒。
 
 ---
 
@@ -1473,51 +1551,62 @@ ML research 项目里，有些节点不应该让 Agent 自动越过。
 最小可行 ML research repo 可以是：
 
 ```text
-my-diffusion-project/
+<my_ml_research_repo>/
   README.md
   AGENTS.md
   PROJECT.md
   DECISIONS.md
 
-  code/
-    src/
-    configs/
-    scripts/
+  lab/
+    code/
+      src/
+      configs/
+      scripts/
+      tests/
+
     experiments/
-    tests/
 
-  infra/
-    inventory.yaml
-    paths/
-    environments/
-    launch/
-    probes/
-    private/
+    infra/
+      inventory.yaml
+      paths/
+      environments/
+      launch/
+      probes/
+      private/
 
-  research/
-    METHOD.md
-    claims.yaml
-    evidence.yaml
-    experiment-ledger.yaml
-    negative-results.md
+    research/
+      METHOD.md
+      claims.yaml
+      evidence.yaml
+      experiment-ledger.yaml
+      negative-results.md
+
+    data/
+      cards/
+      splits/
+      manifests/
+
+    artifacts/
+      result-index.yaml
 
   deliverables/
     paper/
 
-  data/
-    cards/
-    splits/
-    manifests/
-
-  artifacts/
-    result-index.yaml
-
   memory/
     current-status.md
-    boards/
-      actions.yaml
-      decisions.yaml
-      infra.yaml
+    lab/
+      active-experiments.yaml
+      run-queue.yaml
+      infra-status.yaml
+      data-status.yaml
+    paper/
+      manuscript-status.md
+      table-status.yaml
+      figure-status.yaml
+    bridge/
+      claim-to-evidence.yaml
+      evidence-to-table.yaml
+      handoff-log.md
 ```
 
 如果只能先守住三件事：
@@ -1535,7 +1624,7 @@ my-diffusion-project/
 典型漂移包括：
 
 - 新增了实验目录，但没有绑定 claim；
-- 论文表格出现了数字，但 `research/evidence.yaml` 没有对应 evidence；
+- 论文表格出现了数字，但 `lab/research/evidence.yaml` 没有对应 evidence；
 - result index 记录了 artifact，但没有 source config / commit；
 - 某个 config 写死了服务器绝对路径；
 - baseline 复现状态变了，但 reviewer risk 没更新；
@@ -1567,12 +1656,12 @@ referential integrity:
   artifact 支持的 evidence 存在
 
 experiment contract:
-  每个 code/experiments/E###-* 都有 experiment-card.md、config.yaml、linked-claims.yaml
+  每个 lab/experiments/E###-* 都有 experiment-card.md、config.yaml、linked-claims.yaml
   每个实验至少绑定一个 CLM-* 或 HYP-*
 
 infra contract:
   config 和 ledger 不写裸绝对路径
-  infra/private、runs、*.log 被 gitignore
+  lab/infra/private、lab/runs、*.log 被 gitignore
 
 memory freshness:
   memory/current-status.md 写明当前目标、阻塞/风险、下一步
@@ -1674,13 +1763,13 @@ auditor skill 守研究语义和 harness 纪律。
 
 因此，`paper/`、`reviews/` 这类目录不应该和 `src/`、`experiments/` 平铺成同级概念。它们是 human-facing deliverables。
 
-实验、baseline、benchmark runner、训练脚本、核心算法，应该属于 `code/`。
+实验、baseline、benchmark runner、训练脚本、核心算法，应该属于 `lab/code/`。
 
-服务器、路径、conda/uv/Docker、scheduler、storage、probe，应该属于 `infra/`。
+服务器、路径、conda/uv/Docker、scheduler、storage、probe，应该属于 `lab/infra/`。
 
-研究主张、证据、负结果、comparison matrix，应该属于 `research/`。
+研究主张、证据、负结果、comparison matrix，应该属于 `lab/research/`。
 
-当前状态、下一步、风险、决策、交接，应该属于 `memory/`。
+实验推进状态、文章推进状态、实验到文章的桥接关系，应该属于 `memory/`。
 
 这套结构的核心价值可以概括为：
 
