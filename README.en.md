@@ -109,7 +109,7 @@ harness-engineering/
 │   ├── 06-harness-...     #   Harness definition (Fowler control-theory extension)
 │   └── 07-spec-as-product.md #   Spec as product (Symphony extension)
 │
-├── thinking/              # Phase 2: Independent analysis (9 articles)
+├── thinking/              # Phase 2: Independent analysis (10 articles)
 ├── practice/              # Phase 3: Hands-on experiments (1 Ralph Demo)
 ├── feedback/              # Phase 4: Lessons learned (1 article)
 ├── works/                 # Phase 5: Shareable outputs (22 translations + 1 original + 2 external Chinese captures)
@@ -123,7 +123,7 @@ Each subdirectory has its own `AGENTS.md` explaining its purpose and conventions
 ## 🚀 Learning Path
 
 - [x] **Phase 1: Understand core concepts** — 8 concept notes covering OpenAI's six concepts + Fowler's control-theory extension + Symphony's spec-as-product
-- [x] **Phase 2: Form your own opinions** — 9 independent analyses (ongoing)
+- [x] **Phase 2: Form your own opinions** — 10 independent analyses (ongoing)
 - [x] **Phase 3: Pick a small project to practice** — Ralph Demo completed (321s, $0.31)
 - [x] **Phase 4: Record feedback & iterations** — 1 article (ongoing)
 - [x] **Phase 5: Produce shareable work** — 22 professional translations + 1 original synthesis + 2 external Chinese captures
