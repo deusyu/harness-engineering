@@ -155,6 +155,8 @@ baseline 是否公平？
         checkpoints.yaml
         artifacts.yaml
         logs.yaml
+      dependencies.yaml
+      external-scripts.yaml
       probes/
         check_cuda.py
         check_dataset.py
@@ -222,6 +224,7 @@ baseline 是否公平？
   memory/
     current-status.md
     phase-dashboard.yaml
+    change-control.yaml
     lab/
       active-experiments.yaml
       run-queue.yaml
@@ -747,6 +750,71 @@ ML 项目通常有大量不能进 git 的东西：
 - artifact release 包。
 
 这些不进 git，但必须有索引和路径策略。
+
+### lab/infra/dependencies.yaml
+
+`dependencies.yaml` 记录所有会影响复现的非标准依赖。
+
+它不是替代 `pyproject.toml`、`uv.lock`、`requirements.txt` 或 conda environment，而是解释这些依赖为什么存在、从哪里来、是否可控。
+
+危险的依赖漂移包括：
+
+```text
+pip install -e ../SOME_LOCAL_PACKAGE
+from SOME_LOCAL_PACKAGE import *
+requirements.txt 里出现 file:// 或本机路径
+代码依赖某个没有登记的外部 repo clone
+```
+
+每个非标准依赖至少应该记录：
+
+```yaml
+- name: SOME_LOCAL_PACKAGE
+  kind: local_path | git_repo | wheel | system_binary | private_package
+  source: "../SOME_LOCAL_PACKAGE"
+  pinned_ref: null
+  reproducible: false
+  purpose: "Used by data preprocessing."
+  owner: human
+  replacement_plan: "Vendor or publish before release."
+  risk: "Not reproducible outside local machine."
+```
+
+默认规则：
+
+- 本地路径依赖默认视为不可复现；
+- git 依赖必须 pin 到 commit；
+- 私有包必须标明 release 前的替代计划；
+- system binary 必须记录版本和安装方式；
+- 没有登记的外部依赖不能进入主实验链路。
+
+### lab/infra/external-scripts.yaml
+
+`external-scripts.yaml` 记录项目调用的外部脚本、下载脚本和非 repo 内命令。
+
+危险的脚本漂移包括：
+
+```text
+curl ... | bash
+python /Users/me/private/preprocess.py
+bash ~/scripts/launch_train.sh
+从外部 repo 复制脚本但没有 commit / hash
+```
+
+每条外部脚本依赖至少应该记录：
+
+```yaml
+- id: EXT-001
+  name: official_dataset_preprocess
+  source_url: "https://github.com/example/repo/scripts/preprocess.py"
+  pinned_ref: "abc1234"
+  local_copy: "lab/code/scripts/preprocess_dataset.py"
+  sha256: "..."
+  purpose: "Build dataset manifests."
+  allowed_in_release: true
+```
+
+如果一个脚本不能 pin、不能 hash、不能进入 repo，它只能出现在 `lab/infra/private/`，并且不能作为论文主结果的唯一复现路径。
 
 ### lab/infra/probes/
 
@@ -1347,6 +1415,47 @@ high_risks:
 active_infra_target: gpu_server_a
 ```
 
+### memory/change-control.yaml
+
+`change-control.yaml` 记录会改变项目方向的变化。
+
+它解决的是 goal / scope drift：
+
+```text
+项目从 method paper 变成 benchmark paper；
+目标会议从 CVPR 改成 NeurIPS；
+主 claim 换了；
+baseline set 换了；
+主 metric 换了；
+dataset split 冻结或重划了。
+```
+
+这些变化不能只写在聊天记录里，也不能只改一个文件。每个变化都应该有一个 change record，列出必须同步的文件。
+
+示例：
+
+```yaml
+- id: CHG-001
+  type: target_venue_change
+  from: CVPR
+  to: NeurIPS
+  decision: DEC-004
+  reason: "Experiment timeline no longer fits CVPR deadline."
+  required_updates:
+    - PROJECT.md
+    - memory/phase-dashboard.yaml
+    - deliverables/paper/
+  status: complete
+```
+
+默认规则：
+
+- 改 target venue，必须同步 `PROJECT.md` 和 `memory/phase-dashboard.yaml`；
+- 改主 claim，必须同步 `lab/research/claims.yaml` 和 `memory/bridge/claim-to-evidence.yaml`；
+- 改 baseline set，必须同步 `lab/research/baselines.yaml`、`comparison-matrix.yaml` 和 reviewer risk；
+- 改主 metric，必须同步 benchmark protocol、paper table status 和 claim evidence；
+- 改 dataset split，必须同步 `lab/data/splits/`、manifest、checksum 和所有受影响实验。
+
 ### memory/lab/
 
 `memory/lab/` 记录实验系统当前推进到哪。
@@ -1709,7 +1818,7 @@ ML research 项目里，有些节点不应该让 Agent 自动越过。
 
 ---
 
-## 15. 防漂移机制：机械检查 + 审核 Skill
+## 15. 防漂移机制：Research Harness Drift Control
 
 上面的结构如果只停留在文档里，长期开发后一定会漂移。
 
@@ -1719,13 +1828,183 @@ ML research 项目里，有些节点不应该让 Agent 自动越过。
 - 论文表格出现了数字，但 `lab/research/evidence.yaml` 没有对应 evidence；
 - result index 记录了 artifact，但没有 source config / commit；
 - 某个 config 写死了服务器绝对路径；
+- 引入了 `SOME_LOCAL_PACKAGE` 这种本地不可复现依赖；
+- launch script 依赖 `/Users/.../private_script.sh`；
+- 项目目标从 method paper 变成 benchmark paper，但 `PROJECT.md`、claims、paper 和 memory 没同步；
 - baseline 复现状态变了，但 reviewer risk 没更新；
 - `memory/current-status.md` 过期，Agent 接手时只能靠聊天记录猜下一步；
 - private overlay、真实路径或敏感信息被误提交。
 
-所以这套 repo 结构需要两层守护。
+所以这套 repo 结构需要一个 drift control 闭环。
 
-### 15.1 确定性 validator
+可以把 drift 分成四类：
+
+```text
+structure drift      仓库结构被写歪
+dependency drift     依赖、脚本、外部工具不可复现
+goal / scope drift   项目目标变化但没有同步事实源
+memory drift         active memory 过期、膨胀、指向旧事实
+```
+
+### 15.1 Structure Drift
+
+Structure drift 是最容易机械化检查的。
+
+例如：
+
+```text
+lab/ 被打散；
+experiments/ 又被放回 repo 根目录；
+memory/ 变成杂乱 todo；
+deliverables/ 开始存实验事实；
+lab/experiments/E###-* 缺 experiment-card.md 或 linked-claims.yaml。
+```
+
+对应守护：
+
+```text
+repo structure contract
+scripts/check-research-harness.py
+pre-commit / CI gate
+```
+
+validator 至少应该检查：
+
+```text
+required dirs；
+forbidden root dirs；
+required memory/gc files；
+experiment contract files；
+artifact/evidence links；
+paper table 是否能回指 evidence。
+```
+
+### 15.2 Dependency / Script Drift
+
+Dependency drift 是 ML research repo 里最危险的隐性漂移之一。
+
+危险情况包括：
+
+```text
+pip install -e ../SOME_LOCAL_PACKAGE
+from SOME_LOCAL_PACKAGE import *
+shell script depends on /Users/foo/private_script.sh
+training command assumes a local binary
+external repo cloned but commit unknown
+curl ... | bash
+```
+
+对应守护：
+
+```text
+lab/infra/dependencies.yaml
+lab/infra/external-scripts.yaml
+lab/infra/private/
+lab/infra/vendor/   # 可选，用于放入允许 vendor 的外部脚本或小依赖
+```
+
+默认规则：
+
+- 任何非标准依赖都必须登记来源、版本、commit、license、用途、是否可替代；
+- 任何本地路径依赖默认禁止进入主实验链路；
+- 如果必须用本地路径，只能放在 `lab/infra/private/` overlay，并标记 non-reproducible；
+- 任何外部脚本必须 pinned 到 commit 或 hash；
+- 任何 `curl | bash`、裸 `/Users/`、裸 `/home/`、裸 `/mnt/` 都应该触发检查；
+- release 前必须消除 private dependency，或提供公开替代路径。
+
+validator 可以检查：
+
+```text
+pyproject.toml / requirements.txt / uv.lock / conda yaml 中是否有 ../ 或 file://；
+scripts 里是否出现 /Users/、/home/、/mnt/ 这类裸路径；
+import SOME_LOCAL_PACKAGE 是否没有出现在 dependencies.yaml；
+shell 脚本是否出现 curl | bash；
+external-scripts.yaml 里的 source 是否有 pinned_ref 或 sha256。
+```
+
+### 15.3 Goal / Scope Drift
+
+Goal drift 是项目中期最常见的研究漂移。
+
+例如：
+
+```text
+从 diffusion method 变成 benchmark paper；
+从 CVPR 改成 NeurIPS；
+主 claim 换了；
+baseline set 换了；
+metric 换了；
+dataset split 重划了。
+```
+
+这些变化如果只发生在聊天记录里，Agent 三天后接手时会继续按旧目标工作。
+
+对应守护：
+
+```text
+DECISIONS.md
+PROJECT.md
+memory/change-control.yaml
+memory/phase-dashboard.yaml
+lab/research/claims.yaml
+memory/bridge/
+```
+
+Goal Change Protocol：
+
+```text
+任何目标变化 -> DECISIONS.md entry
+任何 active_phase / target_venue / main_claim 改动 -> PROJECT.md + memory/phase-dashboard.yaml
+任何主 claim 改动 -> lab/research/claims.yaml + memory/bridge/claim-to-evidence.yaml
+任何 baseline / metric / split 改动 -> research ledger + paper status + reviewer risk
+```
+
+`memory/change-control.yaml` 是同步清单，不是事实源。它的作用是防止“改了 A，忘了 B/C/D”。
+
+### 15.4 Memory Drift
+
+Memory drift 最隐蔽。
+
+例如：
+
+```text
+current-status.md 说 E004 blocked，但其实已经完成；
+memory/paper/table-status.yaml 说 table2 needs evidence，但 evidence 已经登记；
+memory/bridge/ 还指向旧 claim；
+resolved blocker 继续留在 active blockers；
+active-experiments 里有一个 30 天没更新的 running experiment。
+```
+
+对应守护：
+
+```text
+memory/gc/retention-policy.yaml
+memory/gc/compaction-log.md
+memory/gc/tombstones.yaml
+scripts/check-research-harness.py
+research-repo-auditor skill
+```
+
+validator 应该检查：
+
+```text
+memory/current-status.md 是否太久没更新；
+memory 中引用的 CLM/EVD/EXP 是否存在；
+active-experiments 里 completed 项是否超过 retention policy；
+resolved blocker 是否还留在 active blockers；
+memory/bridge 是否指向已经不存在的 claim / evidence。
+```
+
+auditor skill 定期检查语义一致性：
+
+```text
+PROJECT.md 当前目标是否和 claims / paper / memory 一致；
+memory/bridge 是否还指向有效 evidence；
+paper table 是否引用了不存在或 stale 的 evidence；
+change-control 是否有未完成同步项。
+```
+
+### 15.5 确定性 validator
 
 仓库应提供一个脚本，例如：
 
@@ -1737,26 +2016,32 @@ scripts/check-research-harness.py
 
 ```text
 structure:
-  必需目录和入口文件存在
+  必需目录和入口文件存在；
+  禁止实验系统目录漂到 repo 根目录
 
 schema:
-  claims / evidence / experiment-ledger / result-index 可解析
+  claims / evidence / experiment-ledger / result-index / change-control 可解析
 
 referential integrity:
-  experiment 引用的 claim 存在
-  evidence 引用的 experiment / artifact 存在
-  artifact 支持的 evidence 存在
+  experiment 引用的 claim 存在；
+  evidence 引用的 experiment / artifact 存在；
+  artifact 支持的 evidence 存在；
+  memory 引用的 claim / evidence / experiment 存在
 
 experiment contract:
   每个 lab/experiments/E###-* 都有 experiment-card.md、config.yaml、linked-claims.yaml
   每个实验至少绑定一个 CLM-* 或 HYP-*
 
 infra contract:
-  config 和 ledger 不写裸绝对路径
-  lab/infra/private、lab/runs、*.log 被 gitignore
+  config 和 ledger 不写裸绝对路径；
+  lab/infra/private、lab/runs、*.log 被 gitignore；
+  dependencies.yaml 登记非标准依赖；
+  external-scripts.yaml pin 外部脚本
 
 memory freshness:
-  memory/current-status.md 写明当前目标、阻塞/风险、下一步
+  memory/current-status.md 写明当前目标、阻塞/风险、下一步；
+  memory/gc 文件存在；
+  stale active memory 被标记 review 或 compact
 
 privacy:
   不提交 token、password、private key、真实私有 overlay
@@ -1780,7 +2065,7 @@ scripts/check-research-harness.py
 python3 scripts/check-research-harness.py
 ```
 
-### 15.2 语义审核 Skill
+### 15.6 语义审核 Skill
 
 还有一些问题不能只靠脚本判断：
 
@@ -1789,7 +2074,8 @@ python3 scripts/check-research-harness.py
 - baseline comparison 是否公平；
 - negative result 是否改变了论文叙事；
 - reviewer risk 是否有 action 承接；
-- paper table 是否选择性展示样本或数字。
+- paper table 是否选择性展示样本或数字；
+- PROJECT.md、claims、paper、memory 是否仍然描述同一个目标。
 
 这些应该交给一个专门的审核 skill：
 
@@ -1824,8 +2110,11 @@ Residual Risk
 换句话说：
 
 ```text
-validator 守结构不变量；
-auditor skill 守研究语义和 harness 纪律。
+bootstrap skill 负责出生；
+validator 守结构、依赖、路径、引用和 memory freshness；
+auditor skill 守研究语义、目标同步和 harness 纪律；
+memory GC 负责清理 stale active memory；
+change-control 负责管理目标变化和必要同步。
 ```
 
 前者适合每次 commit 跑，后者适合这些节点跑：
