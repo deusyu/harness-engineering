@@ -6,6 +6,7 @@ sourceAuthor: "Birgitta Böckeler (Thoughtworks)"
 sourcePublishedAt: "2026-02-17"
 translationMethod: "baoyu-translate skill"
 language: "zh-CN"
+sourceFigureCount: 0
 ---
 
 # Harness Engineering —— 初步思考

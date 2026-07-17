@@ -7,6 +7,7 @@ title: "Structured-Prompt-Driven Development（SPDD）"
 summary: "一种用结构化提示词引导 AI 辅助编程的方法，让 LLM 辅助的变更更可治理、可审查、可复用。"
 language: "zh-CN"
 translationMethod: "baoyu-translate skill"
+sourceFigureCount: 9
 ---
 
 # Structured-Prompt-Driven Development（SPDD）

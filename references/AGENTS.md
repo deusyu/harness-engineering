@@ -9,10 +9,10 @@
 
 ## 文章
 
-详见 [articles.md](articles.md) — 完整的文章索引，含三条脉络 **42 篇文章 + 1 项已跟踪产品** 的深度摘要。
+详见 [articles.md](articles.md) — 完整的文章索引，含三条脉络 **50 篇文章 + 1 项已跟踪产品** 的深度摘要。
 权威计数与编号规则以 `articles.md` 头部为准；本表是它的概览缓存。
 
-### 脉络一：AI 时代的 Harness Engineering（38 篇）
+### 脉络一：AI 时代的 Harness Engineering（46 篇）
 
 | # | 文章 | 作者 | 核心贡献 |
 |---|------|------|---------|
@@ -50,24 +50,32 @@
 | 32 | [Exploring AI coding sensors](https://www.thoughtworks.com/en-au/insights/blog/generative-ai/harness-engineering-agent-feedback-exploring-ai-coding-sensors) | Böckeler & Ford | 有/无传感器对照实验 + 态势感知论 + harness 模板展望 |
 | 33 | [HarnessAudit 论文](https://arxiv.org/abs/2605.14271) | Chengzhi Liu 等 | harness 安全审计：中途轨迹违规是输出级评估的盲区 + 210 任务基准 |
 | 34 | [Harness-Bench 论文](https://arxiv.org/abs/2605.27922) | Yilun Yao 等 | 配置级 harness 效应测量（106 任务/5194 轨迹）+ 执行对齐失败分类 |
-| 35 | [How good is your harness? 论文](https://openreview.net/pdf/99eabc2ce65fd2871a253a0a57954c934ea9e6b0.pdf) | Jiwoo Han, Yuekai Sun | Terminal-Bench 2.0 榜单方差统计归因：harness 效应 ≈ 模型效应，且效应异质 |
+| 35 | [How good is your harness? 论文](https://openreview.net/forum?id=QI8z3skBwt) | Jiwoo Han, Yuekai Sun | Terminal-Bench 2.0 榜单方差统计归因：harness 效应 ≈ 模型效应，且效应异质 |
 | 36 | [Dynamic workflows in Claude Code](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code) | Anthropic / Claude | 模型现场写自己的编排 harness + 对抗验证 + workflow 沉淀为 Skill |
 | 37 | [Harness 才是产品](https://sotasync.com/reader/2026-06-09-dongxi-nlp-harness-is-the-product/) | 马东锡 NLP | "Model 在 loop 里，harness 拥有 loop" + 六组件 + 症状→组件 debug 对照表 |
 | 38 | [Position: 基准错位论文](https://arxiv.org/abs/2606.17799) | Maria I. Gorinova 等 | 基准把 model/harness/环境折叠进一个分数的三症状诊断 |
+| 39 | [Unrolling the Codex agent loop](https://openai.com/index/unrolling-the-codex-agent-loop/) | Michael Bolin (OpenAI) | Codex harness 解剖·上：prompt 构造 / 二次方问题与 prompt caching / compaction 端点化 |
+| 40 | [Unlocking the Codex harness](https://openai.com/index/unlocking-the-codex-harness/) | Celia Chen (OpenAI) | Codex harness 解剖·下：App Server 双向 JSON-RPC + Item/Turn/Thread 原语 + HaaS 落地 |
+| 41 | [Loop Engineering](https://addyosmani.com/blog/loop-engineering/) | Addy Osmani | loop 定调文：五构件 + 记忆脊柱；"循环分不出两种用法的区别，你分得出" |
+| 42 | [The Coming Loop](https://lucumr.pocoo.org/2026/6/23/the-coming-loop/) | Armin Ronacher | 怀疑派回应：agent loop vs harness loop + 防御式编码放大 + 软件作为有机体 |
+| 43 | [Loop engineering: Getting started with loops](https://claude.com/blog/getting-started-with-loops) | Claude Code 团队 | 官方四类循环（turn/goal/time/proactive）+ `/goal` 独立判停 + 用量治理清单 |
+| 44 | [Self-Harness 论文](https://arxiv.org/abs/2606.09498) | Hangfan Zhang 等 | 智能体自改 harness：弱点挖掘→提议→回归验证；三模型 held-out +14~21pp |
+| 45 | [Harness Engineering for Self-Improvement](https://lilianweng.github.io/posts/2026-07-04-harness/) | Lilian Weng | RSI 综述：三设计模式 + 优化对象递进链 + 七项未来挑战 + "harness 终将内化"预测 |
+| 46 | [Aria：自动软件验证论文](https://arxiv.org/abs/2607.06341) | Shuangxiang Kan 等 | 行为 harness 极限形态：声明式 HHL 包裹通用智能体做 Coq 证明，全引理零人工通过 |
 
 ### 脉络二：云原生 Harness.io（2 篇）
 
 | # | 文章 | 核心贡献 |
 |---|------|---------|
-| 39 | [Harness.io 官方](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops) | CI/CD 平台全局架构 |
-| 40 | [Google Cloud Architecture](https://docs.cloud.google.com/architecture/partners/harness-cicd-pipeline-for-rag-app) | Harness + GCP 部署 RAG |
+| 47 | [Harness.io 官方](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops) | CI/CD 平台全局架构 |
+| 48 | [Google Cloud Architecture](https://docs.cloud.google.com/architecture/partners/harness-cicd-pipeline-for-rag-app) | Harness + GCP 部署 RAG |
 
 ### 脉络三：效率悖论与能力进化（2 篇）
 
 | # | 文章 | 核心贡献 |
 |---|------|---------|
-| 41 | [YDD / Miss-you](https://yousali.com/posts/20260303-ai-coding-efficiency-to-evolution/) | 效率悖论的系统性拆解：约束理论 + Spec/Rule/Skill + 验证闭环 + 并发 |
-| 42 | [METR 实验后续 + 自报调查](https://metr.org/blog/2026-02-24-uplift-update/) | METR | "慢 19%" 的官方后续：弱证据转向加速 + AI 渗透破坏 RCT 可行性本身 |
+| 49 | [YDD / Miss-you](https://yousali.com/posts/20260303-ai-coding-efficiency-to-evolution/) | 效率悖论的系统性拆解：约束理论 + Spec/Rule/Skill + 验证闭环 + 并发 |
+| 50 | [METR 实验后续 + 自报调查](https://metr.org/blog/2026-02-24-uplift-update/) | "慢 19%" 的官方后续：弱证据转向加速 + AI 渗透破坏 RCT 可行性本身 |
 
 ### 已跟踪产品 / 项目（不计入文章数）
 
@@ -105,7 +113,7 @@
 > 占位条目统一收在这里，**不进 `articles.md` 的编号正文**，避免污染文章计数。
 
 - [x] Geoffrey Huntley 的 Ralph 原始文章 → 已收录为 #28（2026-07）
-- [ ] OpenAI 相关文章：Codex App Server（已定位：[Unlocking the Codex harness](https://openai.com/index/unlocking-the-codex-harness/)，2026-02-04，待评审收录）、Responses API
+- [x] OpenAI Codex harness 解剖二部曲 → 已收录为 #39（Unrolling the Codex agent loop）+ #40（Unlocking the Codex harness / App Server）（2026-07-15）
 - [ ] 马东锡 Harness 系列其余篇目（仓库已收 #18 之 7、#37 才是产品；X 原帖需本地工具抓取）
 - [ ] Medium 实战专栏 — "Beyond Migration: How We Engineered a Secure & Intelligent Delivery Platform with Harness CICD"（标题可能已变更或文章已下架）
 

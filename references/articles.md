@@ -10,7 +10,7 @@
 > **下游引用都是本文的冗余缓存：** 根 `README.md` / `README.en.md` 的 badge、`prompts/deep-research-tracker.md` 的去重清单、`references/AGENTS.md` 的概览表。
 > 新增/删除文章时，必须**同一次提交**更新本文 + 所有下游缓存。
 >
-> 当前规模：**42 篇文章**（脉络一 38 + 脉络二 2 + 脉络三 2）+ **1 项已跟踪产品**（不计入文章数）。最近一次同步：2026-07-08。
+> 当前规模：**50 篇文章**（脉络一 46 + 脉络二 2 + 脉络三 2）+ **1 项已跟踪产品**（不计入文章数）。最近一次同步：2026-07-15。
 
 ## 脉络一：AI 时代的 Harness Engineering（大模型护栏与认知工程）
 
@@ -103,7 +103,7 @@
 | 人类角色 | 对 Anthropic #7 中人类缺位的直接回应——不应消除人类，应引导人类 |
 
 - **延伸阅读：**
-  - [Mitchell Hashimoto: My AI Adoption Journey #Step 5: Engineer the Harness](https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness)
+  - [Mitchell Hashimoto: My AI Adoption Journey #Step 5: Engineer the Harness](https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness)（已升格为 #29）
   - [Context Engineering for Coding Agents](https://martinfowler.com/articles/context-engineering-coding-agents.html)
   - [Humans and Agents in Software Engineering Loops](https://martinfowler.com/articles/humans-and-agents.html)
 
@@ -192,6 +192,7 @@
 
 - **标题：** Skill Issue: Harness Engineering for Coding Agents
 - **链接：** [humanlayer.dev](https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents)
+- **作者：** Kyle（HumanLayer） | **日期：** 2026-03-12
 - **核心：** 最落地的一篇——六个配置杠杆 + 实战经验
 
 - **六个杠杆：**
@@ -744,7 +745,7 @@
 |---------|---------|
 | 四要素 Harness | #2 Fowler、#5 HumanLayer 六杠杆、概念 2/3（地图而非手册 / 机械化执行） |
 | 反馈循环防腐化 | #9 Fowler 反馈飞轮、#19 Fowler Sensors |
-| 反馈瓶颈 / serial speed-up | #41 YDD 效率悖论 |
+| 反馈瓶颈 / serial speed-up | #49 YDD 效率悖论 |
 
 ---
 
@@ -837,6 +838,7 @@
 
 - **标题：** 事件 + 聚合分析：understanding-claude-code（综合 26 篇文章、7 个 HN 帖、10 份官方 TechDocs）
 - **链接：** [pankaj28843/understanding-claude-code](https://github.com/pankaj28843/understanding-claude-code) | 新闻报道：[InfoQ](https://www.infoq.com/news/2026/04/claude-code-source-leak/)
+- **作者：** 事件（当事人 Chaofan Shou，安全研究员；社区镜像扩散，无单一作者——本条为事件型收录） | **日期：** 2026-03-31（事件日）
 - **事件：** 2026-03-31，`@anthropic-ai/claude-code` v2.1.88 npm 包漏发 59.8MB 的 `cli.js.map`（缺一条 `.npmignore`，叠加 Bun 默认生成 source map 的已知 bug），~512,000 行 TypeScript / ~1,900 文件全裸；安全研究员 Chaofan Shou 发现，数小时内 GitHub 镜像扩散
 - **核心：** 业界第一次看到一线编码智能体 harness 的完整生产级源码。此前 #17（Rungta 逆向）只能从行为推测，泄漏把推测变成了可对照的实锤。
 
@@ -975,8 +977,8 @@
 ### 35. How good is your harness? 论文 — harness 效应的统计归因
 
 - **标题：** How good is your harness? Statistical evaluation of coding harnesses
-- **链接：** [openreview.net](https://openreview.net/pdf/99eabc2ce65fd2871a253a0a57954c934ea9e6b0.pdf)
-- **作者：** Jiwoo Han, Yuekai Sun（密歇根大学统计系） | **发表：** CTB@ICML 2026 workshop（首尔）
+- **链接：** [openreview.net forum](https://openreview.net/forum?id=QI8z3skBwt)（[PDF 直链](https://openreview.net/pdf/99eabc2ce65fd2871a253a0a57954c934ea9e6b0.pdf)）
+- **作者：** Jiwoo Han, Yuekai Sun（密歇根大学统计系） | **日期：** 2026-05-25（OpenReview 发布，2026-06-16 末次修订） | **发表：** CTB@ICML 2026 workshop（首尔）
 - **核心：** 用纯统计方法（加性 GLM，logit link）把 Terminal-Bench 2.0 榜单的分数方差拆解归因到 harness 效应与 LLM 效应——不依赖 LLM 标注轨迹，只需要足够交叉的 harness×LLM 榜单设计。数据：清洗后 105 个 harness-LLM 对（28 个 harness × 26 个 LLM）。
 
 - **两个定量结论：**
@@ -1058,7 +1060,7 @@
 
 - **标题：** Position: Coding Benchmarks Are Misaligned with Agentic Software Engineering
 - **链接：** [arxiv.org/abs/2606.17799](https://arxiv.org/abs/2606.17799)
-- **作者：** Maria I. Gorinova, M D Baker, Amy Heineike, Maksim Shaposhnikov, Rob Willoughby, Dru Knox | **日期：** 2026-06 | **arXiv：** 2606.17799
+- **作者：** Maria I. Gorinova, Macey Baker, Amy Heineike, Maksim Shaposhnikov, Rob Willoughby, Dru Knox | **日期：** 2026-06 | **arXiv：** 2606.17799
 - **核心：** 立场论文——我们用来比较编码智能体的基准诞生于前智能体时代：把 model、harness、environment 折叠进一个端到端分数，通常按单一参考解评分，没有可迭代的组件级信号。"实践中的编码智能体不是模型，是 system harness——models/harnesses/contexts/environments/feedback signals 的复合体，其中任何一项都能把基准分数挪动一个相邻模型代际的量级。"
 
 - **三个症状：**
@@ -1077,20 +1079,235 @@
 
 ---
 
-## 脉络二：云原生时代的 Harness.io（交付与平台工程）
-
 <a id="article-39"></a>
 
-### 39. Harness.io 官方 — 全局架构
+### 39. OpenAI / Michael Bolin — 展开 Codex agent loop（Codex harness 解剖 · 上）
 
-- **标题：** Understanding CI/CD Platforms: The backbone of modern DevOps
-- **链接：** [harness.io](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops)
-- **核心：** 标准 CI/CD 平台介绍。8 大组件：SCM → Build → Test → Code Quality → Security Scan → Artifact → Deploy → Monitor
-- **Harness 差异化：** 统一管线、Test Intelligence 智能测试、最少脚本、Policy-as-Code 治理
+- **标题：** Unrolling the Codex agent loop
+- **链接：** [openai.com](https://openai.com/index/unrolling-the-codex-agent-loop/)
+- **作者：** Michael Bolin (OpenAI, Codex CLI 团队) | **日期：** 2026-01-23
+- **核心：** Codex 系列工程博客第一篇——把 Codex CLI 的 agent loop（"我们的 agent，或曰 harness"）逐层展开：从用户输入构造初始 prompt、经 Responses API 推理、执行工具调用并把输出追加回 `input`，直到模型产出 assistant message 结束一个 turn。是官方视角下 harness 内部机制的最细粒度公开拆解。
+- **关键洞察：**
+  - **prompt 是"item 列表"：** `instructions`（模型特定指令）+ `tools`（shell / update_plan / web_search / MCP 工具）+ `input`（sandbox 说明 → developer 指令 → AGENTS.md 聚合的用户指令 → environment_context → 用户消息）——AGENTS.md 从 git 根到 cwd 逐层聚合、默认 32 KiB 上限的机制被首次官方成文
+  - **agent loop 天然是二次方的：** 每轮把全部历史重发；Codex 刻意不用 `previous_response_id` 以保持请求无状态并支持 ZDR（零数据保留），靠 prompt caching 把采样成本从二次方拉回线性
+  - **缓存破坏向量：** 中途改 tools、换模型、改沙箱/审批/工作目录都会 cache miss；MCP 工具枚举顺序不稳定曾是真实 bug——应对策略是"追加新消息表达变更，而不是改旧消息"（与 #6 缓存五原则、#30 泄漏实锤的 14 种缓存破坏向量互证）
+  - **compaction 的演进：** 从手动 `/compact`（用摘要替换 input）到 Responses API 专用 `/responses/compact` 端点——返回含 `encrypted_content` 的 `type=compaction` item，保留模型对原对话的潜在理解，超过 `auto_compact_limit` 自动触发
+- **与其他文章的关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| harness = agent loop 的官方自述 | #3 LangChain 的 Agent = Model + Harness、#17 Claude Code 逆向（对照组：Codex 侧的官方版） |
+| prompt caching 工程细节 | #6 缓存优化五原则、#30 泄漏实锤的缓存破坏向量追踪 |
+| AGENTS.md 聚合机制 | #5 HumanLayer 的 AGENTS.md 杠杆、概念 2 地图而非手册 |
+| compaction 端点化 | #7 Managed Agents 的 Session 外部存储、#22 上下文表面分层 |
+
+---
 
 <a id="article-40"></a>
 
-### 40. Google Cloud Architecture — 前沿场景结合
+### 40. OpenAI / Celia Chen — 解锁 Codex harness：App Server（Codex harness 解剖 · 下）
+
+- **标题：** Unlocking the Codex harness: how we built the App Server
+- **链接：** [openai.com](https://openai.com/index/unlocking-the-codex-harness/)
+- **作者：** Celia Chen (OpenAI) | **日期：** 2026-02-04
+- **核心：** Codex 的 web / CLI / IDE 扩展 / macOS 应用全部由同一个 Codex harness 驱动，而把这个 harness 暴露给所有客户端的是 Codex App Server——一个双向 JSON-RPC（JSONL over stdio）协议 + 长驻进程。把 harness 从产品内部件变成可被第三方集成的稳定平台面（HaaS 的 OpenAI 实现）。
+- **关键洞察：**
+  - **三个对话原语：** Item（原子输入/输出单元，带 `started`/`delta`/`completed` 生命周期）、Turn（一次用户输入触发的工作单元）、Thread（可创建/恢复/fork/归档的持久容器）——为"agent 交互不是请求/响应"给出协议级建模
+  - **协议是双向的：** 服务器可以主动发起请求（如审批），暂停 turn 直到客户端应答——权限门控被编进协议而非提示词
+  - **harness 内容物 = agent loop + thread 生命周期与持久化 + 配置与认证 + 工具执行与扩展（sandbox、MCP、skills）**——官方划出的 harness 边界清单
+  - **集成谱系：** App Server（全功能）> Codex SDK > MCP server 模式 > `codex exec`（CI 一次性）；跨厂商 harness 协议会收敛到能力交集，丰富交互难以表达——对"标准化 vs 表达力"权衡的一手表态
+  - Codex Web 在容器里跑同一个 App Server 二进制，状态留在服务端，浏览器只是轻客户端——ephemeral 会话的断线重连由持久 thread 兜底
+- **与其他文章的关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| HaaS（Harness-as-a-Service） | #31 Osmani 的 HaaS 论、#7 Managed Agents 的 harness 可替换论 |
+| Session/Thread 持久化 | #7 的 Session 外部存储、#18 subagent 的 runtime container |
+| 审批暂停 turn | #25 Overeager 的机械门控、#37 "harness 拥有 loop"的裁决权 |
+| 一个 harness 多个表面 | #21 ADLC 的 framework/runtime/harness 三分 |
+
+---
+
+<a id="article-41"></a>
+
+### 41. Addy Osmani — Loop Engineering（循环工程定调文）
+
+- **标题：** Loop Engineering
+- **链接：** [addyosmani.com](https://addyosmani.com/blog/loop-engineering/)（[Substack 版](https://addyo.substack.com/p/loop-engineering)）
+- **中文译文：** [works/osmani-loop-engineering-translation.md](../works/osmani-loop-engineering-translation.md)
+- **作者：** Addy Osmani (Google Cloud AI Director) | **日期：** 2026-06-07
+- **核心：** #31 作者的续作，给"loop engineering"定调：把"提示智能体的人"换成"设计提示智能体的系统"。上游是两个原始数据点——Peter Steinberger 的推文（2026-06-07，"你不该再提示编码智能体了，你该设计提示它们的循环"，数百万浏览）与 Claude Code 负责人 Boris Cherny 的引语（"我已经不再提示 Claude 了……我的工作是写循环"）。Osmani 的定位声明：loop engineering 在 harness 之上一层——"还是那个 harness，但它跑在定时器上、派生小帮手、自我供料"。
+- **关键洞察：**
+  - **五构件 + 记忆脊柱：** Automations（心跳：按计划发现+分诊）/ Worktrees（并行隔离）/ Skills（固化项目知识，让意图不再反复收费）/ Plugins & Connectors（触达真实工具）/ Sub-agents（做与查分离）+ 外置状态文件（"智能体会忘，仓库不会"）
+  - **不再是工具党的事：** 一年前要自己维护一坨 bash，现在五个构件在 Codex 应用和 Claude Code 里都已产品化（对照表逐项给出两侧对应物）；`/goal` 由独立小模型判定停止条件——"做与查分离"应用到停止条件本身
+  - **三个越好越尖锐的问题：** 验证仍在你身上（"完成"是主张不是证明）/ 理解会腐烂（comprehension debt，顺滑的循环让它涨得更快）/ 舒服的姿势最危险（cognitive surrender：同一个动作，带判断力是解药、逃避思考是加速剂）
+  - **金句：** "两个人可以搭一模一样的循环，得到截然相反的结局……循环分不出这两者的区别。你分得出。" "Cherny 的意思不是工作变轻松了，而是杠杆点挪了位置。"
+- **与其他文章的关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| loop 在 harness 之上一层 | #31 Osmani 的学科地图（harness 层）、#28 Ralph（loop 的方法论祖先） |
+| Automations / 调度化 | #16 Symphony 的 ticket 编排、#43 claude.com 官方 loop 分类 |
+| 做与查分离 | #4 Evaluator 分离、#36 对抗验证 |
+| comprehension debt | #42 Ronacher 的理解关切、#26 Chris Parsons 的反馈瓶颈 |
+
+---
+
+<a id="article-42"></a>
+
+### 42. Armin Ronacher — The Coming Loop（怀疑派对 loop 的系统回应）
+
+- **标题：** The Coming Loop
+- **链接：** [lucumr.pocoo.org](https://lucumr.pocoo.org/2026/6/23/the-coming-loop/)
+- **中文译文：** [works/ronacher-coming-loop-translation.md](../works/ronacher-coming-loop-translation.md)
+- **作者：** Armin Ronacher（Flask 作者，agent harness "Pi" 开发者） | **日期：** 2026-06-23
+- **核心：** 对 loop 浪潮最扎实的怀疑派回应（HN 头版）。区分两层循环——agent loop（智能体内部：调工具、读文件、跑测试）与 **harness loop**（外部：决定工作何时算完成，让任务活过模型自己说"我做完了"的时刻）。判断：循环不可避免（竞争 + 安全压力使退出不是选项），但当下它放大模型最糟的倾向。
+- **关键洞察：**
+  - **循环放大防御式编码：** 模型"对异常怕得要死"（引 Karpathy）——观察到局部失败就加局部防御，而正确修复是让坏状态不可表示；每轮迭代加一个小防御，系统在看起来更健壮的同时变得更不可理解
+  - **循环管用的域有共性：** 移植（Bun Zig→Rust、作者自己的 MiniJinja→Go）、性能探索、安全扫描、调研——要么不产新代码只转换旧代码，要么产出故意不需要长寿命的代码；"harness 只需要一个足以驱动下一轮迭代的信号，不必客观、不必二元"
+  - **软件从机器变有机体：** 由循环产出、循环审查、循环打补丁、靠循环维生的代码库，把机器参与假定为维护模型的一部分——我们治疗它、监控它、稳定它，但不必然理解它
+  - **无法置身事外：** 攻击者和报告者在循环（curl 维护者已被 AI 生成的报告淹没），防御者最终也得循环；竞争侧同理
+  - **角色焦虑：** "在 harness 操作的循环里，我不确定我的角色还是什么。连'完成'信号都失去了全部意义……我的角色被降格为一名信使"
+  - **收尾的问题清单：** 如何不放弃判断力、如何保住良好工程的规则、如何确保负责任的人类能继续监督、如何重新思考代码架构以保住理智
+- **与其他文章的关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| agent loop vs harness loop | #41 Osmani 的 loop 定调、#37 "harness 拥有 loop" |
+| 防御式编码的放大 | #19 Fowler 传感器的失败案例、概念 6 熵与垃圾回收 |
+| 理解与参与 | #26 Chris Parsons 从批准者到训练者、#14 Maganti 的"必须理解每一行" |
+| 无法退出的压力 | #49 YDD 效率悖论、#31 学科汇流的产业动力 |
+
+---
+
+<a id="article-43"></a>
+
+### 43. Anthropic / Claude Code 团队 — Loop engineering 官方入门：四类循环
+
+- **标题：** Loop engineering: Getting started with loops
+- **链接：** [claude.com/blog](https://claude.com/blog/getting-started-with-loops)
+- **作者：** Delba de Oliveira, Michael Segner（Claude Code 团队） | **日期：** 2026-06-30
+- **核心：** 官方把社区吵成一团的"loop"收敛为一个产品级定义——**智能体重复工作周期直到满足停止条件**——并按"触发方式 × 停止方式 × 所用原语 × 适用任务"给出四分类。loop engineering 词汇从 Twitter 话语固化为 shipping feature 的标志文。
+- **四类循环：**
+
+| 循环 | 你交出的 | 适用场景 | 用什么 |
+|------|---------|---------|--------|
+| Turn-based | 检查这一步 | 探索或决策中 | 自定义验证 skills |
+| Goal-based | 停止条件 | 你知道"完成"长什么样 | `/goal`（独立 evaluator 模型判停，可设轮数上限） |
+| Time-based | 触发时机 | 周期性工作 / 对接外部系统 | `/loop`（本机间隔重跑）、`/schedule`（云端 routine） |
+| Proactive | 提示词本身 | 持续到来的明确定义工作流 | 以上全部 + dynamic workflows |
+- **关键洞察：**
+  - **回应"控制激活策略"缺口：** 触发方式（人 / 目标 / 时间 / 事件）第一次有了官方分类学；`/goal` 的判停由独立 evaluator 模型执行——"做与查分离"内置进原语
+  - **确定性判据最有效：** "测试通过数、分数阈值"这类可机械判定的条件让 `/goal` 不必自由裁量"够好了没有"
+  - **质量与成本双清单：** 质量靠"仓库本身干净 + skills 编码验证标准 + 文档易达 + 第二个智能体做 review"；成本靠"选对原语与模型、明确停止条件、大规模前先小切片试跑、确定性工作用脚本、`/usage` 复盘"
+  - **组合示例：** `/schedule` 每小时查 bug 报告 + `/goal` 定义完成 + workflow 三个 worktree 并行探索方案 + 对抗评审 + auto mode 免审批——四个原语拼成一条 proactive 流水线
+- **与其他文章的关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| 四类循环分类学 | #41 Osmani 五构件（社区版 → 官方版）、#28 Ralph（time-based 的祖先） |
+| 独立 evaluator 判停 | #4 Evaluator 分离、#36 对抗验证 |
+| "把个案修复编码进系统" | #9 反馈飞轮、#29 Hashimoto 的错误工程化 |
+| dynamic workflows 组合 | #36 动态工作流（同团队前作） |
+
+---
+
+<a id="article-44"></a>
+
+### 44. Self-Harness 论文 — 智能体改进自己的 harness
+
+- **标题：** Self-Harness: Harnesses That Improve Themselves
+- **链接：** [arxiv.org/abs/2606.09498](https://arxiv.org/abs/2606.09498)
+- **作者：** Hangfan Zhang, Shao Zhang, Kangcong Li, Chen Zhang, Yang Chen, Yiqun Zhang, Lei Bai, Shuyue Hu | **日期：** 2026-06-08 | **arXiv：** 2606.09498
+- **核心：** 提出 Self-Harness 范式：**同一个固定模型**在当前 harness 下研究自己的执行轨迹、给自己的 harness 提出小编辑——不依赖人类工程师，也不依赖更强的外部模型。三段闭环：Weakness Mining（把失败聚类成有验证器根据的失败模式）→ Harness Proposal（生成与失败绑定的、最小且多样的编辑候选）→ Proposal Validation（held-in 验证弱点已解 + held-out 验证无回归，双通过才合并）。
+- **关键数据（Terminal-Bench-2.0，最小初始 harness）：**
+
+| 模型 | 初始通过率 | 最终通过率 |
+|------|-----------|-----------|
+| MiniMax M2.5 | 40.5% | 61.9% |
+| Qwen3.5-35B-A3B | 23.8% | 38.1% |
+| GLM-5 | 42.9% | 57.1% |
+- **关键洞察：**
+  - **harness 设计天然 model-specific：** 不同模型行为不同，人类专家手工设计难以随模型多样化扩展——这是自动化的动机，也是 #35 效应异质的机制侧解释
+  - 定性分析显示学到的不是泛泛指令，而是把模型特定弱点转成**具体可执行的 harness 变更**，且能泛化到未见任务
+  - 与 #24 AHE 同属"证据驱动 + 回归测试门控"的演化范式；区别在 Self-Harness 强调"自己改自己"（无更强外部提议器）
+  - Weng（#45）对这类工作的安全保留：可编辑面必须精心设计，评估器与权限控制要活在演化回路**之外**，否则奖励劫持照旧
+- **与其他文章的关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| harness 自动演化 | #11 Meta-Harness、#24 AHE（三部曲成型） |
+| model-specific harness | #35 效应异质的统计证据、#3 模型-harness 耦合 |
+| 回归测试门控 | 概念 3 机械化执行、#10 评估清单 |
+
+---
+
+<a id="article-45"></a>
+
+### 45. Lilian Weng — 面向自我改进的 Harness Engineering（RSI 综述）
+
+- **标题：** Harness Engineering for Self-Improvement
+- **链接：** [lilianweng.github.io](https://lilianweng.github.io/posts/2026-07-04-harness/)
+- **中文译文：** [works/weng-harness-self-improvement-translation.md](../works/weng-harness-self-improvement-translation.md)
+- **作者：** Lilian Weng（Thinking Machines 联合创始人，前 OpenAI 安全研究 VP） | **日期：** 2026-07-04
+- **核心：** 把 harness engineering 放进递归自我改进（RSI）的框架做系统综述——"原始模型与真实世界上下文之间的那一层，似乎和模型的原始智能同等重要"。三个 harness 设计模式（工作流自动化 / 文件系统即持久记忆 / 子智能体与后台任务）+ 优化对象递进链：**指令提示词 → 结构化上下文 → 工作流 → harness 代码 → 优化器代码**。
+- **关键洞察：**
+  - **组织了整个自动演化文献：** ACE（上下文即演化剧本）→ MCE（机制与内容分离的双层优化）→ Meta-Harness（#11，优化"优化 harness 的代码"）→ ADAS / AFlow（工作流即搜索问题）→ STOP（改进改进器）→ AlphaEvolve / DGM（进化搜索）→ Self-Harness（#44）/ AHE（#24）→ SIA（harness 与权重联合优化）
+  - **递归结构不够，基础能力是底：** STOP 用 GPT-4 提升、用弱模型退化；Lin et al. 拆出两条轴——harness-updating 能力各模型持平（9B 能写出与 Opus 同构的 skill），harness-benefit 非单调（中档模型受益最多）
+  - **两个预测：** harness engineering 朝元方法论演化（harness 本身成为优化目标）；许多 harness 改进最终会**内化进核心模型行为**，但与外部上下文和工具的接口长存——类比提示词技巧被指令微调吸收，而"指明目标、约束、上下文与评估"的需求没有消失
+  - **七项未来挑战：** 弱而模糊的评估器 / 上下文与记忆生命周期（"上下文工程将成为智能的核心部分，而不是停留在软件系统层"）/ 负面结果稀缺 / 多样性坍缩 / 奖励劫持（评估器与权限控制应在演化回路之外）/ 长期成功（RLVR 很少捕捉可维护性与仓库长期健康）/ 人类角色（"人类应该在栈上向上移动，而不是被移出回路"）
+  - **自动研究的六种失败模式**（引 Trehan & Chopra）：偏向训练数据默认值、执行压力下的实现漂移、记忆退化、过度乐观（"数值胶带"）、领域智能不足、科学品味孱弱
+- **与其他文章的关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| 综述骨架 | #11 Meta-Harness、#24 AHE、#44 Self-Harness 全部被纳入组织 |
+| harness 内化预测 | #4 harness 瘦身、#6 "停止做什么"、#17 "harness 应随模型变薄" |
+| 文件系统即记忆 | 概念 1 仓库即记录系统、#28 Ralph 的 fix_plan.md |
+| 人类向上移动 | #2 Fowler 的人类角色重定位、#42 Ronacher 的判断力保卫 |
+| 奖励劫持防线在回路外 | #33 HarnessAudit、#25 Overeager 的机械门控 |
+
+---
+
+<a id="article-46"></a>
+
+### 46. Aria 论文 — 用 harness 包裹编码智能体做形式化验证（行为 harness 的极限形态）
+
+- **标题：** Harnessing Code Agents for Automatic Software Verification
+- **链接：** [arxiv.org/abs/2607.06341](https://arxiv.org/abs/2607.06341)
+- **作者：** Shuangxiang Kan, Shuanglong Kan, Sebastian Ertel | **日期：** 2026-07 | **arXiv：** 2607.06341
+- **核心：** 对本仓库最大已知缺口——**行为 Harness（功能正确性验证）**——的首个强回应。不给智能体强加任务特定的证明策略，而是把整条引理交给通用编码智能体（Claude Code / Codex），外面包一层**声明式验证 harness**：用 Harness Hook Language (HHL) 写成的可复用检查集——超时检查（发散/不停机策略）、幻觉检查（拒绝以 `Admitted` 收尾或悄悄丢弃目标引理的"证明"）、Iris linter、最终 Coq 内核验证。每条引理一个自主会话：智能体尝试证明 → harness 检查 → 失败则带反馈重试，全程无人在环。
+- **关键洞察：**
+  - **结果：** 全部目标引理证明成功、零失败、零 Coq 专家干预——"简单且更有效"胜过施加证明策略的定制方案
+  - **形式化验证是行为 harness 的极限形态：** Coq 内核是终极计算性传感器——不是"测试覆盖了多少"而是"数学上证明了正确"；限定在可形式化域，但在该域内把 #2 指出的"行为 harness 是房间里的大象"直接打掉
+  - **HHL 的声明式可复用设计：** harness 写在通用 code-agent 接口之上，同一份 harness 可驱动不同智能体（论文实例化在 Claude Code SDK 上）——harness 与 agent 解耦的又一实证
+  - **幻觉检查条目化：** "以 Admitted 收尾""悄悄丢引理"这类作弊模式被机械拒绝——与 #25（提示声明不可靠、须机械门控）同构
+- **与其他文章的关联：**
+
+| 本文概念 | 对应文章 |
+|---------|---------|
+| 行为正确性验证 | #2 "行为 Harness 是大象"、thinking/evaluation-elephant-in-the-room |
+| 声明式 harness 语言 | #40 App Server 协议化、#16 Symphony 的 SPEC.md |
+| 机械拒绝作弊 | #25 Overeager、概念 3 机械化执行 |
+| 背压驱动重试 | #28 Ralph 的背压、#5 六杠杆的 Back-Pressure |
+
+---
+
+## 脉络二：云原生时代的 Harness.io（交付与平台工程）
+
+<a id="article-47"></a>
+
+### 47. Harness.io 官方 — 全局架构
+
+- **标题：** Understanding CI/CD Platforms: The backbone of modern DevOps
+- **链接：** [harness.io](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops)
+- **作者：** Harness.io 官方博客 | **日期：** 2026-05-22
+- **核心：** 标准 CI/CD 平台介绍。8 大组件：SCM → Build → Test → Code Quality → Security Scan → Artifact → Deploy → Monitor
+- **Harness 差异化：** 统一管线、Test Intelligence 智能测试、最少脚本、Policy-as-Code 治理
+
+<a id="article-48"></a>
+
+### 48. Google Cloud Architecture — 前沿场景结合
 
 - **标题：** Harness CI/CD pipeline for RAG applications
 - **链接：** [docs.cloud.google.com](https://docs.cloud.google.com/architecture/partners/harness-cicd-pipeline-for-rag-app)
@@ -1103,9 +1320,9 @@
 
 ## 脉络三：效率悖论与能力进化
 
-<a id="article-41"></a>
+<a id="article-49"></a>
 
-### 41. YDD / Miss-you — 效率悖论的系统性拆解
+### 49. YDD / Miss-you — 效率悖论的系统性拆解
 
 - **标题：** 为什么 AI 写代码更快但交付没变，以及我怎么把它扳回来的
 - **链接：** [yousali.com](https://yousali.com/posts/20260303-ai-coding-efficiency-to-evolution/)
@@ -1151,15 +1368,15 @@
 
 ---
 
-<a id="article-42"></a>
+<a id="article-50"></a>
 
-### 42. METR — 生产力实验的后续：结论松动与方法论危机
+### 50. METR — 生产力实验的后续：结论松动与方法论危机
 
 - **标题：** We are Changing our Developer Productivity Experiment Design（2026-02-24）+ Measuring the Self-Reported Impact of Early-2026 AI on Technical Worker Productivity（2026-05-11）
 - **链接：** [metr.org 实验设计更新](https://metr.org/blog/2026-02-24-uplift-update/) | [metr.org 自报调查](https://metr.org/blog/2026-05-11-ai-usage-survey/) | [后续研究数据集](https://github.com/METR/Measuring-Late-2025-AI-on-OSS-Devs)
 - **翻译：** [works/metr-uplift-update-translation.md](../works/metr-uplift-update-translation.md)（实验设计更新篇）
 - **作者：** Joel Becker, Nate Rush, Tom Cunningham, David Rein, Khalid Mahamud (METR) | **日期：** 2026-02-24 / 2026-05-11
-- **核心：** #41 YDD 的论证基石（METR RCT "AI 辅助反而慢 19%"）的官方后续。late-2025 复现实验（57 名开发者、143 仓库、800+ 任务）的原始结果转向加速——原班开发者估计 **-18% 加速**（CI -38%~+9%）、新开发者 -4%（CI -15%~+9%）——但 METR 自己判定这只是**很弱的证据**，并宣布改实验设计。真正的信息量在于：**AI 渗透已经破坏了任务级随机对照实验本身的可行性**。
+- **核心：** #49 YDD 的论证基石（METR RCT "AI 辅助反而慢 19%"）的官方后续。late-2025 复现实验（57 名开发者、143 仓库、800+ 任务）的原始结果转向加速——原班开发者估计 **-18% 加速**（CI -38%~+9%）、新开发者 -4%（CI -15%~+9%）——但 METR 自己判定这只是**很弱的证据**，并宣布改实验设计。真正的信息量在于：**AI 渗透已经破坏了任务级随机对照实验本身的可行性**。
 
 - **选择效应的三重来源（实验设计为何失效）：**
   - 开发者拒绝参与——越来越多人不愿在无 AI 条件下工作（时薪 $50 也不愿），最乐观的采纳者系统性缺席
@@ -1173,9 +1390,9 @@
 
 | 本文概念 | 对应文章 |
 |---------|---------|
-| 19% 减速数据的后续 | #41 YDD 第一章效率悖论（引用了原实验） |
-| 感知与现实的偏差 | #41 的 39 个百分点偏差、自报高估 40+ 个百分点 |
-| 并发智能体使计时失效 | #41 第五章并发策略（并发正是 YDD 开出的药方） |
+| 19% 减速数据的后续 | #49 YDD 第一章效率悖论（引用了原实验） |
+| 感知与现实的偏差 | #49 的 39 个百分点偏差、自报高估 40+ 个百分点 |
+| 并发智能体使计时失效 | #49 第五章并发策略（并发正是 YDD 开出的药方） |
 | 测量方法的时代错位 | #38 Position 论文（基准侧的同构诊断：测量工具追不上被测对象） |
 
 ---
@@ -1202,7 +1419,7 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 ## 中文转译 / 二手资料（不计入文章数）
 
 > 这里收录的是**他人已发布的中文译介或二手综述**——本仓库做了归档但**不视为一手文献**。
-> 本段不参与 `### N. ...` 的全局编号，不计入 42 篇文章总数；与上方编号正文严格区分，避免污染脉络计数。
+> 本段不参与 `### N. ...` 的全局编号，不计入 50 篇文章总数；与上方编号正文严格区分，避免污染脉络计数。
 > 收录标准：内容与 Harness Engineering 直接相关、来源可追溯到具名作者 / 译者、且对本仓库已有一手文献有补充或对照价值。
 
 ### Akshay Pachaar — The Anatomy of an Agent Harness（中译版）
@@ -1228,6 +1445,13 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 - **为什么不进编号正文：** 本文是综述科普，不是一手文献。编号正文中的文章分别对应 OpenAI / Fowler / Anthropic / LangChain 等团队的一手工程博客、论文、外部逆向分析或中文社区原创分析；将综述纳入会污染「一手/准一手」的语义边界与一致性脚本（C1/C2/C6）的语义。归到本段保留对照价值即可。
 - **对照案例：** #31 Osmani 综述经人工评审后**破例**进了编号正文（有原创表述 + 学科定调价值）；本文维持不计数——两者共同构成"综述收录边界"的判例。
 
+### Tony Bai — 全新 AI 技术栈：模型、Harness、Loop 与自我进化的智能体
+
+- **类型：** 对 Rahul（@sairahul1）"The New AI Stack: Models, Harnesses, Loops, and Self-Improving Agents"一文的中文转述 + 点评，非一手文献
+- **链接：** [tonybai.com](https://tonybai.com/2026/07/10/the-new-ai-stack-model-harness-loop-agent/) | **日期：** 2026-07-10
+- **内容定位：** 把"模型 → Harness → Loop → 自优化智能体"叠成一个四层技术栈叙事，覆盖 Self-Harness、进化式 harness 搜索、Darwin Gödel Machine，并附"四周落地路线"（先建循环 → 接持久记忆 → 引入子智能体 → 沉淀避坑剧本）。可作为 #41（Loop Engineering）、#44（Self-Harness）、#45（Weng 综述）的中文入口。
+- **为什么不进编号正文：** 二手转述，论点均已被 #41/#44/#45 的一手文献覆盖；中文社区对 loop 浪潮的响应速度本身是一个传播信号。
+
 ### InfoQ 中文 — Böckeler QCon 纽约演讲整理（Coding Agent 技术全景图）
 
 - **类型：** 演讲的第三方中文整理，非一手文献
@@ -1241,7 +1465,7 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 
 ## 已跟踪产品 / 项目（不计入文章数）
 
-> 这里收录的是**开源产品 / 框架 / 工具**，不是文章。本段不参与"### N. ..." 的全局编号，不计入 42 篇的文章总数。
+> 这里收录的是**开源产品 / 框架 / 工具**，不是文章。本段不参与"### N. ..." 的全局编号，不计入 50 篇的文章总数。
 > 触发"产品级实现案例"的判定通常是：有可运行代码、有版本号、被本仓库 thinking/ 或 works/ 单独分析。
 
 ### ⭐ Chachamaru127 — claude-code-harness v4.2 "Hokage"（产品级实现案例）
@@ -1269,7 +1493,7 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 
 ## 观察项 / 候选材料（不计入文章数）
 
-> 2026-05 起各轮调研中已甄别、但**暂不值得做成正式文章**的产品页 / README / 短 bliki / 发布稿 / 工程随笔。本段不参与 `### N.` 编号，不计入 42 篇文章总数。
+> 2026-05 起各轮调研中已甄别、但**暂不值得做成正式文章**的产品页 / README / 短 bliki / 发布稿 / 工程随笔。本段不参与 `### N.` 编号，不计入 50 篇文章总数。
 > 中文译文留在本地 `translate/`（gitignored）作阅读辅助；下表只记上游链接与定性，方便下次快速复看。
 > **去向标记：** 🔵 待实测后入 `tools/`（遵守 tools/「只收用过的工具」标准，未实测前不正式收录） ｜ ⚪ 长期观察 ｜ ⏭️ 暂存不收。
 
@@ -1298,6 +1522,15 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 | Microsoft Agent Framework `HarnessAgent` | 产品/文档 | ⚪ | 微软入场：batteries-included harness 作为一等 API（`AsHarnessAgent`）；微软视角此前仓库空白，暂只有文档无深度工程文 | [learn.microsoft.com](https://learn.microsoft.com/en-us/agent-framework/agents/harness) |
 | OpenAI Core dump 流行病学 | 工程复盘 | ⚪ | "群体级诊断 > 逐例分析"修复 18 年 libunwind 老 bug，ChatGPT 参与写分析管线；可观测性方法论好文但与 harness 关系间接，2026-06-30 | [openai](https://openai.com/index/core-dump-epidemiology-data-infrastructure-bug/) |
 | thedeepfeed：学科史梳理 | 编年 | ⚪ | "七个声音九个月汇流成一个学科"的传播史（含 Osmani 文收藏/点赞比 2:1 等传播数据）；二手史料，配 #31 看 | [thedeepfeed.ai](https://www.thedeepfeed.ai/posts/2026-05-09-agent-harness-engineering-the-discipline/) |
-| Boris Cherny 工作流 | 实践 | ⚪ | Claude Code 作者本人"出奇原味"的用法（~100 行 CLAUDE.md、plan mode 纪律、跑偏就回 plan 重规划）；源头是其 X 帖，链接为社区维护的档案站（非 Anthropic 官方） | [howborisusesclaudecode.com](https://howborisusesclaudecode.com) |
+| Boris Cherny 工作流 | 实践 | ⚪ | Claude Code 作者本人"出奇原味"的用法（~100 行 CLAUDE.md、早期以 plan mode 纪律著称；站内 Part 15 已记录其 4.6+ 后放弃 plan mode 起手、改 auto mode 直跑——"新模型不再需要显式规划步骤"）；源头是其 X 帖，链接为社区维护的档案站（非 Anthropic 官方） | [howborisusesclaudecode.com](https://howborisusesclaudecode.com) |
+| Steering Claude Code 官方指南 | 产品文档 | ⚪ | 七种转向机制（CLAUDE.md/rules/skills/subagents/hooks/output styles/system prompt append）按"加载时机 × compaction 行为 × token 成本"三轴对照——#49 YDD"区别在加载机制"论的官方版说明书；参考手册体裁，2026-06-18 | [claude.com](https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more) |
+| The Harness Effect 论文 | 论文/厂商评测 | ⚪ | "成本数据"缺口的首个系统数据：同 22 任务 × 6 模型只换编排层，成本 -41%、时延 -44%、token -38%；提出 token maxing 与 harness leverage（质量增益与基线能力 r=0.99）。注意 Writer Inc. 自评自家 harness，利益相关，方法论（frozen baseline + locked tasks）可取 | [arxiv 2607.06906](https://arxiv.org/abs/2607.06906) |
+| Harness Updating ≠ Harness Benefit 论文 | 论文 | ⚪ | 拆开两条能力轴：写 harness 编辑的能力各模型持平（9B 能写出与 Opus 同构的 skill），利用 harness 的能力非单调（中档模型受益最多）——跨模型可移植性缺口的机制侧证据；被 #45 Weng 综述引用 | [arxiv 2605.30621](https://arxiv.org/abs/2605.30621) |
+| ToFu 白盒研究 harness | 工具 | 🔵 | MIT 协议、面向研究者的白盒 harness：三层上下文压缩 + 多语言 + MCP 集成，可作为 research object 检查/修改编排逻辑；待实测后再定去向 | [arxiv 2607.11423](https://arxiv.org/abs/2607.11423) |
+| OpenAI：How agents are transforming work | 报告 | ⚪ | 内部采纳数据：Codex 从占员工 <10% token 到成为全部门（含法务/招聘）主力；99 分位用户日均 60+ 小时 agent turns、多智能体并行——脉络三的组织影响新数据点，2026-06-25 | [openai](https://openai.com/index/how-agents-are-transforming-work/) |
+| Fowler Fragments 2026-07-06 / 07-13 | 短评 | ⚪ | retreat 纪要两则：AGENTS.md <200 行、用 Rust 替代 Python 强化计算性传感器、property-based testing、"DX 与 AX 的维恩图是个圆"（Laura Tacho）、"harness 会否被模型进步淘汰"的现场辩论——#2 的口语化增量 | [07-06](https://martinfowler.com/fragments/2026-07-06.html) / [07-13](https://martinfowler.com/fragments/2026-07-13.html) |
+| Geoffrey Litt：Understand to participate | 演讲 | ⚪ | AIE 2026 演讲（经 Simon Willison 笔记）：cognitive debt——理解要深到"能继续参与创作"，否则参与能力实质受限；与 #42 Ronacher 的 comprehension 关切合流，待官方视频/文字稿 | [simonwillison.net](https://simonwillison.net/2026/Jul/2/understand-to-participate/) |
+| Simon Willison：Agentic Engineering Patterns | patterns 库 | ⚪ | 2026-02 起持续更新的模式集（红绿 TDD、hoard working examples、线性走查等）；附 Fable's judgement 笔记（2026-07-03：让模型自主选低阶模型跑子任务）——个体实践侧长期跟踪 | [guides](https://simonwillison.net/guides/agentic-engineering-patterns/) |
+| Thoughtworks Technology Radar Vol.34 | 行业雷达 | ⚪ | Ralph loop 列为 Assess、Team of coding agents 列为 Assess、Coding agent swarms 列为 Caution（2026-04-15）——#28 Ralph 的行业采纳信号；雷达条目体裁，一行即可 | [thoughtworks](https://www.thoughtworks.com/radar/techniques/ralph-loop) |
 
 > 三篇短 bliki / 随笔（Vibe Coding、Interrogatory LLM、Genie Tarpit）若日后要收，建议合并成一个「概念定义 / 上下文工程 pattern」小专题，别各开条目稀释精品信号。

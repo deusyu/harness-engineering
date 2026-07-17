@@ -17,6 +17,7 @@ summary: |-
   Chris Parsons 认为，2026 年的 AI 编码已经从 IDE 里的补全和对话，转向 Claude Code、Codex CLI 等命令行智能体 Harness。真正的分水岭不是会不会提示模型，而是能否把经验沉淀进 AGENTS.md、CLAUDE.md、Skills、验证循环和反馈机制，让团队的 AI 下周写出的代码比这周更好。
 language: "zh-CN"
 translationMethod: "baoyu-translate skill"
+sourceFigureCount: 8
 ---
 
 # 我是如何用 AI 写代码的

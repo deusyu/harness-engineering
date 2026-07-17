@@ -23,7 +23,7 @@
 - [x] Phase 2：形成自己的观点（thinking/，9 篇，持续中）
 - [x] Phase 3：选一个小项目实践（practice/，1 个 Ralph Demo）
 - [x] Phase 4：记录反馈迭代（feedback/，1 篇，持续中）
-- [x] Phase 5：输出可展示的作品（works/，24 篇翻译 + 1 篇原创 + 2 篇外部中文收录）
+- [x] Phase 5：输出可展示的作品（works/，27 篇翻译 + 1 篇原创 + 2 篇外部中文收录）
 
 > 进度详情以人类向 README.md 的"学习路线"段为准；本节是给智能体的快照。
 

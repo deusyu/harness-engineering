@@ -61,11 +61,11 @@
 > 它必须自包含，因为搜索器无法访问 `references/articles.md`。
 >
 > **维护纪律：** 当 `references/articles.md` 新增/删除条目时，**同一次提交中**必须同步更新本节。两份内容的口径（脉络划分、篇数、产品/项目清单）应保持完全一致。
-> 本节最近一次同步：2026-07-08（与 `articles.md` 当前内容对齐：42 篇文章 + 1 项已跟踪产品）。
+> 本节最近一次同步：2026-07-15（与 `articles.md` 当前内容对齐：50 篇文章 + 1 项已跟踪产品）。
 
-**核心文章 42 篇，分布于三条脉络：**
+**核心文章 50 篇，分布于三条脉络：**
 
-- **脉络一 — AI 时代 Harness Engineering（38 篇）：**
+- **脉络一 — AI 时代 Harness Engineering（46 篇）：**
   - OpenAI "Harness engineering"（原点，2026-02-11）/ "An open-source spec for Codex orchestration: Symphony"（2026-04-27，任务跟踪器作为控制平面）
   - Fowler/Böckeler "Harness engineering for coding agent users"（2026-04-02）+ 前传备忘录（2026-02-17）
   - LangChain "The Anatomy of an Agent Harness"（2026-03）/ "Continual Learning for AI Agents"（2026-04-05）/ "Agent Evaluation Readiness Checklist"
@@ -100,6 +100,14 @@
   - Anthropic/Claude "A harness for every task: dynamic workflows in Claude Code"（2026-06-02，模型现场写自己的编排 harness + 对抗验证 + ultracode 触发）
   - 马东锡 NLP "Harness 才是产品"（2026-06，Model 在 loop 里 harness 拥有 loop + 六组件 + 症状→组件 debug 表）
   - Position 论文 "Coding Benchmarks Are Misaligned with Agentic SE"（arXiv 2606.17799，基准折叠 model/harness/环境的三症状）
+  - OpenAI "Unrolling the Codex agent loop"（2026-01-23，Codex harness 解剖·上：prompt 构造 / 二次方与 prompt caching / compaction 端点化）
+  - OpenAI "Unlocking the Codex harness"（2026-02-04，Codex harness 解剖·下：App Server 双向 JSON-RPC + Item/Turn/Thread 原语 + HaaS）
+  - Addy Osmani "Loop Engineering"（2026-06-08，loop 定调文：五构件 + 记忆脊柱；上游为 Steinberger 推文与 Boris Cherny "我的工作是写循环"）
+  - Armin Ronacher "The Coming Loop"（2026-06-23，怀疑派回应：agent loop vs harness loop + 防御式编码放大 + 软件作为有机体）
+  - Anthropic/Claude Code 团队 "Loop engineering: Getting started with loops"（2026-06-30，官方四类循环 turn/goal/time/proactive + `/goal` 独立判停）
+  - Self-Harness 论文（arXiv 2606.09498，智能体自改 harness：弱点挖掘→提议→回归验证，三模型 held-out +14~21pp）
+  - Lilian Weng "Harness Engineering for Self-Improvement"（2026-07-04，RSI 综述：三设计模式 + 优化对象递进链 + 七项未来挑战）
+  - Aria 论文 "Harnessing Code Agents for Automatic Software Verification"（arXiv 2607.06341，声明式 HHL 包裹通用智能体做 Coq 证明，行为 harness 极限形态）
 - **脉络二 — 云原生 Harness.io（2 篇）：** Harness.io 官方全局架构 / Google Cloud 集成场景
 - **脉络三 — 效率悖论（2 篇）：** YDD/Miss-you "效率悖论的系统性拆解"（2026-03-03）/ METR 实验后续 + 自报调查（2026-02-24 + 2026-05-11，"慢 19%"的官方后续：弱证据转向加速 + RCT 方法论危机）
 

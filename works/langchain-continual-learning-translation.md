@@ -20,6 +20,7 @@ summary: |-
   关于 AI 持续学习的讨论大多聚焦于模型权重的更新。但对于 AI 智能体而言，学习可以发生在三个不同的层面：模型层、Harness 层和上下文层。理解它们之间的差异，将从根本上改变你构建可持续改进系统的思路。
 language: "zh-CN"
 translationMethod: "baoyu-translate skill"
+sourceFigureCount: 4
 ---
 
 # AI 智能体的持续学习

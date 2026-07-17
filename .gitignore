@@ -8,3 +8,6 @@ dist/
 CLAUDE.md
 .baoyu-skills/
 translate/
+
+# 私密商务资料（内训洽谈、聊天截图等，永不入库）
+private/

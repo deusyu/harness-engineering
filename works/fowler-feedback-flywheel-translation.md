@@ -6,6 +6,7 @@ sourceAuthor: "Rahul Garg (Thoughtworks)"
 sourcePublishedAt: "2026-04-08"
 translationMethod: "baoyu-translate skill (refined mode)"
 language: "zh-CN"
+sourceFigureCount: 0
 ---
 
 # 反馈飞轮

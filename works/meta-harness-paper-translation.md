@@ -6,6 +6,7 @@ sourceAuthor: "Yoonho Lee, Roshen Nair, Qizheng Zhang, Kangwook Lee, Omar Khatta
 sourcePublishedAt: "2026-03-30"
 translationMethod: "baoyu-translate skill (refined mode)"
 language: "zh-CN"
+sourceFigureCount: 6
 ---
 
 # Meta-Harness：模型 Harness 的端到端优化
@@ -19,6 +20,8 @@ language: "zh-CN"
 优化后的 Harness：[https://github.com/stanford-iris-lab/meta-harness-tbench2-artifact](https://github.com/stanford-iris-lab/meta-harness-tbench2-artifact)
 
 ![Refer to caption](https://arxiv.org/html/2603.28052v1/x1.png)
+
+![Refer to caption](https://arxiv.org/html/2603.28052v1/x2.png)
 
 Figure 1：（左）在文本分类任务上，Meta-Harness 优于现有最佳的手工设计 Harness（ACE）和现有文本优化器（TTT-Discover、OpenEvolve），仅经过 4 次评估即达到次优方法的最终准确率。（右）在 TerminalBench-2 上，Meta-Harness 优于所有已报告的 Claude Haiku 4.5 Harness。
 

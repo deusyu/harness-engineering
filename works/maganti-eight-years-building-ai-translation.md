@@ -25,6 +25,7 @@ summary: |-
   几周前，经过三个月里约 250 小时的业余投入，我终于发布了 syntaqlite，实现了这个多年的心愿。我认为这件事能成，主要归功于 AI 编码智能体。
 language: "zh-CN"
 translationMethod: "baoyu-translate skill"
+sourceFigureCount: 0
 ---
 
 # 渴望了八年，用 AI 三个月造出来
