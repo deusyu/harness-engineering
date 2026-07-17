@@ -22,9 +22,16 @@ sourceAuthor:      # 原作者（可含所属机构）
 sourcePublishedAt: # 原文日期（未知可为 null）
 translationMethod: # 翻译方式，如 "baoyu-translate skill (refined mode)"
 language: "zh-CN"
+sourceFigureCount: # 原文插图数（数字；null = 原文不可得、未审计。C10 据此校验正文嵌图数）
 ```
 
 可选字段（抓取流水线的溯源元数据）：`sourceCoverImage`、`sourceSiteName`、`sourceSummary`、`summary`、`sourceLanguage`、`sourceAdapter`、`sourceCapturedAt`、`sourceConversionMethod`、`sourceKind`、`sourceRequestedUrl`、`translatedAt`、`translatorAudience`、`translatorStyle` 等。封面图字段统一用 `sourceCoverImage`（不用 `coverImage`）。
+
+**插图与外链约定**：
+
+- 新收录译文的原文插图应下载到 `works/imgs/<slug>/`，以本地相对路径嵌入（`imgs/<slug>/<文件名>`，先例见 [claude-code-architecture-reverse-translation.md](claude-code-architecture-reverse-translation.md)）；存量条目的远程嵌图暂容忍，不强制回迁。
+- 译文正文保留原文中的超链接，不得在翻译时丢弃。
+- `scripts/check-consistency.sh` C10 会校验 `sourceFigureCount` 与正文嵌图数（嵌图数 ≥ 声明数），并对本地嵌图路径做文件存在性检查。
 
 | 文件 | 原文 | 来源 |
 |------|------|------|

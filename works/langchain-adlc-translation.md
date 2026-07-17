@@ -9,6 +9,7 @@ sourceCoverImage: "https://cdn.prod.website-files.com/65c81e88c254bb0f97633a71/6
 sourceLanguage: "en"
 language: "zh-CN"
 translationMethod: "baoyu-translate skill"
+sourceFigureCount: 8
 ---
 
 # 智能体开发生命周期（ADLC）

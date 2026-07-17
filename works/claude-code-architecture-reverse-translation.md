@@ -18,6 +18,7 @@ language: "zh-CN"
 translationMethod: "baoyu-translate skill (refined mode)"
 translatorAudience: "technical"
 translatorStyle: "storytelling"
+sourceFigureCount: 18
 ---
 
 # Claude Code 架构（逆向工程版）

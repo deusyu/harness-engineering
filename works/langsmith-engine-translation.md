@@ -9,6 +9,7 @@ sourceCoverImage: "https://cdn.prod.website-files.com/65c81e88c254bb0f97633a71/6
 sourceLanguage: "en"
 language: "zh-CN"
 translationMethod: "baoyu-translate skill"
+sourceFigureCount: 5
 ---
 
 # 我们如何构建 LangSmith Engine：一个用于改进智能体的智能体

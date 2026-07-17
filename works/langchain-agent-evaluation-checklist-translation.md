@@ -6,6 +6,7 @@ sourceAuthor: "Victor Moreira (LangChain)"
 sourcePublishedAt: "2026-03-27"
 translationMethod: "baoyu-translate skill (refined mode)"
 language: "zh-CN"
+sourceFigureCount: 6
 ---
 
 # 智能体评测就绪清单

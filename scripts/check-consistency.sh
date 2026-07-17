@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # check-consistency.sh — guard against drift between articles.md and downstream caches.
 #
-# Nine checks:
+# Twelve checks:
 #   C1 — articles.md heading numbering is contiguous 1..N
 #   C2 — that N matches every downstream count claim
 #        (README.md / README.en.md / prompts/deep-research-tracker.md / references/AGENTS.md)
@@ -24,6 +24,23 @@
 #        allowed when the line carries a dated-snapshot qualifier (写作时点 / 当时 /
 #        此前 / 首批 / 首轮 / 截至 / 快照); otherwise drop the number and link to
 #        references/articles.md instead.
+#   C10 — figure fidelity (purely local, zero network): every works/*-translation.md
+#         frontmatter must declare sourceFigureCount (null = 原文不可得、未审计 →
+#         SKIP). The body must embed at least that many image lines (![ or <img),
+#         and every local embed target (imgs/...) must exist on disk.
+#   C11 — markdown table shape: in README.md / README.en.md / references/AGENTS.md /
+#         references/articles.md / works/AGENTS.md, every table row must carry the
+#         same cell count as its header row (separator rows skipped).
+#   C12 — entry field completeness: every numbered entry (### N.) in
+#         references/articles.md must carry the **作者：** and **日期：** field lines.
+#
+# Locale pitfall (do NOT reintroduce): bracket expressions containing multibyte
+# characters — e.g. [├└] or [^。] — silently break under LC_ALL=C with BSD grep:
+# the pattern is compiled byte-wise, the UTF-8 sequences fall apart inside the
+# brackets, and the expression never (or wrongly) matches. Use alternation of
+# literal strings instead — (├|└) — or split sentences to lines first (see C8).
+# Literal multibyte strings OUTSIDE brackets match byte-wise and are safe in
+# every locale.
 #
 # Usage:  bash scripts/check-consistency.sh        (run from repo root)
 # Exits 0 on all-pass, 1 on any failure.
@@ -169,7 +186,9 @@ CONCEPTS_FILES=$(find concepts -maxdepth 1 -type f -name '*.md' ! -name 'AGENTS.
 check_concepts_tree() {
   local file="$1"
   local tree_count
-  tree_count=$(sed -n '/^├── concepts\//,/^│$/p' "$file" | grep -cE '^│   [├└]── ' || true)
+  # (├|└) not [├└]: multibyte chars inside a bracket expression break under
+  # LC_ALL=C + BSD grep (byte-wise compilation) — see header locale pitfall.
+  tree_count=$(sed -n '/^├── concepts\//,/^│$/p' "$file" | grep -cE '^│   (├|└)── ' || true)
   if [ "$tree_count" = "$CONCEPTS_FILES" ]; then
     echo "  $(green PASS) — $file concepts tree: $tree_count entries"
   else
@@ -253,7 +272,10 @@ else
     fulltext="$base/sources/$slug/source-full.md"
     [ -f "$fulltext" ] || continue
     c8_checked=$((c8_checked + 1))
-    if grep -qE '非全文|补抓[^。]*全文|只抓[^。]*摘要|只是摘要页' "$analysis"; then
+    # Split sentences to lines first (。→ newline), then keep the "same
+    # sentence" constraint as plain .* — the original [^。]* bracket form is a
+    # multibyte bracket expression and breaks under LC_ALL=C (header pitfall).
+    if awk '{gsub(/。/, "\n"); print}' "$analysis" | grep -qE '非全文|补抓.*全文|只抓.*摘要|只是摘要页'; then
       echo "  $(red FAIL) — $analysis: still claims abstract-only, but $fulltext exists"
       FAIL=1
     else
@@ -291,6 +313,151 @@ $(grep -rnE "$C9_PATTERN" concepts thinking feedback --include='*.md' 2>/dev/nul
 EOF
 if [ "$c9_fails" -eq 0 ]; then
   echo "  $(green PASS) — $c9_hits count mention(s), all snapshot-qualified or none present"
+fi
+
+# ─── C10 ───────────────────────────────────────────────────────────────
+# Figure fidelity, purely local (zero network). Every works/*-translation.md
+# must declare sourceFigureCount in its frontmatter:
+#   - field missing            → FAIL (new entries must audit the source's figures)
+#   - value null               → SKIP (原文不可得，图数未审计)
+#   - numeric N                → body (after the closing ---) must contain at
+#                                least N image-embed lines (a line counts when
+#                                it contains ![ or <img)
+# Additionally, every local embed target (imgs/...) must exist on disk —
+# remote embeds (https://...) are tolerated for legacy entries and not fetched.
+echo "[C10] translation figure fidelity (sourceFigureCount vs embedded images)"
+c10_pass=0
+c10_skip=0
+c10_fail=0
+for tf in works/*-translation.md; do
+  declared=$(awk '
+    NR==1 { if ($0 !~ /^---[ \t]*$/) exit; next }
+    /^---[ \t]*$/ { exit }
+    /^sourceFigureCount:/ { sub(/^sourceFigureCount:[ \t]*/, ""); sub(/[ \t]*$/, ""); print; exit }
+  ' "$tf")
+  if [ -z "$declared" ]; then
+    echo "  $(red FAIL) — $tf: frontmatter missing sourceFigureCount"
+    FAIL=1; c10_fail=$((c10_fail + 1))
+    continue
+  fi
+  if [ "$declared" = "null" ]; then
+    echo "  $(yellow SKIP) — $tf: sourceFigureCount null（原文不可得，图数未审计）"
+    c10_skip=$((c10_skip + 1))
+    continue
+  fi
+  case "$declared" in
+    *[!0-9]*)
+      echo "  $(red FAIL) — $tf: sourceFigureCount '$declared' is neither a number nor null"
+      FAIL=1; c10_fail=$((c10_fail + 1))
+      continue ;;
+  esac
+  embedded=$(awk '/^---[ \t]*$/{d++; next} d>=2 && (/!\[/ || /<img/){c++} END{print c+0}' "$tf")
+  if [ "$embedded" -lt "$declared" ]; then
+    echo "  $(red FAIL) — $tf: declares $declared figure(s), body embeds only $embedded"
+    FAIL=1; c10_fail=$((c10_fail + 1))
+    continue
+  fi
+  # Local-path embeds must resolve (paths are relative to works/, per the
+  # claude-code-architecture-reverse-translation.md precedent).
+  c10_missing=0
+  while IFS= read -r img; do
+    [ -z "$img" ] && continue
+    if [ ! -f "works/$img" ]; then
+      echo "  $(red FAIL) — $tf: local embed target missing on disk: works/$img"
+      FAIL=1; c10_missing=1
+    fi
+  done <<C10EOF
+$({ grep -oE '\]\(imgs/[^)]+\)' "$tf" | sed -E 's/^\]\((imgs\/[^)" ]+).*/\1/'
+    grep -oE '<img[^>]*src="imgs/[^"]+"' "$tf" | sed -E 's/.*src="(imgs\/[^"]+)".*/\1/'
+  } 2>/dev/null || true)
+C10EOF
+  if [ "$c10_missing" -eq 0 ]; then
+    c10_pass=$((c10_pass + 1))
+  else
+    c10_fail=$((c10_fail + 1))
+  fi
+done
+if [ "$c10_fail" -eq 0 ]; then
+  echo "  $(green PASS) — $c10_pass file(s) at/above declared figure count ($c10_skip null-skipped), all local embeds resolve"
+fi
+
+# ─── C11 ───────────────────────────────────────────────────────────────
+# Markdown table shape: every table row must have the same cell count as its
+# header row. Parsing rules — kept deliberately narrow, verified zero false
+# positives against the current repo:
+#   - a table row is a line starting with '|' outside ``` fences (all tables
+#     in the checked files start at column 0 and are '|'-terminated);
+#   - escaped \| and pipes inside single-backtick inline code are stripped
+#     before counting, so they never split a cell;
+#   - separator rows (only | - : space) are skipped;
+#   - multi-line backtick spans / HTML tables are NOT handled — none exist in
+#     the checked files; if one is ever introduced, revisit these rules.
+echo "[C11] markdown table rows match header column count"
+C11_FILES="README.md README.en.md references/AGENTS.md references/articles.md works/AGENTS.md"
+c11_fail=0
+for cf in $C11_FILES; do
+  c11_errors=$(awk '
+    /^[ \t]*```/ { fence = !fence; next }
+    fence { next }
+    /^\|/ {
+      line = $0
+      gsub(/\\\|/, "", line)          # escaped pipes do not delimit cells
+      gsub(/`[^`]*`/, "", line)       # pipes inside inline code do not delimit
+      n = gsub(/\|/, "|", line) - 1   # cells = pipes - 1 (rows are |-terminated)
+      if (!intab) { intab = 1; header = n; hline = NR; next }
+      if (line ~ /^[|: \t-]+$/) next  # separator row
+      if (n != header) print "line " NR " has " n " cells, header (line " hline ") has " header
+      next
+    }
+    { intab = 0 }
+  ' "$cf")
+  if [ -n "$c11_errors" ]; then
+    while IFS= read -r c11_err; do
+      echo "  $(red FAIL) — $cf: $c11_err"
+    done <<C11EOF
+$c11_errors
+C11EOF
+    FAIL=1
+    c11_fail=1
+  fi
+done
+if [ "$c11_fail" -eq 0 ]; then
+  echo "  $(green PASS) — every table row matches its header across: $C11_FILES"
+fi
+
+# ─── C12 ───────────────────────────────────────────────────────────────
+# Entry field completeness: every numbered entry (### N.) in articles.md must
+# carry the standard field lines, written repo-wide as
+#   - **作者：** X | **日期：** Y
+# (both fields may share one line; C12 only requires each label to appear
+# somewhere inside the entry block). A block ends at the next #/##/### heading.
+echo "[C12] articles.md numbered entries carry 作者/日期 fields"
+c12_errors=$(awk '
+  function flush() {
+    if (head != "") {
+      if (!a) print head " (line " hline "): missing **作者：** field"
+      if (!d) print head " (line " hline "): missing **日期：** field"
+    }
+  }
+  /^# / || /^## / || /^### / {
+    flush(); head = ""; a = 0; d = 0
+    if ($0 ~ /^### [0-9]+\./) { head = $0; hline = NR }
+    next
+  }
+  head != "" && /\*\*作者：\*\*/ { a = 1 }
+  head != "" && /\*\*日期：\*\*/ { d = 1 }
+  END { flush() }
+' references/articles.md)
+c12_total=$(grep -cE '^### [0-9]+\.' references/articles.md)
+if [ -n "$c12_errors" ]; then
+  while IFS= read -r c12_err; do
+    echo "  $(red FAIL) — references/articles.md: $c12_err"
+  done <<C12EOF
+$c12_errors
+C12EOF
+  FAIL=1
+else
+  echo "  $(green PASS) — all $c12_total numbered entries carry 作者/日期"
 fi
 
 # ─── Summary ───────────────────────────────────────────────────────────

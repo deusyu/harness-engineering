@@ -7,9 +7,12 @@ title: "面向编码智能体的可维护性传感器"
 summary: "一篇关于生产路径上计算性传感器的实践复盘，并深入讨论 ESLint 与静态分析如何为编码智能体提供反馈。"
 language: "zh-CN"
 translationMethod: "baoyu-translate skill"
+sourceFigureCount: 4
 ---
 
 # 面向编码智能体的可维护性传感器
+
+> **译注：** 本篇为节译，译至原文 "Static code analysis: AI modularity review" 一节为止；其后的变异测试传感器、sidecar 工具附录与传感器简史（含原文 Figure 5–11）未译，请参见[原文](https://martinfowler.com/articles/sensors-for-coding-agents.html)。frontmatter 的 `sourceFigureCount: 4` 对应已译部分的图数。
 
 我们通常希望在代码库中达成并监控多个维度：功能正确性（按预期工作）、[架构适应度](https://www.thoughtworks.com/insights/decoder/f/fitness-functions)（足够快、安全、可用），以及可维护性。我在这里把可维护性定义为：让代码库随着时间推移仍然容易修改，而且修改风险较低，也就是[所谓"内部质量"](https://martinfowler.com/articles/is-quality-worth-cost.html)。所以，我不只是希望今天能快速改动，也希望未来仍然能快速改动。我也不希望每次自己修改，或者让 AI 修改时，都担心引入 bug 或让适应度下降。对 AI 生成的代码库来说，我通常看到的第一批可维护性裂缝，是为一个小调整而改动的文件数量开始增加；或者是改动开始破坏过去能工作的东西。
 

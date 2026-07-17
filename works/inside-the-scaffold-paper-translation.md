@@ -6,6 +6,7 @@ sourceAuthor: "Benjamin Rombaut (Centre for Software Excellence, Huawei Canada)"
 sourcePublishedAt: "2026-04-04"
 translationMethod: "baoyu-translate skill (refined mode)"
 language: "zh-CN"
+sourceFigureCount: 1
 ---
 
 # 深入脚手架内部：编码智能体架构的源代码级分类法

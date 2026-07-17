@@ -18,6 +18,7 @@ summary: |-
   当 OpenAI 让团队在"不写一行人类代码"的前提下交付内部工具，下一个瓶颈不是模型，而是人类的上下文切换。Symphony 是他们的回应：一份极简的 SPEC.md 规范，把 Linear 这样的问题跟踪器变成智能体的控制平面——每个打开的任务都有一个智能体在自己的工作区中运行。这套机制让部分团队前三周已落地 PR 数量增长 500%，也把"谁能发起工程工作"扩展到了 PM 和设计师。
 language: "zh-CN"
 translationMethod: "baoyu-translate skill"
+sourceFigureCount: 2
 ---
 
 # Codex 编排的开源规范：Symphony

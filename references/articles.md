@@ -103,7 +103,7 @@
 | 人类角色 | 对 Anthropic #7 中人类缺位的直接回应——不应消除人类，应引导人类 |
 
 - **延伸阅读：**
-  - [Mitchell Hashimoto: My AI Adoption Journey #Step 5: Engineer the Harness](https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness)
+  - [Mitchell Hashimoto: My AI Adoption Journey #Step 5: Engineer the Harness](https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness)（已升格为 #29）
   - [Context Engineering for Coding Agents](https://martinfowler.com/articles/context-engineering-coding-agents.html)
   - [Humans and Agents in Software Engineering Loops](https://martinfowler.com/articles/humans-and-agents.html)
 
@@ -192,6 +192,7 @@
 
 - **标题：** Skill Issue: Harness Engineering for Coding Agents
 - **链接：** [humanlayer.dev](https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents)
+- **作者：** Kyle（HumanLayer） | **日期：** 2026-03-12
 - **核心：** 最落地的一篇——六个配置杠杆 + 实战经验
 
 - **六个杠杆：**
@@ -837,6 +838,7 @@
 
 - **标题：** 事件 + 聚合分析：understanding-claude-code（综合 26 篇文章、7 个 HN 帖、10 份官方 TechDocs）
 - **链接：** [pankaj28843/understanding-claude-code](https://github.com/pankaj28843/understanding-claude-code) | 新闻报道：[InfoQ](https://www.infoq.com/news/2026/04/claude-code-source-leak/)
+- **作者：** 事件（当事人 Chaofan Shou，安全研究员；社区镜像扩散，无单一作者——本条为事件型收录） | **日期：** 2026-03-31（事件日）
 - **事件：** 2026-03-31，`@anthropic-ai/claude-code` v2.1.88 npm 包漏发 59.8MB 的 `cli.js.map`（缺一条 `.npmignore`，叠加 Bun 默认生成 source map 的已知 bug），~512,000 行 TypeScript / ~1,900 文件全裸；安全研究员 Chaofan Shou 发现，数小时内 GitHub 镜像扩散
 - **核心：** 业界第一次看到一线编码智能体 harness 的完整生产级源码。此前 #17（Rungta 逆向）只能从行为推测，泄漏把推测变成了可对照的实锤。
 
@@ -975,8 +977,8 @@
 ### 35. How good is your harness? 论文 — harness 效应的统计归因
 
 - **标题：** How good is your harness? Statistical evaluation of coding harnesses
-- **链接：** [openreview.net](https://openreview.net/pdf/99eabc2ce65fd2871a253a0a57954c934ea9e6b0.pdf)
-- **作者：** Jiwoo Han, Yuekai Sun（密歇根大学统计系） | **发表：** CTB@ICML 2026 workshop（首尔）
+- **链接：** [openreview.net forum](https://openreview.net/forum?id=QI8z3skBwt)（[PDF 直链](https://openreview.net/pdf/99eabc2ce65fd2871a253a0a57954c934ea9e6b0.pdf)）
+- **作者：** Jiwoo Han, Yuekai Sun（密歇根大学统计系） | **日期：** 2026-05-25（OpenReview 发布，2026-06-16 末次修订） | **发表：** CTB@ICML 2026 workshop（首尔）
 - **核心：** 用纯统计方法（加性 GLM，logit link）把 Terminal-Bench 2.0 榜单的分数方差拆解归因到 harness 效应与 LLM 效应——不依赖 LLM 标注轨迹，只需要足够交叉的 harness×LLM 榜单设计。数据：清洗后 105 个 harness-LLM 对（28 个 harness × 26 个 LLM）。
 
 - **两个定量结论：**
@@ -1058,7 +1060,7 @@
 
 - **标题：** Position: Coding Benchmarks Are Misaligned with Agentic Software Engineering
 - **链接：** [arxiv.org/abs/2606.17799](https://arxiv.org/abs/2606.17799)
-- **作者：** Maria I. Gorinova, M D Baker, Amy Heineike, Maksim Shaposhnikov, Rob Willoughby, Dru Knox | **日期：** 2026-06 | **arXiv：** 2606.17799
+- **作者：** Maria I. Gorinova, Macey Baker, Amy Heineike, Maksim Shaposhnikov, Rob Willoughby, Dru Knox | **日期：** 2026-06 | **arXiv：** 2606.17799
 - **核心：** 立场论文——我们用来比较编码智能体的基准诞生于前智能体时代：把 model、harness、environment 折叠进一个端到端分数，通常按单一参考解评分，没有可迭代的组件级信号。"实践中的编码智能体不是模型，是 system harness——models/harnesses/contexts/environments/feedback signals 的复合体，其中任何一项都能把基准分数挪动一个相邻模型代际的量级。"
 
 - **三个症状：**
@@ -1133,7 +1135,7 @@
 - **标题：** Loop Engineering
 - **链接：** [addyosmani.com](https://addyosmani.com/blog/loop-engineering/)（[Substack 版](https://addyo.substack.com/p/loop-engineering)）
 - **中文译文：** [works/osmani-loop-engineering-translation.md](../works/osmani-loop-engineering-translation.md)
-- **作者：** Addy Osmani (Google Cloud AI Director) | **日期：** 2026-06-08
+- **作者：** Addy Osmani (Google Cloud AI Director) | **日期：** 2026-06-07
 - **核心：** #31 作者的续作，给"loop engineering"定调：把"提示智能体的人"换成"设计提示智能体的系统"。上游是两个原始数据点——Peter Steinberger 的推文（2026-06-07，"你不该再提示编码智能体了，你该设计提示它们的循环"，数百万浏览）与 Claude Code 负责人 Boris Cherny 的引语（"我已经不再提示 Claude 了……我的工作是写循环"）。Osmani 的定位声明：loop engineering 在 harness 之上一层——"还是那个 harness，但它跑在定时器上、派生小帮手、自我供料"。
 - **关键洞察：**
   - **五构件 + 记忆脊柱：** Automations（心跳：按计划发现+分诊）/ Worktrees（并行隔离）/ Skills（固化项目知识，让意图不再反复收费）/ Plugins & Connectors（触达真实工具）/ Sub-agents（做与查分离）+ 外置状态文件（"智能体会忘，仓库不会"）
@@ -1299,6 +1301,7 @@
 
 - **标题：** Understanding CI/CD Platforms: The backbone of modern DevOps
 - **链接：** [harness.io](https://www.harness.io/blog/understanding-ci-cd-platforms-the-backbone-of-modern-devops)
+- **作者：** Harness.io 官方博客 | **日期：** 2026-05-22
 - **核心：** 标准 CI/CD 平台介绍。8 大组件：SCM → Build → Test → Code Quality → Security Scan → Artifact → Deploy → Monitor
 - **Harness 差异化：** 统一管线、Test Intelligence 智能测试、最少脚本、Policy-as-Code 治理
 
@@ -1519,7 +1522,7 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 | Microsoft Agent Framework `HarnessAgent` | 产品/文档 | ⚪ | 微软入场：batteries-included harness 作为一等 API（`AsHarnessAgent`）；微软视角此前仓库空白，暂只有文档无深度工程文 | [learn.microsoft.com](https://learn.microsoft.com/en-us/agent-framework/agents/harness) |
 | OpenAI Core dump 流行病学 | 工程复盘 | ⚪ | "群体级诊断 > 逐例分析"修复 18 年 libunwind 老 bug，ChatGPT 参与写分析管线；可观测性方法论好文但与 harness 关系间接，2026-06-30 | [openai](https://openai.com/index/core-dump-epidemiology-data-infrastructure-bug/) |
 | thedeepfeed：学科史梳理 | 编年 | ⚪ | "七个声音九个月汇流成一个学科"的传播史（含 Osmani 文收藏/点赞比 2:1 等传播数据）；二手史料，配 #31 看 | [thedeepfeed.ai](https://www.thedeepfeed.ai/posts/2026-05-09-agent-harness-engineering-the-discipline/) |
-| Boris Cherny 工作流 | 实践 | ⚪ | Claude Code 作者本人"出奇原味"的用法（~100 行 CLAUDE.md、plan mode 纪律、跑偏就回 plan 重规划）；源头是其 X 帖，链接为社区维护的档案站（非 Anthropic 官方） | [howborisusesclaudecode.com](https://howborisusesclaudecode.com) |
+| Boris Cherny 工作流 | 实践 | ⚪ | Claude Code 作者本人"出奇原味"的用法（~100 行 CLAUDE.md、早期以 plan mode 纪律著称；站内 Part 15 已记录其 4.6+ 后放弃 plan mode 起手、改 auto mode 直跑——"新模型不再需要显式规划步骤"）；源头是其 X 帖，链接为社区维护的档案站（非 Anthropic 官方） | [howborisusesclaudecode.com](https://howborisusesclaudecode.com) |
 | Steering Claude Code 官方指南 | 产品文档 | ⚪ | 七种转向机制（CLAUDE.md/rules/skills/subagents/hooks/output styles/system prompt append）按"加载时机 × compaction 行为 × token 成本"三轴对照——#49 YDD"区别在加载机制"论的官方版说明书；参考手册体裁，2026-06-18 | [claude.com](https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more) |
 | The Harness Effect 论文 | 论文/厂商评测 | ⚪ | "成本数据"缺口的首个系统数据：同 22 任务 × 6 模型只换编排层，成本 -41%、时延 -44%、token -38%；提出 token maxing 与 harness leverage（质量增益与基线能力 r=0.99）。注意 Writer Inc. 自评自家 harness，利益相关，方法论（frozen baseline + locked tasks）可取 | [arxiv 2607.06906](https://arxiv.org/abs/2607.06906) |
 | Harness Updating ≠ Harness Benefit 论文 | 论文 | ⚪ | 拆开两条能力轴：写 harness 编辑的能力各模型持平（9B 能写出与 Opus 同构的 skill），利用 harness 的能力非单调（中档模型受益最多）——跨模型可移植性缺口的机制侧证据；被 #45 Weng 综述引用 | [arxiv 2605.30621](https://arxiv.org/abs/2605.30621) |

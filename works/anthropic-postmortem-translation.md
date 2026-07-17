@@ -15,6 +15,7 @@ sourceKind: "generic/article"
 language: "zh-CN"
 sourceLanguage: "en"
 translationMethod: "baoyu-translate skill"
+sourceFigureCount: 3
 ---
 
 # 关于近期 Claude Code 质量报告的更新
