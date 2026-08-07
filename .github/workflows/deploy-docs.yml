@@ -18,14 +18,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0  # lastUpdated 需要完整 git 历史
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
         with:
-          node-version: 20
+          enablement: true  # 自动开启 GitHub Pages 并设为 Actions 部署
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
@@ -37,11 +42,8 @@ jobs:
       - name: Disable Jekyll
         run: touch .vitepress/dist/.nojekyll
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: .vitepress/dist
 
