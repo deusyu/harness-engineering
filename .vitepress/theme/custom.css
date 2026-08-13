@@ -1,0 +1,126 @@
+/**
+ * Harness Engineering 文档站 —— 自有视觉系统
+ *
+ * 主色取「缰绳青」（teal），与仓库自产海报的暖纸底 × 缰绳橙形成同族
+ * 但更适合长文阅读的数字端演绎；辅以天青做首页标题渐变。
+ * 中文排版细节（字体栈、1.85 行高）吸收自 PR #21（@Doraemonblogs）。
+ */
+
+:root {
+  --vp-c-brand-1: #0f766e;
+  --vp-c-brand-2: #115e59;
+  --vp-c-brand-3: #14b8a6;
+  --vp-c-brand-soft: rgba(20, 184, 166, 0.14);
+
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(135deg, #0f766e 30%, #0284c7);
+}
+
+.dark {
+  --vp-c-brand-1: #2dd4bf;
+  --vp-c-brand-2: #14b8a6;
+  --vp-c-brand-3: #5eead4;
+  --vp-c-brand-soft: rgba(45, 212, 191, 0.16);
+
+  --vp-home-hero-name-background: linear-gradient(135deg, #2dd4bf 30%, #38bdf8);
+}
+
+/* ── 中文长文阅读排版 ─────────────────────────────────────────── */
+
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.85;
+}
+
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3 {
+  letter-spacing: 0.01em;
+}
+
+/* 宽表格横向滚动，避免撑破移动端版面 */
+.vp-doc table {
+  display: block;
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+div[class*='language-'] {
+  border-radius: 8px;
+}
+
+/* ── 首页 ─────────────────────────────────────────────────────── */
+
+.VPFeature {
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.VPFeature:hover {
+  border-color: var(--vp-c-brand-1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px var(--vp-c-brand-soft), 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* 构建时统计卡片（HomeStats.vue） */
+
+.home-stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 40px auto 0;
+  max-width: 1152px;
+  padding: 0 24px;
+}
+
+@media (max-width: 960px) {
+  .home-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-stats > a:last-child {
+    grid-column: span 2;
+  }
+}
+
+.home-stats-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 20px 12px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+  text-decoration: none;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.home-stats-card:hover {
+  border-color: var(--vp-c-brand-1);
+  transform: translateY(-2px);
+}
+
+.home-stats-value {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--vp-c-brand-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-stats-label {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  text-align: center;
+}
+
+.home-stats-note {
+  margin: 12px auto 0;
+  max-width: 1152px;
+  padding: 0 24px;
+  font-size: 13px;
+  color: var(--vp-c-text-3);
+  text-align: center;
+}

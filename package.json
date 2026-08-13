@@ -1,0 +1,15 @@
+{
+  "name": "harness-engineering-docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview",
+    "docs:verify": "node .vitepress/sidebar.mjs --verify"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}

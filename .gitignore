@@ -9,5 +9,8 @@ CLAUDE.md
 .baoyu-skills/
 translate/
 
+# VitePress 本地缓存（构建产物已被上面的 dist/ 规则覆盖）
+.vitepress/cache/
+
 # 私密商务资料（内训洽谈、聊天截图等，永不入库）
 private/
