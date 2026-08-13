@@ -3,6 +3,7 @@
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
 ![Articles](https://img.shields.io/badge/articles-74-green)
 ![Translations](https://img.shields.io/badge/translations-34-orange)
+[![在线阅读](https://img.shields.io/badge/在线阅读-harness.dyu.sh-0f766e)](https://harness.dyu.sh)
 
 # Harness Engineering 学习指南
 

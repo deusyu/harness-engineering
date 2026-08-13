@@ -49,6 +49,7 @@
 - **C11** — markdown 表格形状：README ×2、`references/AGENTS.md`、`references/articles.md`、`works/AGENTS.md` 里每一行表格的单元格数须与表头一致
 - **C12** — 条目字段完整性：`references/articles.md` 每个 `### N.` 编号条目必须带 **作者：** 与 **日期：** 字段
 - **C13** — 零插图声明须留痕：C10 只能证伪"多报"（嵌图数 < 声明数才 FAIL），因此 `sourceFigureCount: 0` 在本地**永远无法被证伪**——不管你有没有真去核对原文，它都是绿的。2026-07-27 就是这个洞放行了一个假 0（原文实有 4 张配图）。C10 刻意零网络、无法回查原文，所以改为要求留痕：**声明 0 的译文必须同时带 `sourceFigureAudit` 字段，值里要有 `YYYY-MM-DD` 核对日期**，写清怎么核对的、结论是什么。`null` 仍然 SKIP——它本来就自陈未审计
+- **C14** — 文档站防漂移：VitePress 站点（部署到 harness.dyu.sh）的侧边栏与首页统计一律由 `.vitepress/sidebar.mjs` 在构建时从文件系统生成，不手写。两条不变量：站点源码（`index.md`、`.vitepress/`）不得出现裸计数（"N 篇"），数字只能来自 `computeStats()`；每个一等内容文件必须在生成的侧边栏中恰好出现一次（`node .vitepress/sidebar.mjs --verify`）。站点脚手架不存在时 SKIP；node 不可用时 verify 半边 SKIP、裸计数 grep 照常执行
 
 执行：`bash scripts/check-consistency.sh`（仓库根目录）
 启用 pre-commit 阻断：`git config core.hooksPath .githooks`

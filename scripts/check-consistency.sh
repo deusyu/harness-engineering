@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # check-consistency.sh — guard against drift between articles.md and downstream caches.
 #
-# Twelve checks:
+# Fourteen checks:
 #   C1 — articles.md heading numbering is contiguous 1..N
 #   C2 — that N matches every downstream count claim
 #        (README.md / README.en.md / prompts/deep-research-tracker.md / references/AGENTS.md)
@@ -45,6 +45,15 @@
 #         sourceFigureAudit field containing a YYYY-MM-DD date, recording when
 #         and how the "no figures" claim was verified. null keeps SKIPping —
 #         it already self-declares as unaudited.
+#   C14 — docs-site harness integrity. The VitePress site must derive its
+#         sidebar and every displayed count from the filesystem at build time
+#         (.vitepress/sidebar.mjs), never from hand-written config. Two
+#         invariants: (a) site sources (index.md, .vitepress/) must not
+#         hardcode library counts ("N 篇") — numbers belong to computeStats();
+#         (b) every first-class content file must appear in the generated
+#         sidebar exactly once (node .vitepress/sidebar.mjs --verify). SKIPs
+#         when the site scaffold is absent; the verify half additionally SKIPs
+#         when node is unavailable.
 #
 # Locale pitfall (do NOT reintroduce): bracket expressions containing multibyte
 # characters — e.g. [├└] or [^。] — silently break under LC_ALL=C with BSD grep:
@@ -507,6 +516,44 @@ for tf in works/*-translation.md; do
 done
 if [ "$c13_fail" -eq 0 ]; then
   echo "  $(green PASS) — $c13_zero zero-figure claim(s), all carrying a dated audit trail"
+fi
+
+# ─── C14 ───────────────────────────────────────────────────────────────
+# Docs-site harness integrity: the sidebar and all displayed counts are
+# generated from the filesystem (.vitepress/sidebar.mjs). Hand-written nav
+# or hardcoded counts would be a drift surface no other check covers.
+echo "[C14] docs site derives nav/counts from the filesystem"
+if [ ! -f .vitepress/sidebar.mjs ]; then
+  echo "  $(yellow SKIP) — no .vitepress/sidebar.mjs (docs site scaffold not present)"
+else
+  c14_ok=1
+  c14_hits=$(grep -rnE '[0-9]+ ?篇' index.md .vitepress/config.ts .vitepress/sidebar.mjs .vitepress/theme 2>/dev/null || true)
+  if [ -n "$c14_hits" ]; then
+    while IFS= read -r c14_hit; do
+      [ -z "$c14_hit" ] && continue
+      echo "  $(red FAIL) — hardcoded count in site source: $c14_hit"
+    done <<C14EOF
+$c14_hits
+C14EOF
+    echo "    fix: 站点源码不写裸计数，数字一律由 .vitepress/sidebar.mjs computeStats() 构建时计算"
+    FAIL=1; c14_ok=0
+  fi
+  if command -v node >/dev/null 2>&1; then
+    c14_verify=$(node .vitepress/sidebar.mjs --verify 2>&1)
+    if [ $? -ne 0 ]; then
+      while IFS= read -r c14_line; do
+        [ -z "$c14_line" ] && continue
+        echo "  $(red FAIL) — $c14_line"
+      done <<C14VEOF
+$c14_verify
+C14VEOF
+      FAIL=1; c14_ok=0
+    elif [ "$c14_ok" -eq 1 ]; then
+      echo "  $(green PASS) — $c14_verify; no hardcoded counts in site sources"
+    fi
+  elif [ "$c14_ok" -eq 1 ]; then
+    echo "  $(green PASS) — no hardcoded counts in site sources ($(yellow 'verify half SKIPped: node unavailable'))"
+  fi
 fi
 
 # ─── Summary ───────────────────────────────────────────────────────────
