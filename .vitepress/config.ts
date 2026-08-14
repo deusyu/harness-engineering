@@ -63,23 +63,38 @@ export default defineConfig({
       ['meta', { property: 'og:url', content: `${HOST}/${cleanPath}` }],
       ['meta', { name: 'twitter:card', content: 'summary' }],
     )
+    // 构建时估算阅读时长（中文按字数计），供 DocMeta 文档页头使用。
+    if (pageData.relativePath !== 'index.md') {
+      try {
+        const raw = fs
+          .readFileSync(path.join(ROOT, pageData.relativePath), 'utf8')
+          .replace(/^---[\s\S]*?\n---/, '')
+          .replace(/```[\s\S]*?```/g, '')
+        const cjk = (raw.match(/[\u4e00-\u9fff]/g) ?? []).length
+        const words = (raw.match(/[A-Za-z0-9]+/g) ?? []).length
+        pageData.frontmatter.haReadingTime = Math.max(1, Math.round((cjk + words * 1.5) / 400))
+      } catch {
+        /* 文件不可读时跳过阅读时长 */
+      }
+    }
   },
 
   themeConfig: {
     logo: '/favicon.svg',
+    siteTitle: '驭缰工程',
 
     nav: [
-      { text: '首页', link: '/' },
-      { text: '概念笔记', link: '/concepts/00-overview' },
-      { text: '独立思考', link: '/thinking/why-this-project-exists' },
-      { text: '翻译与作品', link: '/works/harness-engineering-chinese-interpretation' },
-      { text: '文章索引', link: '/references/articles' },
+      { text: '概念', link: '/concepts/00-overview' },
+      { text: '思考', link: '/thinking/why-this-project-exists' },
+      { text: '实践', link: '/practice/01-ralph-demo/README' },
+      { text: '作品', link: '/works/harness-engineering-chinese-interpretation' },
+      { text: '资料库', link: '/references/articles' },
     ],
 
     // 侧边栏由 .vitepress/sidebar.mjs 从文件系统生成（C14 守卫），不手写。
     sidebar: buildSidebar(),
 
-    outline: { label: '本页目录', level: [2, 3] },
+    outline: { label: '本页目录 · ON THIS PAGE', level: [2, 3] },
 
     search: {
       provider: 'local',

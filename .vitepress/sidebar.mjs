@@ -116,31 +116,52 @@ export function articlesCount() {
 /** 内部模型：与最终侧边栏同构，但每个页面节点额外带 file 字段供校验/构建用。 */
 export function buildModel() {
   return [
-    { text: '概念笔记', collapsed: false, items: listMd('concepts').map(page) },
-    { text: '独立思考', collapsed: false, items: listMd('thinking').map(page) },
-    { text: '动手实践', collapsed: false, items: subdirReadmes('practice').map(page) },
-    { text: '反馈记录', collapsed: false, items: listMd('feedback').map(page) },
-    worksSection(),
-    { text: '工具库', collapsed: false, items: listMd('tools', { recursive: true }).map(page) },
-    { text: '提示词', collapsed: false, items: listMd('prompts').map(page) },
+    { text: '概念笔记', en: 'CONCEPTS', collapsed: false, items: listMd('concepts').map(page) },
+    { text: '独立思考', en: 'THINKING', collapsed: false, items: listMd('thinking').map(page) },
+    { text: '动手实践', en: 'PRACTICE', collapsed: false, items: subdirReadmes('practice').map(page) },
+    { text: '反馈记录', en: 'FEEDBACK', collapsed: false, items: listMd('feedback').map(page) },
+    { en: 'WORKS', ...worksSection() },
+    { text: '工具库', en: 'TOOLS', collapsed: false, items: listMd('tools', { recursive: true }).map(page) },
+    { text: '提示词', en: 'PROMPTS', collapsed: false, items: listMd('prompts').map(page) },
     {
-      text: '资源索引',
+      text: '资料库',
+      en: 'REFERENCES',
+      countValue: articlesCount(),
       collapsed: false,
-      items: [{ ...page('references/articles.md'), text: `文章索引（${articlesCount()} 篇深度摘要）` }],
+      items: [{ ...page('references/articles.md'), text: '文章深度摘要' }],
     },
   ]
 }
 
-function stripFile(nodes) {
-  return nodes.map(({ file, items, ...rest }) => ({
-    ...rest,
-    ...(items ? { items: stripFile(items) } : {}),
-  }))
+function countLinks(nodes) {
+  let n = 0
+  for (const node of nodes) {
+    if (node.link) n += 1
+    if (node.items) n += countLinks(node.items)
+  }
+  return n
+}
+
+/** 展示层装饰（仅 buildSidebar 使用，collectPages/llms/RSS 拿到的仍是干净文本）：
+ *  顶级分组加英文微标签 + 右对齐计数徽标；带数字前缀的文件名在条目前显示编号。 */
+function decorateItem(node) {
+  if (node.items) {
+    return { text: node.text, collapsed: node.collapsed, items: node.items.map(decorateItem) }
+  }
+  const m = node.file.match(/(?:^|\/)(\d+)-[^/]*\.md$/)
+  const text = m ? `<span class="ha-side-num">${m[1]}</span>${node.text}` : node.text
+  return { text, link: node.link }
 }
 
 /** VitePress themeConfig.sidebar 直接消费的形态。 */
 export function buildSidebar() {
-  return stripFile(buildModel())
+  return buildModel().map((section) => ({
+    text: `${section.text}<span class="ha-side-en">${section.en}</span><span class="ha-side-count">${
+      section.countValue ?? countLinks(section.items)
+    }</span>`,
+    collapsed: section.collapsed,
+    items: section.items.map(decorateItem),
+  }))
 }
 
 /** 展平出全部页面节点（含 file），供 --verify 与 buildEnd（md 副本 / llms / RSS）使用。 */

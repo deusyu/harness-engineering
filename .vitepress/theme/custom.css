@@ -141,11 +141,46 @@ body::after {
   border-right: 1px solid var(--he-hairline-soft);
 }
 
+/* 分组标头：中文名 + 英文微标签 + 右对齐计数徽标（由 sidebar.mjs 构建时注入） */
 .VPSidebarItem.level-0 > .item > .text {
-  font-family: var(--he-serif);
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--he-ink-2);
+}
+
+.ha-side-en {
+  margin-left: 7px;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  color: var(--he-ink-3);
+}
+
+.ha-side-count {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--he-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.ha-side-num {
+  display: inline-block;
+  min-width: 26px;
+  font-size: 11px;
   letter-spacing: 0.06em;
-  color: var(--he-ink);
+  color: var(--he-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.VPSidebarItem .link:hover .ha-side-num,
+.VPSidebarItem .is-active .ha-side-num {
+  color: inherit;
 }
 
 .VPSidebarItem .item .text {
@@ -176,24 +211,36 @@ body::after {
   font-weight: 900;
 }
 
+/* 小节自动编号（01 02 …）：源文件不写编号，编号由 CSS 计数器机械生成 */
+.vp-doc {
+  counter-reset: ha-sec;
+}
+
 .vp-doc h2 {
   font-weight: 700;
-  border-top: none;
-  padding-top: 0;
-  margin-top: 48px;
+  border-top: 1px solid var(--he-hairline);
+  padding-top: 30px;
+  margin-top: 56px;
 }
 
 .vp-doc h2::before {
-  content: '';
+  counter-increment: ha-sec;
+  content: counter(ha-sec, decimal-leading-zero);
   display: block;
-  width: 28px;
-  height: 3px;
-  background: var(--he-rein);
-  margin-bottom: 18px;
+  font-family: var(--vp-font-family-base);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--he-rein);
+  margin-bottom: 10px;
 }
 
 .vp-doc h3 {
   font-weight: 700;
+}
+
+.vp-doc ul > li::marker {
+  color: var(--he-rein);
 }
 
 .vp-doc p,
@@ -207,9 +254,10 @@ body::after {
 }
 
 .vp-doc blockquote {
+  border: 1px solid var(--he-hairline);
   border-left: 2px solid var(--he-rein);
   background: var(--he-paper-2);
-  padding: 12px 20px;
+  padding: 14px 20px;
   color: var(--he-ink-2);
 }
 
@@ -242,6 +290,11 @@ div[class*='language-'] {
 /* 上一篇 / 下一篇 */
 .pager-link {
   border-radius: 0 !important;
+}
+
+.pager-link .title {
+  font-family: var(--he-serif);
+  font-weight: 700;
 }
 
 .pager-link:hover {
