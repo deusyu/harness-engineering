@@ -8,6 +8,7 @@ export default {
     '../../works/*.md',
     '../../concepts/*.md',
     '../../thinking/*.md',
+    '../../feedback/*.md',
     '../../scripts/check-consistency.sh',
   ],
   load() {

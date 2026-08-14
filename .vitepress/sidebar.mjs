@@ -163,6 +163,7 @@ export function computeStats() {
     translations: listMd('works').filter((f) => f.endsWith('-translation.md')).length,
     concepts: listMd('concepts').length,
     thinking: listMd('thinking').length,
+    feedback: listMd('feedback').length,
     checks: (readText('scripts/check-consistency.sh').match(/^echo "\[C\d+\]/gm) ?? []).length,
   }
 }
