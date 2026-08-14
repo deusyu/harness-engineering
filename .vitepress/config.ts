@@ -43,7 +43,12 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
-    ['meta', { name: 'theme-color', content: '#0f766e' }],
+    // 标题衬线（Noto Serif SC）：Google Fonts 按 unicode-range 切片按需加载，
+    // 不可达时回退系统宋体（Songti SC / STSong）。
+    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
+    ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&display=swap' }],
+    ['meta', { name: 'theme-color', content: '#f5f1e8' }],
     ['meta', { property: 'og:site_name', content: SITE_TITLE }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: `${SITE_TITLE} RSS`, href: `${HOST}/feed.xml` }],

@@ -1,11 +1,11 @@
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import HomeStats from './HomeStats.vue'
+import HomeArchive from './HomeArchive.vue'
 import './custom.css'
 
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
-    app.component('HomeStats', HomeStats)
+    app.component('HomeArchive', HomeArchive)
   },
 } satisfies Theme

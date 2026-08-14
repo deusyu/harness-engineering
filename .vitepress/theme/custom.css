@@ -1,126 +1,255 @@
 /**
- * Harness Engineering 文档站 —— 自有视觉系统
+ * Harness Engineering 文档站 —— 「纸墨缰绳」视觉系统
  *
- * 主色取「缰绳青」（teal），与仓库自产海报的暖纸底 × 缰绳橙形成同族
- * 但更适合长文阅读的数字端演绎；辅以天青做首页标题渐变。
- * 中文排版细节（字体栈、1.85 行高）吸收自 PR #21（@Doraemonblogs）。
+ * 设计语境直接延续仓库自产海报（works/harness-engineering-intro-deck）：
+ *   暖纸底 #F5F1E8 × 深墨 #1F1C17 × 缰绳橙红 #C2481D（唯一强调色），
+ *   视觉 DNA 是一条缰绳曲线——墨色锚点是人类，箭头指向智能体。
+ * 方向：编辑部 / 档案馆气质，宋体系衬线做标题，长中文阅读优先。
+ * 设计流程按 baoyu-design（Claude Design 引擎）方法论执行。
  */
 
+/* ── 品牌 token ─────────────────────────────────────────────── */
+
 :root {
-  --vp-c-brand-1: #0f766e;
-  --vp-c-brand-2: #115e59;
-  --vp-c-brand-3: #14b8a6;
-  --vp-c-brand-soft: rgba(20, 184, 166, 0.14);
+  --he-paper: #f5f1e8;
+  --he-paper-2: #ede7d8;
+  --he-paper-3: #e5ddc9;
+  --he-ink: #1f1c17;
+  --he-ink-2: rgba(31, 28, 23, 0.74);
+  --he-ink-3: rgba(31, 28, 23, 0.52);
+  --he-rein: #c2481d;
+  --he-rein-strong: #a63a14;
+  --he-rein-soft: rgba(194, 72, 29, 0.12);
+  --he-hairline: rgba(31, 28, 23, 0.16);
+  --he-hairline-soft: rgba(31, 28, 23, 0.09);
 
-  --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(135deg, #0f766e 30%, #0284c7);
+  --he-serif: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
 }
 
 .dark {
-  --vp-c-brand-1: #2dd4bf;
-  --vp-c-brand-2: #14b8a6;
-  --vp-c-brand-3: #5eead4;
-  --vp-c-brand-soft: rgba(45, 212, 191, 0.16);
-
-  --vp-home-hero-name-background: linear-gradient(135deg, #2dd4bf 30%, #38bdf8);
+  --he-paper: #171310;
+  --he-paper-2: #1f1a15;
+  --he-paper-3: #282218;
+  --he-ink: #f0eadf;
+  --he-ink-2: rgba(240, 234, 223, 0.76);
+  --he-ink-3: rgba(240, 234, 223, 0.55);
+  --he-rein: #e0602f;
+  --he-rein-strong: #ef7a4a;
+  --he-rein-soft: rgba(224, 96, 47, 0.16);
+  --he-hairline: rgba(240, 234, 223, 0.18);
+  --he-hairline-soft: rgba(240, 234, 223, 0.1);
 }
 
-/* ── 中文长文阅读排版 ─────────────────────────────────────────── */
+/* ── 映射到 VitePress 主题变量 ─────────────────────────────── */
+
+:root {
+  --vp-c-bg: var(--he-paper);
+  --vp-c-bg-alt: var(--he-paper-2);
+  --vp-c-bg-soft: var(--he-paper-2);
+  --vp-c-bg-elv: var(--he-paper);
+
+  --vp-c-text-1: var(--he-ink);
+  --vp-c-text-2: var(--he-ink-2);
+  --vp-c-text-3: var(--he-ink-3);
+
+  --vp-c-divider: var(--he-hairline);
+  --vp-c-gutter: var(--he-hairline);
+  --vp-c-border: var(--he-hairline);
+
+  --vp-c-brand-1: var(--he-rein);
+  --vp-c-brand-2: var(--he-rein-strong);
+  --vp-c-brand-3: var(--he-rein);
+  --vp-c-brand-soft: var(--he-rein-soft);
+
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+
+  --vp-nav-bg-color: var(--he-paper);
+  --vp-sidebar-bg-color: var(--he-paper-2);
+
+  --vp-code-block-bg: #eee8d9;
+  --vp-code-bg: var(--he-paper-3);
+  --vp-code-color: var(--he-rein-strong);
+
+  --vp-custom-block-tip-border: transparent;
+  --vp-custom-block-tip-text: var(--he-ink);
+  --vp-custom-block-tip-bg: var(--he-rein-soft);
+  --vp-custom-block-info-bg: var(--he-paper-2);
+
+  --vp-button-brand-bg: var(--he-ink);
+  --vp-button-brand-text: var(--he-paper);
+  --vp-button-brand-border: var(--he-ink);
+  --vp-button-brand-hover-bg: var(--he-rein);
+  --vp-button-brand-hover-text: #fff;
+  --vp-button-brand-hover-border: var(--he-rein);
+  --vp-button-brand-active-bg: var(--he-rein-strong);
+  --vp-button-brand-active-border: var(--he-rein-strong);
+}
+
+.dark {
+  --vp-code-block-bg: #221d16;
+  --vp-code-bg: var(--he-paper-3);
+  --vp-code-color: var(--he-rein-strong);
+  --vp-button-brand-bg: var(--he-ink);
+  --vp-button-brand-text: #171310;
+  --vp-button-brand-border: var(--he-ink);
+}
+
+::selection {
+  background: var(--he-rein-soft);
+}
+
+/* ── 纸张颗粒（低调的档案质感） ───────────────────────────── */
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+.dark body::after {
+  opacity: 0.07;
+}
+
+/* ── 导航栏 ──────────────────────────────────────────────────── */
+
+.VPNav {
+  border-bottom: 1px solid var(--he-hairline-soft);
+}
+
+.VPNavBar:not(.home) {
+  background: var(--he-paper);
+}
+
+.VPNavBarTitle .title {
+  font-family: var(--he-serif);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.VPNavBarMenuLink.active {
+  color: var(--he-rein);
+}
+
+/* ── 侧边栏：档案目录气质 ────────────────────────────────────── */
+
+.VPSidebar {
+  border-right: 1px solid var(--he-hairline-soft);
+}
+
+.VPSidebarItem.level-0 > .item > .text {
+  font-family: var(--he-serif);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--he-ink);
+}
+
+.VPSidebarItem .item .text {
+  line-height: 1.6;
+}
+
+/* ── 页内目录（outline） ─────────────────────────────────────── */
+
+.VPDocAsideOutline .content {
+  border-left: 1px solid var(--he-hairline);
+}
+
+.VPDocAsideOutline .outline-marker {
+  background-color: var(--he-rein);
+}
+
+/* ── 正文排版：衬线标题 + 长中文阅读 ────────────────────────── */
+
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4 {
+  font-family: var(--he-serif);
+  letter-spacing: 0.015em;
+}
+
+.vp-doc h1 {
+  font-weight: 900;
+}
+
+.vp-doc h2 {
+  font-weight: 700;
+  border-top: none;
+  padding-top: 0;
+  margin-top: 48px;
+}
+
+.vp-doc h2::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: var(--he-rein);
+  margin-bottom: 18px;
+}
+
+.vp-doc h3 {
+  font-weight: 700;
+}
 
 .vp-doc p,
 .vp-doc li {
   line-height: 1.85;
 }
 
-.vp-doc h1,
-.vp-doc h2,
-.vp-doc h3 {
-  letter-spacing: 0.01em;
+.vp-doc a {
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
 }
 
-/* 宽表格横向滚动，避免撑破移动端版面 */
+.vp-doc blockquote {
+  border-left: 2px solid var(--he-rein);
+  background: var(--he-paper-2);
+  padding: 12px 20px;
+  color: var(--he-ink-2);
+}
+
+.vp-doc blockquote p {
+  font-size: 15px;
+}
+
+/* 宽表格横向滚动；表头压纸色 */
 .vp-doc table {
   display: block;
   overflow-x: auto;
-  border-radius: 8px;
+}
+
+.vp-doc th {
+  background: var(--he-paper-2);
+  font-family: var(--he-serif);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.vp-doc tr:nth-child(2n) {
+  background: transparent;
 }
 
 div[class*='language-'] {
-  border-radius: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--he-hairline-soft);
 }
 
-/* ── 首页 ─────────────────────────────────────────────────────── */
-
-.VPFeature {
-  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+/* 上一篇 / 下一篇 */
+.pager-link {
+  border-radius: 0 !important;
 }
 
-.VPFeature:hover {
-  border-color: var(--vp-c-brand-1);
-  transform: translateY(-2px);
-  box-shadow: 0 0 0 1px var(--vp-c-brand-soft), 0 10px 24px rgba(0, 0, 0, 0.06);
+.pager-link:hover {
+  border-color: var(--he-rein) !important;
 }
 
-/* 构建时统计卡片（HomeStats.vue） */
+/* ── 本地搜索弹层贴合纸色 ───────────────────────────────────── */
 
-.home-stats {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
-  margin: 40px auto 0;
-  max-width: 1152px;
-  padding: 0 24px;
-}
-
-@media (max-width: 960px) {
-  .home-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .home-stats > a:last-child {
-    grid-column: span 2;
-  }
-}
-
-.home-stats-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 20px 12px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  background: var(--vp-c-bg-soft);
-  text-decoration: none;
-  transition: border-color 0.25s ease, transform 0.25s ease;
-}
-
-.home-stats-card:hover {
-  border-color: var(--vp-c-brand-1);
-  transform: translateY(-2px);
-}
-
-.home-stats-value {
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--vp-c-brand-1);
-  font-variant-numeric: tabular-nums;
-}
-
-.home-stats-label {
-  font-size: 13px;
-  color: var(--vp-c-text-2);
-  text-align: center;
-}
-
-.home-stats-note {
-  margin: 12px auto 0;
-  max-width: 1152px;
-  padding: 0 24px;
-  font-size: 13px;
-  color: var(--vp-c-text-3);
-  text-align: center;
+.VPLocalSearchBox .shell {
+  background: var(--he-paper);
 }
