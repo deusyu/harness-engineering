@@ -8,10 +8,15 @@
 set -u
 
 # Files whose change can break consistency. Keep in sync with
-# scripts/check-consistency.sh sources.
-WATCHED_REGEX='^(references/(articles\.md|AGENTS\.md)|README\.md|README\.en\.md|AGENTS\.md|prompts/deep-research-tracker\.md|(concepts|thinking|feedback|works)/[^/]+\.md)$'
+# scripts/check-consistency.sh sources: C1-C13 read the README/AGENTS/tracker,
+# content markdown (any depth — nested works/practice/tools files count), and
+# the images referenced by translations (C10 checks works/imgs/* existence);
+# C14 additionally reads index.md, .vitepress/**, and the check script itself.
+WATCHED_REGEX='^(references/(articles|AGENTS)\.md$|README(\.en)?\.md$|AGENTS\.md$|index\.md$|\.vitepress/|works/imgs/|scripts/check-consistency\.sh$|(concepts|thinking|feedback|works|practice|tools|prompts)/.+\.md$)'
 
-staged=$(git diff --cached --name-only --diff-filter=ACMRD)
+# --no-renames: a rename lists only the destination path by default, letting
+# `git mv README.md elsewhere` slip past the watch list unseen.
+staged=$(git diff --cached --no-renames --name-only --diff-filter=ACMRD)
 if ! echo "$staged" | grep -qE "$WATCHED_REGEX"; then
   exit 0
 fi

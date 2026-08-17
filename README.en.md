@@ -228,7 +228,7 @@ The "Ralph Wiggum Loop" is the core implementation pattern of Harness Engineerin
 
 ## 🛠️ Development Notes
 
-The repo ships with a consistency checker, `scripts/check-consistency.sh`, guarding against count and fidelity drift across thirteen layers of checks:
+The repo ships with a consistency checker, `scripts/check-consistency.sh`, guarding against count and fidelity drift across fourteen layers of checks:
 
 - **C1-C2** — `references/articles.md` article count + its 4 downstream claim sites (README × 2 badges, `prompts/deep-research-tracker.md` header, `references/AGENTS.md` overview)
 - **C3** — actual `*.md` file counts in `concepts/` / `thinking/` / `feedback/` match the README "X 篇" claims
@@ -242,6 +242,7 @@ The repo ships with a consistency checker, `scripts/check-consistency.sh`, guard
 - **C11** — markdown table shape: in the checked files, every table row must carry the same cell count as its header
 - **C12** — every numbered entry in `references/articles.md` must carry the **作者：** and **日期：** fields
 - **C13** — zero-figure claims need an audit trail. C10 can only falsify OVER-claiming, so `sourceFigureCount: 0` is unfalsifiable locally — that hole shipped a false 0 on 2026-07-27 (the source had 4 body figures). Any translation claiming 0 must therefore also carry `sourceFigureAudit` containing a `YYYY-MM-DD` date, stating how the claim was verified
+- **C14** — docs-site harness integrity: the VitePress sidebar and every displayed count must be derived from the filesystem at build time by `.vitepress/sidebar.mjs`; site sources (`index.md`, `.vitepress/**`) must not hardcode counts, and `node .vitepress/sidebar.mjs --verify` asserts every first-class content file appears in the generated sidebar exactly once. On the artifact side, `scripts/verify-dist.mjs` asserts published pages and their `.md` copies correspond one-to-one
 
 **Enable the pre-commit hook after first clone:**
 
@@ -249,7 +250,7 @@ The repo ships with a consistency checker, `scripts/check-consistency.sh`, guard
 git config core.hooksPath .githooks
 ```
 
-Once enabled, every commit touching the README, `AGENTS.md`, `references/articles.md`, `references/AGENTS.md`, `prompts/deep-research-tracker.md`, or any `*.md` under `concepts/` / `thinking/` / `feedback/` / `works/` runs the checks automatically; unrelated commits are left alone.
+Once enabled, every commit touching the README, `AGENTS.md`, `references/articles.md`, `references/AGENTS.md`, `index.md`, `.vitepress/`, `scripts/check-consistency.sh`, or any `*.md` (nested included) under `concepts/` / `thinking/` / `feedback/` / `works/` / `practice/` / `tools/` / `prompts/` runs the checks automatically; unrelated commits are left alone.
 
 **Run manually:** `bash scripts/check-consistency.sh`
 
@@ -261,7 +262,7 @@ See the "机械化检查" section of the root `AGENTS.md` for details.
 
 > This archive now curates itself.
 >
-> Bringing in outside research no longer runs on vibes — it follows a pipeline frozen into a skill, [`curate-research`](.claude/skills/curate-research/SKILL.md): review is automated by parallel agents (the feedback loop), `scripts/check-consistency.sh` keeps counts and fidelity from drifting via C1–C13 (the mechanical rail), and whether something gets in is always a human gate (humans steer, agents execute).
+> Bringing in outside research no longer runs on vibes — it follows a pipeline frozen into a skill, [`curate-research`](.claude/skills/curate-research/SKILL.md): review is automated by parallel agents (the feedback loop), `scripts/check-consistency.sh` keeps counts and fidelity from drifting via C1–C14 (the mechanical rail), and whether something gets in is always a human gate (humans steer, agents execute).
 >
 > So the constraints themselves became the product — exactly what [concepts/07-spec-as-product.md](concepts/07-spec-as-product.md) argues, except this time the subject is the repo itself.
 

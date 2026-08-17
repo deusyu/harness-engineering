@@ -10,10 +10,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# 最小权限：build job 只读源码；pages/id-token 写权限只授给 deploy job，
+# 构建（会执行仓库内脚本）不持有任何部署凭据。
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -22,6 +22,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read # configure-pages 读取 Pages 配置（GET /pages）需要
     steps:
       - uses: actions/checkout@v6
         with:
@@ -29,8 +32,6 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true # 首次运行自动开启 GitHub Pages（Actions 部署模式）
 
       - name: Setup Node
         uses: actions/setup-node@v5
@@ -42,10 +43,13 @@ jobs:
         run: npm ci
 
       - name: Verify sidebar completeness (C14)
-        run: node .vitepress/sidebar.mjs --verify
+        run: npm run docs:verify
 
       - name: Build site
         run: npm run docs:build
+
+      - name: Verify dist contract (page ↔ markdown-copy parity)
+        run: npm run docs:verify:dist
 
       - name: Disable Jekyll
         run: touch .vitepress/dist/.nojekyll
@@ -58,6 +62,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

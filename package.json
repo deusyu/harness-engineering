@@ -7,7 +7,8 @@
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
-    "docs:verify": "node .vitepress/sidebar.mjs --verify"
+    "docs:verify": "node .vitepress/sidebar.mjs --verify",
+    "docs:verify:dist": "node scripts/verify-dist.mjs"
   },
   "devDependencies": {
     "vitepress": "^1.6.4"

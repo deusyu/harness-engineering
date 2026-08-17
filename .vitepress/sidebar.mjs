@@ -23,12 +23,43 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const REAL_ROOT = fs.realpathSync(ROOT)
 
-function readText(rel) {
-  return fs.readFileSync(path.join(ROOT, rel), 'utf8')
+/**
+ * 站点不发布的源文件（VitePress srcExclude 的唯一事实源，config.ts 直接 import）。
+ * collectPublishedFiles() 的排除规则与此保持同构；两者的最终一致性由
+ * scripts/verify-dist.mjs 在构建产物上机械校验。
+ */
+export const SRC_EXCLUDE = [
+  '**/AGENTS.md',
+  'README.md',
+  'README.en.md',
+  'CLAUDE.md',
+  'translate/**',
+  'private/**',
+  'output/**',
+  '.claude/**',
+]
+
+/**
+ * 安全解析内容文件：必须是仓库根内的普通文件。拒绝 symlink 与越界路径，
+ * 防止仓库外内容（哪怕通过一个恶意/失误的软链）被读入并复制进公开产物。
+ */
+export function assertContentFile(rel) {
+  const expected = path.join(REAL_ROOT, rel)
+  if (!expected.startsWith(REAL_ROOT + path.sep)) throw new Error(`refusing path outside repo root: ${rel}`)
+  const abs = path.join(ROOT, rel)
+  const st = fs.lstatSync(abs, { throwIfNoEntry: false })
+  if (!st || !st.isFile()) throw new Error(`refusing non-regular file (symlink/missing): ${rel}`)
+  if (fs.realpathSync(abs) !== expected) throw new Error(`refusing symlinked path: ${rel}`)
+  return abs
 }
 
-/** 列出目录下的内容 md 文件（排除 AGENTS.md），返回仓库相对路径，按文件名排序。 */
+function readText(rel) {
+  return fs.readFileSync(assertContentFile(rel), 'utf8')
+}
+
+/** 列出目录下的内容 md 文件（排除 AGENTS.md 与一切非普通文件），返回仓库相对路径，按文件名排序。 */
 function listMd(dir, { recursive = false } = {}) {
   const abs = path.join(ROOT, dir)
   if (!fs.existsSync(abs)) return []
@@ -38,13 +69,14 @@ function listMd(dir, { recursive = false } = {}) {
       if (recursive) out.push(...listMd(path.join(dir, ent.name), { recursive }))
       continue
     }
+    if (!ent.isFile()) continue // symlink 一律不进内容集
     if (!ent.name.endsWith('.md') || ent.name === 'AGENTS.md') continue
     out.push(path.join(dir, ent.name))
   }
   return out.sort()
 }
 
-/** 子目录形态的作品/实验：以其 README.md 作为入口页。 */
+/** 子目录形态的作品/实验：以其 README.md 作为入口页（必须是普通文件，symlink 不算）。 */
 function subdirReadmes(dir) {
   const abs = path.join(ROOT, dir)
   if (!fs.existsSync(abs)) return []
@@ -52,8 +84,44 @@ function subdirReadmes(dir) {
   for (const ent of fs.readdirSync(abs, { withFileTypes: true })) {
     if (!ent.isDirectory()) continue
     const rel = path.join(dir, ent.name, 'README.md')
-    if (fs.existsSync(path.join(ROOT, rel))) out.push(rel)
+    const st = fs.lstatSync(path.join(ROOT, rel), { throwIfNoEntry: false })
+    if (st?.isFile()) out.push(rel)
   }
+  return out.sort()
+}
+
+/** SRC_EXCLUDE 的谓词形式：collectPublishedFiles 用它判断一个文件是否被站点排除。 */
+function isExcludedFromSite(rel) {
+  if (path.basename(rel) === 'AGENTS.md') return true
+  if (rel === 'README.md' || rel === 'README.en.md' || rel === 'CLAUDE.md') return true
+  return ['translate/', 'private/', 'output/', '.claude/'].some((p) => rel.startsWith(p))
+}
+
+/**
+ * 站点实际发布的全部 md 源文件（含首页、PROMPT.md、poster/style.md 等不进侧栏的
+ * 附属页）。遍历规则与 VitePress 的源扫描一致：跳过点目录与 node_modules，再应用
+ * SRC_EXCLUDE。md 副本、llms 输出与产物校验共享这一个模型，杜绝「发布了却没有
+ * 机器可读副本」的缝隙。
+ */
+export function collectPublishedFiles() {
+  const out = []
+  const walk = (dir) => {
+    for (const ent of fs.readdirSync(path.join(ROOT, dir || '.'), { withFileTypes: true })) {
+      const rel = dir ? path.join(dir, ent.name) : ent.name
+      if (ent.isDirectory()) {
+        // 与 VitePress 源扫描的忽略规则对齐：点目录、node_modules、任意层级的 dist
+        if (ent.name.startsWith('.') || ent.name === 'node_modules' || ent.name === 'dist') continue
+        walk(rel)
+        continue
+      }
+      if (!ent.isFile() || !ent.name.endsWith('.md')) continue
+      if (ent.name.startsWith('.')) continue // glob dot:false，点文件不被 VitePress 构建
+      if (/\[\w+?\]/.test(rel)) continue // VitePress 视作动态路由，无 .paths 时不产出 html
+      if (isExcludedFromSite(rel)) continue
+      out.push(rel)
+    }
+  }
+  walk('')
   return out.sort()
 }
 
@@ -79,11 +147,16 @@ function page(rel) {
 }
 
 /**
- * works/ 分组规则：按文件名前缀归入来源系列（分组式信息架构吸收自 PR #21，
- * by @Doraemonblogs）。match 按数组顺序生效，最后一组恒真兜底。
+ * works/ 分组规则：按文件名（子目录作品按目录名）前缀归入来源系列（分组式信息
+ * 架构吸收自 PR #21，by @Doraemonblogs）。match 按数组顺序生效，最后一组恒真
+ * 兜底——未匹配任何前缀的新作品落入「社区博客」，宁可分组不准，不可静默丢失。
  */
 const WORKS_GROUPS = [
-  { text: '原创分析', match: (n) => n === 'harness-engineering-chinese-interpretation.md' },
+  {
+    text: '原创分析',
+    match: (n) =>
+      n === 'harness-engineering-chinese-interpretation.md' || n === 'harness-engineering-intro-deck',
+  },
   { text: 'Martin Fowler 系列', match: (n) => n.startsWith('fowler-') },
   { text: 'Anthropic 系列', match: (n) => n.startsWith('anthropic-') },
   { text: 'LangChain 系列', match: (n) => /^(langchain|langsmith|deep-agents)-/.test(n) },
@@ -96,10 +169,12 @@ const WORKS_GROUPS = [
 function worksSection() {
   const groups = WORKS_GROUPS.map((g) => ({ text: g.text, match: g.match, items: [] }))
   for (const rel of listMd('works')) {
-    const name = path.basename(rel)
-    groups.find((g) => g.match(name)).items.push(page(rel))
+    groups.find((g) => g.match(path.basename(rel))).items.push(page(rel))
   }
-  for (const rel of subdirReadmes('works')) groups[0].items.push(page(rel))
+  // 子目录作品与平铺文件走同一套匹配规则（按目录名），同样受兜底组保护。
+  for (const rel of subdirReadmes('works')) {
+    groups.find((g) => g.match(path.basename(path.dirname(rel)))).items.push(page(rel))
+  }
   return {
     text: '翻译与作品',
     collapsed: true,
@@ -164,7 +239,7 @@ export function buildSidebar() {
   }))
 }
 
-/** 展平出全部页面节点（含 file），供 --verify 与 buildEnd（md 副本 / llms / RSS）使用。 */
+/** 展平出侧栏全部页面节点（含 file），供 --verify、llms.txt 分组索引与 RSS 使用。 */
 export function collectPages() {
   const out = []
   const walk = (nodes) => {
@@ -175,6 +250,16 @@ export function collectPages() {
   }
   walk(buildModel())
   return out
+}
+
+/**
+ * 发布页面全集的页面对象（含首页与附属页），供 buildEnd 生成 .md 副本与
+ * llms 全文使用——「每个页面都有同路径 Markdown 版本」这句对外承诺以此为准。
+ */
+export function collectPublishedPages() {
+  return collectPublishedFiles().map((rel) =>
+    rel === 'index.md' ? { text: '首页', link: '/', file: rel } : page(rel)
+  )
 }
 
 /** 首页与 llms.txt 使用的构建时统计 —— 站点里出现的每个数字都来自这里。 */
@@ -210,11 +295,21 @@ export function verify() {
   const req = requiredPages()
   const missing = [...req].filter((f) => !seen.has(f))
   const orphans = files.filter((f) => !fs.existsSync(path.join(ROOT, f)))
+  // 侧栏页必须是发布全集的子集——srcExclude 误伤侧栏页会在这里现形。
+  const published = new Set(collectPublishedFiles())
+  const unpublished = files.filter((f) => !published.has(f))
   const problems = []
   if (missing.length) problems.push(`missing from generated sidebar: ${missing.join(', ')}`)
   if (dups.length) problems.push(`duplicated in generated sidebar: ${dups.join(', ')}`)
   if (orphans.length) problems.push(`sidebar links to nonexistent files: ${orphans.join(', ')}`)
-  return { ok: problems.length === 0, problems, pageCount: files.length, requiredCount: req.size }
+  if (unpublished.length) problems.push(`sidebar links to files excluded from the site: ${unpublished.join(', ')}`)
+  return {
+    ok: problems.length === 0,
+    problems,
+    pageCount: files.length,
+    requiredCount: req.size,
+    publishedCount: published.size,
+  }
 }
 
 const invokedDirectly =
@@ -226,7 +321,7 @@ if (invokedDirectly) {
     const r = verify()
     if (r.ok) {
       console.log(
-        `sidebar derives ${r.pageCount} pages from the filesystem; all ${r.requiredCount} first-class content files present exactly once`
+        `sidebar derives ${r.pageCount} pages from the filesystem; all ${r.requiredCount} first-class content files present exactly once; site publishes ${r.publishedCount} markdown sources`
       )
       process.exit(0)
     }

@@ -1,11 +1,20 @@
 import { defineConfig } from 'vitepress'
-import { execSync } from 'node:child_process'
+import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 // @ts-ignore — 纯 ESM 生成器（Node 标准库，无类型声明）
-import { ROOT, buildSidebar, collectPages, computeStats } from './sidebar.mjs'
+import {
+  ROOT,
+  SRC_EXCLUDE,
+  assertContentFile,
+  buildSidebar,
+  collectPages,
+  collectPublishedPages,
+  computeStats,
+} from './sidebar.mjs'
 
 const HOST = 'https://harness.dyu.sh'
+const REPO_URL = 'https://github.com/deusyu/harness-engineering'
 const SITE_TITLE = 'Harness Engineering'
 const SITE_DESC = '驭缰工程中文学习档案——概念笔记、独立思考、系统性翻译与实践记录'
 
@@ -19,26 +28,94 @@ export default defineConfig({
   lastUpdated: true,
 
   // 站点只发布内容页：智能体导航文件（AGENTS.md）、仓库门面（根 README）、
-  // 本地过程稿（translate/）与私密资料（private/）都不属于站点。
-  srcExclude: [
-    '**/AGENTS.md',
-    'README.md',
-    'README.en.md',
-    'CLAUDE.md',
-    'translate/**',
-    'private/**',
-    '.claude/**',
-  ],
+  // 本地过程稿（translate/、output/）与私密资料（private/）都不属于站点。
+  // 排除清单的唯一事实源在 sidebar.mjs（SRC_EXCLUDE），与发布页面模型同源。
+  srcExclude: SRC_EXCLUDE,
 
-  // 仓库内多数交叉链接为 GitHub 浏览而写（目录链接、指向 .py/AGENTS.md 的链接），
-  // VitePress 天然无法解析，故关闭死链阻断。站内导航完整性由 C14 的
-  // sidebar --verify 从文件系统侧守护。
-  ignoreDeadLinks: true,
-
+  // 死链阻断保持开启：仓库内为 GitHub 浏览而写的交叉链接（目录链接、指向
+  // .py/AGENTS.md 的链接）由下方 markdown.config 的构建期改写规则统一转成
+  // GitHub 链接，站内不应残留任何死链。
   sitemap: { hostname: HOST },
 
   markdown: {
     image: { lazy: true },
+    config(md) {
+      // 构建期链接改写：相对链接若指向站点未发布的目标（AGENTS.md、源码文件、
+      // 目录……），改写为 GitHub 链接，内容在站点与 GitHub 两个语境下都可读；
+      // 指向的目录若有已发布的 README，则直接路由到站内该页。改写发生在 parse
+      // 阶段，VitePress 的死链检查看到的已是改写后的链接，因此无需关闭检查。
+      // （published 在渲染器创建时快照一次；dev 模式新增页面需重启才会进集合，
+      // 生产构建每次全新快照，不受影响。）
+      const published = new Set(collectPublishedPages().map((p) => p.file))
+      // 只有 git 跟踪的目标才配得到 GitHub 链接——本地存在但未跟踪的文件改写
+      // 过去只会得到 404；这类链接留给死链检查大声报错。git 不可用时放行兜底。
+      let trackedFiles: Set<string> | null = null
+      const trackedDirs = new Set<string>()
+      try {
+        trackedFiles = new Set(
+          execFileSync('git', ['ls-files', '-z'], {
+            cwd: ROOT,
+            encoding: 'utf8',
+            stdio: ['ignore', 'pipe', 'ignore'],
+            maxBuffer: 32 * 1024 * 1024,
+          })
+            .split('\0')
+            .filter(Boolean)
+        )
+        for (const f of trackedFiles) {
+          let d = path.posix.dirname(f)
+          while (d !== '.' && !trackedDirs.has(d)) {
+            trackedDirs.add(d)
+            d = path.posix.dirname(d)
+          }
+        }
+      } catch {
+        trackedFiles = null
+      }
+      const isTracked = (rel: string, isDir: boolean) =>
+        trackedFiles === null || (isDir ? trackedDirs.has(rel) : trackedFiles.has(rel))
+      md.core.ruler.push('ha_rewrite_repo_links', (state) => {
+        const pagePath = (state.env as { relativePath?: string })?.relativePath
+        if (!pagePath) return
+        for (const block of state.tokens) {
+          if (block.type !== 'inline' || !block.children) continue
+          for (const token of block.children) {
+            if (token.type !== 'link_open') continue
+            const href = token.attrGet('href')
+            // 只处理相对链接；协议链接、锚点、站内绝对路径原样保留。
+            if (!href || /^(?:[a-z][a-z0-9+.-]*:|\/\/|#|\/)/i.test(href)) continue
+            const hash = href.indexOf('#')
+            const target = hash === -1 ? href : href.slice(0, hash)
+            const anchor = hash === -1 ? '' : href.slice(hash)
+            if (!target) continue
+            let decoded = target
+            try {
+              decoded = decodeURI(target)
+            } catch {
+              /* 非法转义序列：按原文处理 */
+            }
+            const rel = path.posix
+              .normalize(path.posix.join(path.posix.dirname(pagePath), decoded))
+              .replace(/\/+$/, '')
+            if (rel.startsWith('..')) continue // 仓库外相对路径：留给死链检查报错
+            if (published.has(rel)) continue // 已发布页面：VitePress 自会路由
+            let stat
+            try {
+              stat = fs.statSync(path.join(ROOT, rel))
+            } catch {
+              continue // 目标不存在：留给死链检查报错
+            }
+            if (stat.isDirectory() && published.has(path.posix.join(rel, 'README.md'))) {
+              token.attrSet('href', `/${rel}/README${anchor}`)
+            } else if (isTracked(rel, stat.isDirectory())) {
+              const kind = stat.isDirectory() ? 'tree' : 'blob'
+              token.attrSet('href', `${REPO_URL}/${kind}/main/${rel}${anchor}`)
+            }
+            // 未跟踪的本地目标不改写：留给死链检查报错，胜过发布一个 404 链接
+          }
+        }
+      })
+    },
   },
 
   head: [
@@ -67,7 +144,7 @@ export default defineConfig({
     if (pageData.relativePath !== 'index.md') {
       try {
         const raw = fs
-          .readFileSync(path.join(ROOT, pageData.relativePath), 'utf8')
+          .readFileSync(assertContentFile(pageData.relativePath), 'utf8')
           .replace(/^---[\s\S]*?\n---/, '')
           .replace(/```[\s\S]*?```/g, '')
         const cjk = (raw.match(/[\u4e00-\u9fff]/g) ?? []).length
@@ -136,26 +213,33 @@ export default defineConfig({
    */
   async buildEnd(siteConfig) {
     const out = siteConfig.outDir
-    const pages = collectPages()
+    const pages = collectPages() // 侧栏内容页：llms 分组索引与 RSS 用
+    const published = collectPublishedPages() // 发布全集（含首页与附属页）：md 副本与全文用
     const stats = computeStats()
 
-    // 1) 每页伴生 Markdown 副本
-    for (const p of pages) {
-      const dest = path.join(out, `${p.link.slice(1)}.md`)
+    // 1) 每个发布页面伴生同路径 Markdown 副本（首页 → /index.md）。
+    //    与产物的一一对应由 scripts/verify-dist.mjs 在构建后机械校验。
+    for (const p of published) {
+      const dest = path.join(out, p.link === '/' ? 'index.md' : `${p.link.slice(1)}.md`)
       fs.mkdirSync(path.dirname(dest), { recursive: true })
-      fs.copyFileSync(path.join(ROOT, p.file), dest)
+      fs.copyFileSync(assertContentFile(p.file), dest)
     }
 
     // 2) llms.txt / llms-full.txt
+    const sidebarFiles = new Set(pages.map((p) => p.file))
+    const extras = published.filter((p) => p.file !== 'index.md' && !sidebarFiles.has(p.file))
     const model = groupedForLlms(pages)
     const llms = [
       `# ${SITE_TITLE} 学习档案`,
       '',
       `> 中文 Harness Engineering（驭缰工程）知识库：${stats.concepts} 篇概念笔记、${stats.thinking} 篇独立思考、${stats.translations} 篇一手翻译，以及收录 ${stats.articles} 篇文章的深度摘要索引。人类掌舵，智能体执行。`,
       '',
-      '本站每个页面都有同路径的 Markdown 版本：在页面 URL 后追加 `.md` 即可获取纯文本。',
+      '本站每个页面都有同路径的 Markdown 版本：在页面 URL 后追加 `.md` 即可获取纯文本（首页为 `/index.md`）。',
       '',
       ...model,
+      ...(extras.length
+        ? ['## 附属页面', '', ...extras.map((p) => `- [${p.text}](${HOST}${p.link}.md)`), '']
+        : []),
       '## 完整内容',
       '',
       `- [llms-full.txt](${HOST}/llms-full.txt)：全站正文合并版`,
@@ -163,9 +247,10 @@ export default defineConfig({
     ].join('\n')
     fs.writeFileSync(path.join(out, 'llms.txt'), llms)
 
-    const full = pages
+    // 全文 = 侧栏内容页（按分区顺序）+ 附属页；首页是纯组件壳，无正文可并。
+    const full = [...pages, ...extras]
       .map((p) => {
-        const raw = fs.readFileSync(path.join(ROOT, p.file), 'utf8')
+        const raw = fs.readFileSync(assertContentFile(p.file), 'utf8')
         return `\n\n---\ntitle: ${p.text}\nurl: ${HOST}${p.link}\n---\n\n${raw}`
       })
       .join('')
@@ -236,7 +321,8 @@ function groupedForLlms(pages: Array<{ text: string; link: string; file: string 
 
 function gitDate(file: string): Date {
   try {
-    const iso = execSync(`git log -1 --format=%cI -- "${file}"`, {
+    // 参数数组 + `--` 分隔符：文件名永远只是参数，不进 shell，杜绝命令注入。
+    const iso = execFileSync('git', ['log', '-1', '--format=%cI', '--', file], {
       cwd: ROOT,
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'ignore'],
