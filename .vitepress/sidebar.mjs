@@ -18,6 +18,7 @@
  *   node .vitepress/sidebar.mjs --verify   # 完整性校验（C14 调用）
  *   node .vitepress/sidebar.mjs --stats    # 打印构建时统计
  */
+import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -173,9 +174,28 @@ export function mapMarkdownLinks(raw, fn) {
  * symlink，因此一律拒绝，而不是逐目录白名单。
  */
 export function findForbiddenSymlinks() {
-  const found = []
-  // 豁免只认精确的仓库根路径——按目录名任意层级豁免会留出
-  // public/node_modules/ 这类被 Vite 原样复制、却躲过扫描的死角。
+  const found = new Set()
+  // 第一道：git index。被跟踪的 symlink（mode 120000）无论藏在哪个路径——
+  // 包括下面工作树扫描豁免的目录（有人 git add -f node_modules/x 也逃不掉）
+  // ——都会出现在 CI 的 checkout 里，必须从索引侧兜住。git 不可用时退化为
+  // 纯工作树扫描。
+  try {
+    for (const line of execFileSync('git', ['ls-files', '-s', '-z'], {
+      cwd: ROOT,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+      maxBuffer: 32 * 1024 * 1024,
+    })
+      .split('\0')
+      .filter(Boolean)) {
+      if (line.startsWith('120000 ')) found.add(line.split('\t')[1])
+    }
+  } catch {
+    /* 非 git 环境：仅工作树扫描 */
+  }
+  // 第二道：工作树扫描，抓未跟踪的 symlink。豁免只认精确的仓库根路径——
+  // 按目录名任意层级豁免会留出 public/node_modules/ 这类被 Vite 原样复制、
+  // 却躲过扫描的死角。
   const SKIP_REL = new Set([
     '.git',
     'node_modules',
@@ -187,7 +207,7 @@ export function findForbiddenSymlinks() {
     for (const ent of fs.readdirSync(path.join(ROOT, dir || '.'), { withFileTypes: true })) {
       const rel = dir ? `${dir}/${ent.name}` : ent.name
       if (ent.isSymbolicLink()) {
-        found.push(rel)
+        found.add(rel)
         continue
       }
       if (ent.isDirectory()) {
@@ -197,7 +217,7 @@ export function findForbiddenSymlinks() {
     }
   }
   walk('')
-  return found.sort()
+  return [...found].sort()
 }
 
 /** SRC_EXCLUDE 的谓词形式：collectPublishedFiles 用它判断一个文件是否被站点排除。 */

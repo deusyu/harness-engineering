@@ -75,8 +75,18 @@ const encodePath = (rel: string) =>
     )
     .join('/')
 
-/** 锚点编码：改写产出的 URL 若透传原始锚点，空格等字符会截断 Markdown 链接。 */
-const encodeAnchor = (anchor: string) => (anchor ? `#${encodeURIComponent(anchor.slice(1))}` : '')
+/** 容错解码：非法转义序列按原文返回（幂等编码的前置步骤）。 */
+const safeDecode = (s: string) => {
+  try {
+    return decodeURIComponent(s)
+  } catch {
+    return s
+  }
+}
+
+/** 锚点编码：改写产出的 URL 若透传原始锚点，空格等字符会截断 Markdown 链接。
+ *  先解码再编码保证幂等——源里已写成 %20 / UTF-8 转义的锚点不会被二次编码。 */
+const encodeAnchor = (anchor: string) => (anchor ? `#${encodeURIComponent(safeDecode(anchor.slice(1)))}` : '')
 
 /** 站内页面路由 → 对外绝对 URL（llms/RSS/og 的唯一出口，统一做路径段编码）。 */
 const pageUrl = (link: string) => `${HOST}${encodePath(link)}`
@@ -100,12 +110,9 @@ function classifyLink(pageRel: string, href: string): LinkClass {
   const q = target.indexOf('?')
   if (q !== -1) target = target.slice(0, q)
   if (!target) return { kind: 'skip' }
-  let decoded = target
-  try {
-    decoded = decodeURI(target)
-  } catch {
-    /* 非法转义序列：按原文处理 */
-  }
+  // 按路径段 decodeURIComponent（decodeURI 不解 %26/%3A 等保留字符，源里写
+  // 成 a%26b.md 的链接会匹配不上文件名含 & 的已发布页）。
+  const decoded = target.split('/').map(safeDecode).join('/')
   const rel = path.posix
     .normalize(path.posix.join(path.posix.dirname(pageRel), decoded))
     .replace(/\/+$/, '')
@@ -395,7 +402,9 @@ function transformCopy(pageRel: string, raw: string, absolute = false): string {
     const c = classifyLink(pageRel, href)
     const asImage = kind === 'image' || (kind === 'def' && c.kind === 'github' && IMAGE_EXT_RE.test(c.rel))
     if (asImage) {
-      return c.kind === 'github' && !c.isDir ? `${RAW_URL}/${encodePath(c.rel)}` : null
+      if (c.kind === 'github' && !c.isDir) return `${RAW_URL}/${encodePath(c.rel)}`
+      if (absolute && /^\/[^/]/.test(href)) return `${HOST}${href}` // 根相对图片同样要补 host
+      return null
     }
     if (c.kind === 'dir-readme') return `${HOST}/${encodePath(c.rel)}/README.md${encodeAnchor(c.anchor)}`
     if (c.kind === 'github') {
