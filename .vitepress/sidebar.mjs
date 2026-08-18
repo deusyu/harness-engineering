@@ -154,7 +154,9 @@ export function mapMarkdownLinks(raw, fn) {
       const def = masked.match(DEF_RE)
       let mapped
       if (def) {
-        const r = fn('link', def[2] ?? def[3])
+        // 定义处看不到使用侧是链接还是图片，交给消费端按 'def' 自行判定
+        //（config.ts 按目标扩展名区分 raw 图片地址与 GitHub 页面地址）。
+        const r = fn('def', def[2] ?? def[3])
         mapped = r == null ? masked : `${def[1]}${r}${def[4]}`
       } else {
         mapped = mapSeg(masked)

@@ -94,8 +94,11 @@ type LinkClass =
 function classifyLink(pageRel: string, href: string): LinkClass {
   if (!href || /^(?:[a-z][a-z0-9+.-]*:|\/\/|#|\/)/i.test(href)) return { kind: 'skip' }
   const hash = href.indexOf('#')
-  const target = hash === -1 ? href : href.slice(0, hash)
   const anchor = hash === -1 ? '' : href.slice(hash)
+  let target = hash === -1 ? href : href.slice(0, hash)
+  // query string 不是文件路径的一部分（仓库文件对 query 无语义，解析时剥离）。
+  const q = target.indexOf('?')
+  if (q !== -1) target = target.slice(0, q)
   if (!target) return { kind: 'skip' }
   let decoded = target
   try {
@@ -316,12 +319,20 @@ export default defineConfig({
     ].join('\n')
     fs.writeFileSync(path.join(out, 'llms.txt'), llms)
 
-    // 全文 = 首页 + 侧栏内容页（按分区顺序）+ 附属页，与 .md 副本同一份改写
-    // 后内容；标题经 JSON.stringify 保证元数据块是合法 YAML。首页条目用无
-    // frontmatter 的正文，避免元数据块后紧跟第二个 --- 定界块造成解析歧义。
+    // 全文 = 首页 + 侧栏内容页（按分区顺序）+ 附属页。合并文档没有「所在
+    // 目录」，因此不能复用同路径副本的内容：改用 absolute 模式重新改写
+    //（相对链接 → 各页 .md 副本的绝对 URL），并剥离源 frontmatter——生成的
+    // 元数据块后紧跟第二个 --- 块会让按块解析的消费端产生歧义。标题经
+    // JSON.stringify 保证元数据块是合法 YAML。
     const fullEntries = [
       { text: HOME_TITLE, link: '/', content: homeMd },
-      ...[...pages, ...extras].map((p) => ({ text: p.text, link: p.link, content: copies.get(p.file)! })),
+      ...[...pages, ...extras].map((p) => ({
+        text: p.text,
+        link: p.link,
+        content: stripFrontmatter(
+          transformCopy(p.file, fs.readFileSync(assertContentFile(p.file), 'utf8'), true)
+        ),
+      })),
     ]
     const full = fullEntries
       .map((p) => `\n\n---\ntitle: ${JSON.stringify(p.text)}\nurl: ${pageUrl(p.link)}\n---\n\n${p.content}`)
@@ -363,28 +374,45 @@ export default defineConfig({
   },
 })
 
+const IMAGE_EXT_RE = /\.(png|jpe?g|gif|svg|webp|avif)$/i
+
 /**
  * .md 副本 / llms-full.txt 的构建期改写：链接解析共用 sidebar.mjs 的
  * mapMarkdownLinks（围栏/行内代码/嵌套徽章/引用式定义都在那里统一处理），
  * 判定共用 classifyLink 决策表。
  *   - 图片：已跟踪的仓库图片改写为 raw.githubusercontent 绝对地址——站点把
- *     图片打包成哈希资产，原相对路径在副本语境是死的；
- *   - 链接：指向已发布 md 的相对链接原样保留（副本目录结构与站点一致，依然
- *     成立）；目录改写为其 README 副本；其余已跟踪资产改写为 GitHub 链接。
+ *     图片打包成哈希资产，原相对路径在副本语境是死的；引用式定义按目标扩展名
+ *     判定是否图片（定义处看不到使用侧语法）；
+ *   - 链接：指向已发布 md 的相对链接在同路径副本里原样保留（副本目录结构与
+ *     站点一致，依然成立）；目录改写为其 README 副本；其余已跟踪资产改写为
+ *     GitHub 链接。
+ *   - absolute 模式（llms-full.txt 专用）：合并文档没有「所在目录」，任何
+ *     相对/根相对链接都无从解析——已发布页改写为其 .md 副本的绝对 URL，
+ *     根相对路由补上 host。
  */
-function transformCopy(pageRel: string, raw: string): string {
-  return mapMarkdownLinks(raw, (kind: 'image' | 'link', href: string) => {
+function transformCopy(pageRel: string, raw: string, absolute = false): string {
+  return mapMarkdownLinks(raw, (kind: 'image' | 'link' | 'def', href: string) => {
     const c = classifyLink(pageRel, href)
-    if (kind === 'image') {
+    const asImage = kind === 'image' || (kind === 'def' && c.kind === 'github' && IMAGE_EXT_RE.test(c.rel))
+    if (asImage) {
       return c.kind === 'github' && !c.isDir ? `${RAW_URL}/${encodePath(c.rel)}` : null
     }
     if (c.kind === 'dir-readme') return `${HOST}/${encodePath(c.rel)}/README.md${encodeAnchor(c.anchor)}`
     if (c.kind === 'github') {
       return `${REPO_URL}/${c.isDir ? 'tree' : 'blob'}/main/${encodePath(c.rel)}${encodeAnchor(c.anchor)}`
     }
+    if (absolute) {
+      if (c.kind === 'published') {
+        return `${pageUrl(`/${c.rel.replace(/\.md$/, '')}`)}.md${encodeAnchor(c.anchor)}`
+      }
+      if (/^\/[^/]/.test(href)) return `${HOST}${href}` // 根相对路由补 host
+    }
     return null // skip/published/unknown：原样保留
   })
 }
+
+/** 剥离源 frontmatter（llms-full 专用——生成的元数据块后再跟一个 --- 块会产生解析歧义）。 */
+const stripFrontmatter = (raw: string) => raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '')
 
 function groupedForLlms(pages: Array<{ text: string; link: string; file: string }>): string[] {
   const sections = new Map<string, string[]>()

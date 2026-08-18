@@ -250,7 +250,7 @@ The repo ships with a consistency checker, `scripts/check-consistency.sh`, guard
 git config core.hooksPath .githooks
 ```
 
-Once enabled, every commit touching the README, `AGENTS.md`, `references/articles.md`, `references/AGENTS.md`, `index.md`, `.vitepress/`, `scripts/check-consistency.sh`, or any `*.md` (nested included) under `concepts/` / `thinking/` / `feedback/` / `works/` / `practice/` / `tools/` / `prompts/` runs the checks automatically; staging a symlink at any path also triggers them unconditionally (the repo-wide C14 ban). Unrelated commits are left alone.
+Once enabled, every commit touching the README, `AGENTS.md`, `references/articles.md`, `references/AGENTS.md`, `index.md`, `.vitepress/`, `scripts/check-consistency.sh`, or any `*.md` (nested included) under `concepts/` / `thinking/` / `feedback/` / `works/` / `practice/` / `tools/` / `prompts/` runs the checks automatically; staging a symlink at any path is rejected outright (the repo-wide C14 ban, judged on the staged state). Unrelated commits are left alone.
 
 **Run manually:** `bash scripts/check-consistency.sh`
 

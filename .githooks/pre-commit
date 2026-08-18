@@ -20,12 +20,19 @@ WATCHED_REGEX='^(references/(articles|AGENTS)\.md$|README(\.en)?\.md$|AGENTS\.md
 # stages as T, not A/M — excluding it would blind both branches below.
 staged=$(git diff --cached --no-renames --name-only --diff-filter=ACMRDT)
 
-# Symlinks are banned repo-wide (C14 invariant c) — the watch list above is
-# path-scoped, so a staged symlink (mode 120000) triggers the checks
-# unconditionally, whatever its path.
-staged_symlink=$(git diff --cached --no-renames --raw --diff-filter=ACMRT | awk '$2 == "120000" { print; exit }')
+# Symlinks are banned repo-wide (C14 invariant c). Reject a staged symlink
+# directly from the INDEX — running the full checks instead would scan the
+# working tree, which can be swapped back to a regular file after staging
+# (TOCTOU): the staged state is what gets committed, so it is what we judge.
+staged_symlinks=$(git diff --cached --no-renames --raw --diff-filter=ACMRT | awk -F'\t' '$1 ~ / 120000 / { print $2 }')
+if [ -n "$staged_symlinks" ]; then
+  echo "pre-commit blocked: symlinks are forbidden in this repo (C14) — staged:"
+  echo "$staged_symlinks" | sed 's/^/  /'
+  echo "Vite dereferences symlinks into the published site; commit the real file instead."
+  exit 1
+fi
 
-if [ -z "$staged_symlink" ] && ! echo "$staged" | grep -qE "$WATCHED_REGEX"; then
+if ! echo "$staged" | grep -qE "$WATCHED_REGEX"; then
   exit 0
 fi
 

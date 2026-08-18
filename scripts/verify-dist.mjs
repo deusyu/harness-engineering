@@ -76,11 +76,42 @@ const extractLinks = (raw) => {
     for (const t of tokens) {
       if (t.type === 'link_open') found.push({ kind: 'link', href: t.attrGet('href') })
       if (t.type === 'image') found.push({ kind: 'image', href: t.attrGet('src') })
+      // 裸 HTML 标签里的 src/href 不产出 link/image token——改写器也看不见
+      // 它们，必须在这里补上校验面，否则两侧同盲。
+      if ((t.type === 'html_inline' || t.type === 'html_block') && t.content) {
+        for (const m of t.content.matchAll(/(?:src|href)\s*=\s*["']([^"']+)["']/gi)) {
+          found.push({ kind: 'html', href: m[1] })
+        }
+      }
       if (t.children) walk(t.children)
     }
   }
   walk(MD.parse(raw, {}))
   return found
+}
+
+/**
+ * href 分类：{ scope: 'external' } 不校验；{ scope: 'site', target } 在 dist 内
+ * 校验；{ scope: 'relative', target } 相对链接（target 相对 baseDir 已解析，
+ * baseDir 为 null 表示无所在目录的语境——llms-full——此时相对链接本身即违规）。
+ * query 与锚点都不是文件路径的一部分，解析前剥离。
+ */
+const classifyHref = (baseDir, href) => {
+  if (!href) return { scope: 'external' }
+  const strip = (s) => s.split('#')[0].split('?')[0]
+  if (href.startsWith(`${SITE_HOST}/`) || href === SITE_HOST) {
+    return { scope: 'site', target: strip(href.slice(SITE_HOST.length + 1)) }
+  }
+  if (href.startsWith('/') && !href.startsWith('//')) {
+    return { scope: 'site', target: strip(href.slice(1)) }
+  }
+  if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(href)) return { scope: 'external' }
+  const t = strip(href)
+  if (!t) return { scope: 'external' }
+  return {
+    scope: 'relative',
+    target: baseDir === null ? null : path.posix.normalize(path.posix.join(baseDir, t)),
+  }
 }
 for (const p of pages) {
   const copyRel = mdOf(p)
@@ -89,23 +120,28 @@ for (const p of pages) {
     problems.push(`page has no same-path markdown copy: ${p.link} (expected /${copyRel})`)
     continue
   }
-  for (const { kind, href } of extractLinks(fs.readFileSync(copyAbs, 'utf8'))) {
-    let target
-    if (href.startsWith(`${SITE_HOST}/`) || href === SITE_HOST) {
-      target = href.slice(SITE_HOST.length + 1).split('#')[0]
-    } else if (href.startsWith('/')) {
-      target = href.slice(1).split('#')[0]
-    } else if (!href || /^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(href)) {
-      continue // 站外链接/锚点不校验
-    } else {
-      const t = href.split('#')[0]
-      if (!t) continue
-      target = path.posix.normalize(path.posix.join(path.posix.dirname(copyRel), t))
+  checkLinks(fs.readFileSync(copyAbs, 'utf8'), path.posix.dirname(copyRel), `/${copyRel}`)
+}
+
+// llms-full.txt：合并文档没有所在目录，其中不允许任何相对链接（baseDir=null
+// 时 classifyHref 直接判违规）；站内绝对链接照常在 dist 内校验。
+const llmsFullPath = path.join(DIST, 'llms-full.txt')
+if (fs.existsSync(llmsFullPath)) {
+  checkLinks(fs.readFileSync(llmsFullPath, 'utf8'), null, '/llms-full.txt')
+}
+
+function checkLinks(raw, baseDir, label) {
+  for (const { kind, href } of extractLinks(raw)) {
+    const c = classifyHref(baseDir, href)
+    if (c.scope === 'external') continue
+    if (c.scope === 'relative' && c.target === null) {
+      problems.push(`llms-full.txt must not contain relative links (no base dir): ${href}`)
+      continue
     }
     // 按路径段 decodeURIComponent——与编码出口（config.ts encodePath 的
     // encodeURIComponent）互为逆运算；decodeURI 不解码 %26 等保留字符，会把
     // 含 & 等合法文件名误报为 unreachable。
-    target = target
+    const target = c.target
       .split('/')
       .map((seg) => {
         try {
@@ -124,7 +160,7 @@ for (const p of pages) {
       /* missing */
     }
     if (target.startsWith('..') || !st || !st.isFile()) {
-      problems.push(`markdown copy has unreachable ${kind}: /${copyRel} → ${href}`)
+      problems.push(`unreachable ${kind}: ${label} → ${href}`)
     }
   }
 }
