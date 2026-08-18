@@ -14,3 +14,7 @@ translate/
 
 # 私密商务资料（内训洽谈、聊天截图等，永不入库）
 private/
+
+# 本地过程产物（审计报告、发布稿、课程大纲 PDF 等，站点侧已由 SRC_EXCLUDE
+# 排除；这里补 git 侧防线，防止 git add -A 把商务产物带进公开仓库）
+output/
