@@ -19,9 +19,13 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const HERE = path.dirname(fileURLToPath(import.meta.url))
-const { collectPublishedPages, mapMarkdownLinks, SITE_HOST } = await import(
+const { collectPublishedPages, SITE_HOST } = await import(
   new URL('../.vitepress/sidebar.mjs', import.meta.url).href
 )
+// 独立解析路径：校验器用 VitePress 自带的 markdown 渲染器（生产站点同款）提取
+// 副本里的链接，与构建期改写器（sidebar.mjs mapMarkdownLinks 的正则）不共享
+// 实现——改写器的解析盲区会在这里以断链形式现形，而不是被同一套盲区放行。
+const { createMarkdownRenderer } = await import('vitepress')
 
 const DIST = path.resolve(HERE, '../.vitepress/dist')
 if (!fs.existsSync(DIST)) {
@@ -64,8 +68,20 @@ for (const h of expected) {
 
 // .md 副本存在性 + 自足性：副本内的相对链接/图片，以及指向本站的绝对链接
 // （生成式首页副本与目录改写都输出 host 绝对 URL），都必须在 dist 内可达。
-// 链接解析与构建期改写共用 sidebar.mjs 的 mapMarkdownLinks——围栏与行内
-// 代码里的语法示例天然不进校验，改写器看得见的链接校验器同样看得见。
+// 围栏与行内代码里的语法示例由 markdown 解析天然排除在校验之外。
+const MD = await createMarkdownRenderer(path.resolve(HERE, '..'))
+const extractLinks = (raw) => {
+  const found = []
+  const walk = (tokens) => {
+    for (const t of tokens) {
+      if (t.type === 'link_open') found.push({ kind: 'link', href: t.attrGet('href') })
+      if (t.type === 'image') found.push({ kind: 'image', href: t.attrGet('src') })
+      if (t.children) walk(t.children)
+    }
+  }
+  walk(MD.parse(raw, {}))
+  return found
+}
 for (const p of pages) {
   const copyRel = mdOf(p)
   const copyAbs = path.join(DIST, copyRel)
@@ -73,24 +89,32 @@ for (const p of pages) {
     problems.push(`page has no same-path markdown copy: ${p.link} (expected /${copyRel})`)
     continue
   }
-  mapMarkdownLinks(fs.readFileSync(copyAbs, 'utf8'), (kind, href) => {
+  for (const { kind, href } of extractLinks(fs.readFileSync(copyAbs, 'utf8'))) {
     let target
     if (href.startsWith(`${SITE_HOST}/`) || href === SITE_HOST) {
       target = href.slice(SITE_HOST.length + 1).split('#')[0]
     } else if (href.startsWith('/')) {
       target = href.slice(1).split('#')[0]
-    } else if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(href)) {
-      return null // 站外链接/锚点不校验
+    } else if (!href || /^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(href)) {
+      continue // 站外链接/锚点不校验
     } else {
       const t = href.split('#')[0]
-      if (!t) return null
+      if (!t) continue
       target = path.posix.normalize(path.posix.join(path.posix.dirname(copyRel), t))
     }
-    try {
-      target = decodeURI(target)
-    } catch {
-      /* 非法转义：按原文校验 */
-    }
+    // 按路径段 decodeURIComponent——与编码出口（config.ts encodePath 的
+    // encodeURIComponent）互为逆运算；decodeURI 不解码 %26 等保留字符，会把
+    // 含 & 等合法文件名误报为 unreachable。
+    target = target
+      .split('/')
+      .map((seg) => {
+        try {
+          return decodeURIComponent(seg)
+        } catch {
+          return seg // 非法转义：按原文校验
+        }
+      })
+      .join('/')
     // 页面路由（无扩展名）对应 .html；带扩展名的按文件本体校验；根 → index.html。
     const cand = target === '' ? 'index.html' : /\.[a-z0-9]+$/i.test(target) ? target : `${target}.html`
     let st = null
@@ -102,8 +126,7 @@ for (const p of pages) {
     if (target.startsWith('..') || !st || !st.isFile()) {
       problems.push(`markdown copy has unreachable ${kind}: /${copyRel} → ${href}`)
     }
-    return null // 只校验，不改写
-  })
+  }
 }
 
 for (const f of ['llms.txt', 'llms-full.txt', 'feed.xml', 'sitemap.xml']) {

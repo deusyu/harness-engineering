@@ -17,6 +17,18 @@ export function homeCopy(stats) {
       titleLead: '人类掌舵，',
       titleEm: '智能体执行',
       lede: '一座从概念理解到独立实践的 Harness Engineering 深度学习档案。工程师不再逐行写代码——设计约束、明确意图、构建反馈回路，让智能体可靠地交付。',
+      actions: [
+        { text: '从概念开始', link: '/concepts/00-overview' },
+        { text: '读一手翻译', link: '/works/harness-engineering-chinese-interpretation', sup: stats.translations },
+        { text: '浏览档案总目', link: '#ledger' },
+      ],
+      // 语义化缰绳图：从人类的约束设计到智能体的如约交付
+      rein: {
+        aria: '从人类设计约束到智能体如约交付的路径',
+        start: { title: '人类', sub: '设计约束 · 握住缰绳' },
+        milestones: ['AGENTS.md', '自定义 linter', 'CI 反馈回路'],
+        end: { title: '智能体', sub: '如约交付' },
+      },
     },
     shift: {
       title: '一句话理解',
@@ -100,13 +112,19 @@ export function homeCopy(stats) {
  */
 export function homeMarkdown(stats, host) {
   const c = homeCopy(stats)
-  const abs = (link) => (link.startsWith('/') ? `${host}${link}` : link)
+  const abs = (link) =>
+    link.startsWith('/') ? `${host}${link}` : link.startsWith('#') ? `${host}/${link}` : link
+  const rein = c.hero.rein
   const lines = [
     `# ${c.hero.titleLead}${c.hero.titleEm}`,
     '',
     c.hero.kicker,
     '',
     c.hero.lede,
+    '',
+    ...c.hero.actions.map((a) => `- [${a.text}${a.sup != null ? `（${a.sup} 篇）` : ''}](${abs(a.link)})`),
+    '',
+    `${rein.aria}：${rein.start.title}（${rein.start.sub}）→ ${rein.milestones.join(' → ')} → ${rein.end.title}（${rein.end.sub}）`,
     '',
     `## § 01 ${c.shift.title}（${c.shift.en}）`,
     '',

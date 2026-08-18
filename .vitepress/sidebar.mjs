@@ -62,19 +62,20 @@ function readText(rel) {
   return fs.readFileSync(assertContentFile(rel), 'utf8')
 }
 
-/** 列出目录下的内容 md 文件（排除 AGENTS.md 与一切非普通文件），返回仓库相对路径，按文件名排序。 */
+/** 列出目录下的内容 md 文件（排除 AGENTS.md 与一切非普通文件），返回仓库相对路径
+ *  （统一 `/` 分隔——排除规则与 URL 逻辑都以此为标识），按文件名排序。 */
 function listMd(dir, { recursive = false } = {}) {
   const abs = path.join(ROOT, dir)
   if (!fs.existsSync(abs)) return []
   const out = []
   for (const ent of fs.readdirSync(abs, { withFileTypes: true })) {
     if (ent.isDirectory()) {
-      if (recursive) out.push(...listMd(path.join(dir, ent.name), { recursive }))
+      if (recursive) out.push(...listMd(`${dir}/${ent.name}`, { recursive }))
       continue
     }
     if (!ent.isFile()) continue // symlink 一律不进内容集
     if (!ent.name.endsWith('.md') || ent.name === 'AGENTS.md') continue
-    out.push(path.join(dir, ent.name))
+    out.push(`${dir}/${ent.name}`)
   }
   return out.sort()
 }
@@ -86,7 +87,7 @@ function subdirReadmes(dir) {
   const out = []
   for (const ent of fs.readdirSync(abs, { withFileTypes: true })) {
     if (!ent.isDirectory()) continue
-    const rel = path.join(dir, ent.name, 'README.md')
+    const rel = `${dir}/${ent.name}/README.md`
     const st = fs.lstatSync(path.join(ROOT, rel), { throwIfNoEntry: false })
     if (st?.isFile()) out.push(rel)
   }
@@ -97,24 +98,35 @@ function subdirReadmes(dir) {
  * 遍历 Markdown 源里「真实导航」位置的链接——行内链接、图片、引用式定义——
  * 跳过围栏代码块（含 4+ 反引号嵌套围栏）与行内代码里的语法示例。
  * fn(kind, href) 返回字符串则把该链接目标替换为返回值，返回 null 保持原样。
- * config.ts 的副本改写与 scripts/verify-dist.mjs 的副本校验共用本函数，
- * 保证「改写什么」与「校验什么」永远是同一套解析，不会各自漂移。
+ * 改写侧（config.ts transformCopy）用本函数；校验侧（scripts/verify-dist.mjs）
+ * 用 VitePress 自带渲染器的 AST 独立提取——两条解析路径互为对方的探测器。
+ *
+ * 已知边界（逐行正则解析的固有限制，与生产解析器对拍基线 171/171 一致）：
+ * 跨行行内代码、4 空格缩进代码块、打断段落的伪引用定义行会被当普通文本处理。
+ * 这些形态改坏真实链接时会被 AST 校验以断链形式抓住；改坏代码示例属静默面，
+ * 仓库内容约定不在正文用这些形态（现存内容为零）。
  */
 export function mapMarkdownLinks(raw, fn) {
-  const IMG_RE = /!\[([^\]]*)\]\(([^)\s]+?)( +("[^"]*"|'[^']*'))?\)/g
+  // 目标形态：<尖括号目标>（可含空格）或普通目标（允许一层平衡括号）。
+  const DEST = /(?:<([^<>\n]*)>|((?:\([^()\s]*\)|[^()\s])+?))/.source
+  const TITLE = /( +("[^"]*"|'[^']*'))?/.source
+  const IMG_RE = new RegExp(`!\\[([^\\]]*)\\]\\(${DEST}${TITLE}\\)`, 'g')
   // 链接文本允许嵌套一个图片（徽章形态 [![alt](img)](target)）；(?<!!) 防止把
   // 图片语法自身再当链接匹配一次。
-  const LINK_RE = /(?<!!)\[((?:[^[\]]|!\[[^\]]*\]\([^()]*\))*)\]\(([^)\s]+?)( +("[^"]*"|'[^']*'))?\)/g
+  const LINK_RE = new RegExp(
+    `(?<!!)\\[((?:[^[\\]]|!\\[[^\\]]*\\]\\([^()]*\\))*)\\]\\(${DEST}${TITLE}\\)`,
+    'g'
+  )
   // 引用式链接定义 [ref]: target（排除脚注 [^n]:）。
-  const DEF_RE = /^(\s*\[(?!\^)[^\]]+\]:\s*)(\S+)(.*)$/
+  const DEF_RE = /^(\s*\[(?!\^)[^\]]+\]:\s*)(?:<([^<>\n]*)>|(\S+))(.*)$/
   const mapSeg = (seg) =>
     seg
-      .replace(IMG_RE, (m, text, href, titlePart) => {
-        const r = fn('image', href)
+      .replace(IMG_RE, (m, text, angle, plain, titlePart) => {
+        const r = fn('image', angle ?? plain)
         return r == null ? m : `![${text}](${r}${titlePart ?? ''})`
       })
-      .replace(LINK_RE, (m, text, href, titlePart) => {
-        const r = fn('link', href)
+      .replace(LINK_RE, (m, text, angle, plain, titlePart) => {
+        const r = fn('link', angle ?? plain)
         return r == null ? m : `[${text}](${r}${titlePart ?? ''})`
       })
   let fence = null
@@ -131,16 +143,23 @@ export function mapMarkdownLinks(raw, fn) {
         fence = open[1]
         return line
       }
-      const def = line.match(DEF_RE)
+      // 行内代码先挖空成占位符：`...` 里的链接是语法示例、不参与解析，
+      // 但链接文本里的行内代码（[\`file.md\`](path) 形态）不能阻断链接识别，
+      // 所以不能按代码段切开整行——挖空后整行统一匹配，最后回填。
+      // 行内已含 NUL 的病态输入（文本文件不该有）直接跳过挖空，防止占位符冲突。
+      const codes = []
+      const masked = line.includes('\x00')
+        ? line
+        : line.replace(/`+[^`\n]*`+/g, (m) => `\x00${codes.push(m) - 1}\x00`)
+      const def = masked.match(DEF_RE)
+      let mapped
       if (def) {
-        const r = fn('link', def[2])
-        return r == null ? line : `${def[1]}${r}${def[3]}`
+        const r = fn('link', def[2] ?? def[3])
+        mapped = r == null ? masked : `${def[1]}${r}${def[4]}`
+      } else {
+        mapped = mapSeg(masked)
       }
-      // 行内代码保护：`...` 里的链接是语法示例，不是导航。
-      return line
-        .split(/(`+[^`]*`+)/)
-        .map((part, i) => (i % 2 === 1 ? part : mapSeg(part)))
-        .join('')
+      return mapped.replace(/\x00(\d+)\x00/g, (_, i) => codes[+i])
     })
     .join('\n')
 }
@@ -153,17 +172,24 @@ export function mapMarkdownLinks(raw, fn) {
  */
 export function findForbiddenSymlinks() {
   const found = []
-  const SKIP = new Set(['.git', 'node_modules'])
-  const SKIP_REL = new Set(['.vitepress/dist', '.vitepress/cache', '.vitepress/.temp'])
+  // 豁免只认精确的仓库根路径——按目录名任意层级豁免会留出
+  // public/node_modules/ 这类被 Vite 原样复制、却躲过扫描的死角。
+  const SKIP_REL = new Set([
+    '.git',
+    'node_modules',
+    '.vitepress/dist',
+    '.vitepress/cache',
+    '.vitepress/.temp',
+  ])
   const walk = (dir) => {
     for (const ent of fs.readdirSync(path.join(ROOT, dir || '.'), { withFileTypes: true })) {
-      const rel = dir ? path.join(dir, ent.name) : ent.name
+      const rel = dir ? `${dir}/${ent.name}` : ent.name
       if (ent.isSymbolicLink()) {
         found.push(rel)
         continue
       }
       if (ent.isDirectory()) {
-        if (SKIP.has(ent.name) || SKIP_REL.has(rel)) continue
+        if (SKIP_REL.has(rel)) continue
         walk(rel)
       }
     }
@@ -189,7 +215,7 @@ export function collectPublishedFiles() {
   const out = []
   const walk = (dir) => {
     for (const ent of fs.readdirSync(path.join(ROOT, dir || '.'), { withFileTypes: true })) {
-      const rel = dir ? path.join(dir, ent.name) : ent.name
+      const rel = dir ? `${dir}/${ent.name}` : ent.name
       if (ent.isDirectory()) {
         // 与 VitePress 源扫描的忽略规则对齐：点目录、node_modules、任意层级的 dist
         if (ent.name.startsWith('.') || ent.name === 'node_modules' || ent.name === 'dist') continue
@@ -381,7 +407,12 @@ export function verify() {
   const published = new Set(collectPublishedFiles())
   const unpublished = files.filter((f) => !published.has(f))
   const symlinks = findForbiddenSymlinks()
+  // '#'/'?' 在 URL 中是定界符：VitePress 对这类文件名会静默产出 NotFound 壳页
+  //（fail-open），对外出口的 URL 也无法与文件一一对应，机械禁止。
+  const badNames = [...published].filter((f) => /[#?]/.test(f))
   const problems = []
+  if (badNames.length)
+    problems.push(`publishable filenames must not contain '#' or '?': ${badNames.join(', ')}`)
   if (missing.length) problems.push(`missing from generated sidebar: ${missing.join(', ')}`)
   if (dups.length) problems.push(`duplicated in generated sidebar: ${dups.join(', ')}`)
   if (orphans.length) problems.push(`sidebar links to nonexistent files: ${orphans.join(', ')}`)

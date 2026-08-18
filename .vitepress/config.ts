@@ -65,8 +65,21 @@ const TRACKED = (() => {
 const isTracked = (rel: string, isDir: boolean) =>
   TRACKED.files === null || (isDir ? TRACKED.dirs.has(rel) : TRACKED.files.has(rel))
 
-/** GitHub URL 路径段编码（CJK/特殊字符安全；现有文件名均为 ASCII，属于防御）。 */
-const encodePath = (rel: string) => rel.split('/').map(encodeURIComponent).join('/')
+/** URL 路径段编码（CJK/空格/& 等合法文件名安全；'#'/'?' 文件名被 C14 verify 禁止）。
+ *  括号等 RFC3986 sub-delims 也强制编码——它们会截断 Markdown 行内链接语法。 */
+const encodePath = (rel: string) =>
+  rel
+    .split('/')
+    .map((seg) =>
+      encodeURIComponent(seg).replace(/[()!'*]/g, (ch) => `%${ch.charCodeAt(0).toString(16).toUpperCase()}`)
+    )
+    .join('/')
+
+/** 锚点编码：改写产出的 URL 若透传原始锚点，空格等字符会截断 Markdown 链接。 */
+const encodeAnchor = (anchor: string) => (anchor ? `#${encodeURIComponent(anchor.slice(1))}` : '')
+
+/** 站内页面路由 → 对外绝对 URL（llms/RSS/og 的唯一出口，统一做路径段编码）。 */
+const pageUrl = (link: string) => `${HOST}${encodePath(link)}`
 
 const PUBLISHED_FILES = new Set(collectPublishedPages().map((p) => p.file))
 
@@ -148,9 +161,12 @@ export default defineConfig({
             if (!href) continue
             const c = classifyLink(pagePath, href)
             if (c.kind === 'dir-readme') {
-              token.attrSet('href', `/${c.rel}/README${c.anchor}`)
+              token.attrSet('href', `/${c.rel}/README${encodeAnchor(c.anchor)}`)
             } else if (c.kind === 'github') {
-              token.attrSet('href', `${REPO_URL}/${c.isDir ? 'tree' : 'blob'}/main/${encodePath(c.rel)}${c.anchor}`)
+              token.attrSet(
+                'href',
+                `${REPO_URL}/${c.isDir ? 'tree' : 'blob'}/main/${encodePath(c.rel)}${encodeAnchor(c.anchor)}`
+              )
             }
             // skip/published/unknown：原样保留（unknown 留给死链检查大声报错）
           }
@@ -178,7 +194,7 @@ export default defineConfig({
     pageData.frontmatter.head.push(
       ['meta', { property: 'og:title', content: pageData.title ? `${pageData.title} | ${SITE_TITLE}` : `${SITE_TITLE} 学习档案` }],
       ['meta', { property: 'og:description', content: pageData.description || SITE_DESC }],
-      ['meta', { property: 'og:url', content: `${HOST}/${cleanPath}` }],
+      ['meta', { property: 'og:url', content: pageUrl(`/${cleanPath}`) }],
       ['meta', { name: 'twitter:card', content: 'summary' }],
     )
     // 构建时估算阅读时长（中文按字数计），供 DocMeta 文档页头使用。
@@ -291,7 +307,7 @@ export default defineConfig({
       '',
       ...model,
       ...(extras.length
-        ? ['## 附属页面', '', ...extras.map((p) => `- [${p.text}](${HOST}${p.link}.md)`), '']
+        ? ['## 附属页面', '', ...extras.map((p) => `- [${p.text}](${pageUrl(p.link)}.md)`), '']
         : []),
       '## 完整内容',
       '',
@@ -308,7 +324,7 @@ export default defineConfig({
       ...[...pages, ...extras].map((p) => ({ text: p.text, link: p.link, content: copies.get(p.file)! })),
     ]
     const full = fullEntries
-      .map((p) => `\n\n---\ntitle: ${JSON.stringify(p.text)}\nurl: ${HOST}${p.link}\n---\n\n${p.content}`)
+      .map((p) => `\n\n---\ntitle: ${JSON.stringify(p.text)}\nurl: ${pageUrl(p.link)}\n---\n\n${p.content}`)
       .join('')
     fs.writeFileSync(path.join(out, 'llms-full.txt'), `# ${SITE_TITLE} 学习档案 — 全站正文\n${full}`)
 
@@ -322,8 +338,8 @@ export default defineConfig({
         [
           '    <item>',
           `      <title>${xmlEscape(p.text)}</title>`,
-          `      <link>${HOST}${p.link}</link>`,
-          `      <guid>${HOST}${p.link}</guid>`,
+          `      <link>${xmlEscape(pageUrl(p.link))}</link>`,
+          `      <guid>${xmlEscape(pageUrl(p.link))}</guid>`,
           `      <pubDate>${p.date.toUTCString()}</pubDate>`,
           '    </item>',
         ].join('\n')
@@ -362,9 +378,9 @@ function transformCopy(pageRel: string, raw: string): string {
     if (kind === 'image') {
       return c.kind === 'github' && !c.isDir ? `${RAW_URL}/${encodePath(c.rel)}` : null
     }
-    if (c.kind === 'dir-readme') return `${HOST}/${c.rel}/README.md${c.anchor}`
+    if (c.kind === 'dir-readme') return `${HOST}/${encodePath(c.rel)}/README.md${encodeAnchor(c.anchor)}`
     if (c.kind === 'github') {
-      return `${REPO_URL}/${c.isDir ? 'tree' : 'blob'}/main/${encodePath(c.rel)}${c.anchor}`
+      return `${REPO_URL}/${c.isDir ? 'tree' : 'blob'}/main/${encodePath(c.rel)}${encodeAnchor(c.anchor)}`
     }
     return null // skip/published/unknown：原样保留
   })
@@ -389,7 +405,7 @@ function groupedForLlms(pages: Array<{ text: string; link: string; file: string 
   for (const p of pages) {
     const key = sectionOf(p.file)
     if (!sections.has(key)) sections.set(key, [])
-    sections.get(key)!.push(`- [${p.text}](${HOST}${p.link}.md)`)
+    sections.get(key)!.push(`- [${p.text}](${pageUrl(p.link)}.md)`)
   }
   const lines: string[] = []
   for (const [name, links] of sections) {

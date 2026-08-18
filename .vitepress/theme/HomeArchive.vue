@@ -25,32 +25,30 @@ const phases = c.routeSection.phases
       <h1 class="ha-title ha-reveal ha-d1">{{ c.hero.titleLead }}<em>{{ c.hero.titleEm }}</em></h1>
       <p class="ha-lede ha-reveal ha-d2">{{ c.hero.lede }}</p>
       <div class="ha-actions ha-reveal ha-d3">
-        <a class="ha-btn" href="/concepts/00-overview">从概念开始</a>
-        <a class="ha-btn ha-btn-ghost" href="/works/harness-engineering-chinese-interpretation">读一手翻译 <sup>{{ data.translations }}</sup></a>
-        <a class="ha-btn ha-btn-ghost" href="#ledger">浏览档案总目</a>
+        <a v-for="(a, i) in c.hero.actions" :key="a.text" class="ha-btn" :class="{ 'ha-btn-ghost': i > 0 }" :href="a.link">{{ a.text }}<sup v-if="a.sup != null"> {{ a.sup }}</sup></a>
       </div>
 
-      <!-- 语义化缰绳图：从人类的约束设计到智能体的如约交付 -->
-      <svg class="ha-rein ha-reveal ha-d4" viewBox="0 0 960 250" fill="none" aria-label="从人类设计约束到智能体如约交付的路径">
+      <!-- 语义化缰绳图（文案同源 home-copy.mjs）：从人类的约束设计到智能体的如约交付 -->
+      <svg class="ha-rein ha-reveal ha-d4" viewBox="0 0 960 250" fill="none" :aria-label="c.hero.rein.aria">
         <path d="M60 212 C 250 208, 460 180, 620 136 C 720 108, 800 86, 862 68"
           stroke="var(--he-rein)" stroke-width="3" stroke-linecap="round" />
         <path d="M874 64 l-26 -2 M874 64 l-10 22" stroke="var(--he-rein)" stroke-width="3.5" stroke-linecap="round" />
 
         <circle cx="60" cy="212" r="7" fill="var(--he-ink)" />
-        <text x="78" y="218" class="ha-rein-t">人类</text>
-        <text x="78" y="236" class="ha-rein-s">设计约束 · 握住缰绳</text>
+        <text x="78" y="218" class="ha-rein-t">{{ c.hero.rein.start.title }}</text>
+        <text x="78" y="236" class="ha-rein-s">{{ c.hero.rein.start.sub }}</text>
 
         <circle cx="330" cy="199" r="4.5" fill="var(--he-rein)" />
-        <text x="322" y="182" class="ha-rein-s">AGENTS.md</text>
+        <text x="322" y="182" class="ha-rein-s">{{ c.hero.rein.milestones[0] }}</text>
 
         <circle cx="540" cy="161" r="4.5" fill="var(--he-rein)" />
-        <text x="532" y="144" class="ha-rein-s">自定义 linter</text>
+        <text x="532" y="144" class="ha-rein-s">{{ c.hero.rein.milestones[1] }}</text>
 
         <circle cx="700" cy="114" r="4.5" fill="var(--he-rein)" />
-        <text x="692" y="97" class="ha-rein-s">CI 反馈回路</text>
+        <text x="692" y="97" class="ha-rein-s">{{ c.hero.rein.milestones[2] }}</text>
 
-        <text x="826" y="34" class="ha-rein-t ha-rein-end">智能体</text>
-        <text x="826" y="52" class="ha-rein-s">如约交付</text>
+        <text x="826" y="34" class="ha-rein-t ha-rein-end">{{ c.hero.rein.end.title }}</text>
+        <text x="826" y="52" class="ha-rein-s">{{ c.hero.rein.end.sub }}</text>
       </svg>
     </section>
 

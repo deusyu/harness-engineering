@@ -249,7 +249,7 @@ harness-engineering/
 git config core.hooksPath .githooks
 ```
 
-启用后，每次 commit 涉及 README、`AGENTS.md`、`references/articles.md`、`references/AGENTS.md`、`index.md`、`.vitepress/`、`scripts/check-consistency.sh`、或 `concepts/` / `thinking/` / `feedback/` / `works/` / `practice/` / `tools/` / `prompts/` 下（含嵌套目录）的 `*.md` 时会自动跑检查；不涉及则不打扰。
+启用后，每次 commit 涉及 README、`AGENTS.md`、`references/articles.md`、`references/AGENTS.md`、`index.md`、`.vitepress/`、`scripts/check-consistency.sh`、或 `concepts/` / `thinking/` / `feedback/` / `works/` / `practice/` / `tools/` / `prompts/` 下（含嵌套目录）的 `*.md` 时会自动跑检查；此外任何路径下 stage 了 symlink 都会无条件触发（C14 全仓禁令）。不涉及则不打扰。
 
 **手动跑：** `bash scripts/check-consistency.sh`
 

@@ -16,8 +16,16 @@ WATCHED_REGEX='^(references/(articles|AGENTS)\.md$|README(\.en)?\.md$|AGENTS\.md
 
 # --no-renames: a rename lists only the destination path by default, letting
 # `git mv README.md elsewhere` slip past the watch list unseen.
-staged=$(git diff --cached --no-renames --name-only --diff-filter=ACMRD)
-if ! echo "$staged" | grep -qE "$WATCHED_REGEX"; then
+# T (typechange) included: replacing a tracked file with a symlink in place
+# stages as T, not A/M — excluding it would blind both branches below.
+staged=$(git diff --cached --no-renames --name-only --diff-filter=ACMRDT)
+
+# Symlinks are banned repo-wide (C14 invariant c) — the watch list above is
+# path-scoped, so a staged symlink (mode 120000) triggers the checks
+# unconditionally, whatever its path.
+staged_symlink=$(git diff --cached --no-renames --raw --diff-filter=ACMRT | awk '$2 == "120000" { print; exit }')
+
+if [ -z "$staged_symlink" ] && ! echo "$staged" | grep -qE "$WATCHED_REGEX"; then
   exit 0
 fi
 
