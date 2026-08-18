@@ -1,59 +1,29 @@
 <script setup>
 import { data } from './home-stats.data.mjs'
+import { homeCopy } from './home-copy.mjs'
 
 // 结构与叙事吸收自用户以 Claude Design 产出的探索稿（2026-08-14）：
 // 语义化缰绳图、§ 卷宗分节、台账式档案总目、暗色自指章节、五阶段路线。
-// 与探索稿的关键差异：稿内硬编码的计数（74/34/C1–C13 等）全部改回
-// 构建时从文件系统统计（C14 纪律），联系方式等事实以仓库 README 为准。
+// 与探索稿的关键差异：稿内硬编码的计数全部改回构建时从文件系统统计
+// （C14 纪律），联系方式等事实以仓库 README 为准。
+//
+// 文案唯一事实源在 home-copy.mjs——config.ts buildEnd 用同一份文案生成
+// /index.md 机器可读副本与 llms-full.txt 首页条目，人读与机读永不漂移。
 
-const ledger = [
-  { title: '文章索引', sub: 'references/articles.md · 深度摘要', value: data.articles, unit: '篇', link: '/references/articles' },
-  { title: '一手翻译', sub: 'works/*-translation.md', value: data.translations, unit: '篇', link: '/works/harness-engineering-chinese-interpretation' },
-  { title: '概念笔记', sub: 'concepts/', value: data.concepts, unit: '篇', link: '/concepts/00-overview' },
-  { title: '独立思考', sub: 'thinking/', value: data.thinking, unit: '篇', link: '/thinking/why-this-project-exists' },
-  {
-    title: '一致性检查',
-    sub: `scripts/check-consistency.sh · C1–C${data.checks}`,
-    value: data.checks,
-    unit: '项',
-    accent: true,
-    link: 'https://github.com/deusyu/harness-engineering/blob/main/scripts/check-consistency.sh',
-  },
-]
-
-const concepts = [
-  { num: '01', tag: 'REPO = RECORD', title: '仓库即记录系统', desc: '不在仓库里的东西，对智能体不存在。决策、规范、计划一律以版本化工件入库。', path: 'concepts/01', link: '/concepts/01-repo-as-source-of-truth' },
-  { num: '02', tag: 'MAP, NOT MANUAL', title: '地图而非手册', desc: 'AGENTS.md 是目录页，不是百科全书。渐进式披露，从小入口点指向更深的文档。', path: 'concepts/00', link: '/concepts/00-overview' },
-  { num: '03', tag: 'MECHANICAL', title: '机械化执行', desc: '文档会腐烂，lint 规则不会。自定义 linter 与结构测试，是不变量的守护者。', path: 'concepts/02', link: '/concepts/02-mechanical-enforcement' },
-  { num: '04', tag: 'AGENT READABLE', title: '智能体可读性', desc: '优先为智能体的推理优化。选「无聊」的稳定技术，让应用可按 worktree 隔离启动。', path: 'concepts/04', link: '/concepts/04-agent-readability' },
-  { num: '05', tag: 'THROUGHPUT', title: '吞吐量改变合并理念', desc: '纠错成本低、等待成本高。PR 生命周期很短，偶发失败靠续跑重跑解决。', path: 'concepts/05', link: '/concepts/05-throughput-changes-merge' },
-  { num: '06', tag: 'ENTROPY & GC', title: '熵管理 = 垃圾回收', desc: '技术债是高息贷款。把「黄金规则」编码进仓库，后台任务定期扫描并修复偏差。', path: 'concepts/03', link: '/concepts/03-entropy-and-garbage-collection' },
-]
-
-const pillars = [
-  { tag: 'HUMAN GATE', title: '人类闸门', desc: '「收不收进来」始终是一道人类闸门。人类掌舵，决定什么值得进入档案。' },
-  { tag: 'MECHANICAL RAIL', title: '机械护栏', desc: `C1–C${data.checks} 一致性检查守着计数与保真，不让任何数字悄悄腐烂。` },
-  { tag: 'FEEDBACK LOOP', title: '反馈回路', desc: '外部调研的评审，由智能体沿一条固化成 skill 的流水线自动完成。' },
-]
-
-const phases = [
-  { n: '1', meta: `concepts/ · ${data.concepts} 篇`, title: '理解核心概念', desc: '覆盖 OpenAI 六大概念，加上控制论扩展与「约束即产品」的延伸。', link: '/concepts/00-overview' },
-  { n: '2', meta: `thinking/ · ${data.thinking} 篇`, title: '形成自己的观点', desc: '质疑、延伸与跨文章洞察——把别人的范式变成自己能用的判断（持续中）。', link: '/thinking/why-this-project-exists' },
-  { n: '3', meta: 'practice/ · Ralph Demo', title: '选一个小项目实践', desc: '跑通一个自主循环：321 秒 · $0.31——用最小成本亲手验证方法论。', link: '/practice/01-ralph-demo/README' },
-  { n: '4', meta: `feedback/ · ${data.feedback} 篇`, title: '记录反馈迭代', desc: '把踩坑与修正留成轨迹——「翻译即 harness」是第一篇（持续中）。', link: '/feedback/2026-04-14-translation-as-harness' },
-  { n: '5', meta: `works/ · ${data.translations} 篇翻译 + 原创`, title: '输出可展示的作品', desc: '专业一手翻译加原创综合分析——学习闭环在这里交付。', link: '/works/harness-engineering-chinese-interpretation', last: true },
-]
+const c = homeCopy(data)
+const ledger = c.ledgerSection.rows
+const concepts = c.conceptsSection.cards
+const pillars = c.band.pillars
+const phases = c.routeSection.phases
 </script>
 
 <template>
   <div class="ha" lang="zh">
     <!-- 卷首 -->
     <section class="ha-hero">
-      <p class="ha-kicker ha-reveal ha-d0">HARNESS ENGINEERING —— 学习档案 · 中文</p>
-      <h1 class="ha-title ha-reveal ha-d1">人类掌舵，<em>智能体执行</em></h1>
-      <p class="ha-lede ha-reveal ha-d2">
-        一座从概念理解到独立实践的 Harness Engineering 深度学习档案。工程师不再逐行写代码——设计约束、明确意图、构建反馈回路，让智能体可靠地交付。
-      </p>
+      <p class="ha-kicker ha-reveal ha-d0">{{ c.hero.kicker }}</p>
+      <h1 class="ha-title ha-reveal ha-d1">{{ c.hero.titleLead }}<em>{{ c.hero.titleEm }}</em></h1>
+      <p class="ha-lede ha-reveal ha-d2">{{ c.hero.lede }}</p>
       <div class="ha-actions ha-reveal ha-d3">
         <a class="ha-btn" href="/concepts/00-overview">从概念开始</a>
         <a class="ha-btn ha-btn-ghost" href="/works/harness-engineering-chinese-interpretation">读一手翻译 <sup>{{ data.translations }}</sup></a>
@@ -87,37 +57,30 @@ const phases = [
     <!-- § 01 一句话理解 -->
     <section class="ha-sec">
       <header class="ha-sec-head">
-        <h2 class="ha-sec-title"><span class="ha-sec-num">§ 01</span>一句话理解</h2>
-        <span class="ha-sec-en">THE PARADIGM SHIFT</span>
+        <h2 class="ha-sec-title"><span class="ha-sec-num">§ 01</span>{{ c.shift.title }}</h2>
+        <span class="ha-sec-en">{{ c.shift.en }}</span>
       </header>
       <div class="ha-shift">
-        <div class="ha-shift-row">
-          <span class="ha-shift-label">传统工程</span>
-          <span class="ha-chip">人类写代码</span>
-          <span class="ha-shift-arrow">→</span>
-          <span class="ha-chip">机器执行代码</span>
-        </div>
-        <div class="ha-shift-row">
-          <span class="ha-shift-label ha-shift-label-hot">HARNESS ENG.</span>
-          <span class="ha-chip ha-chip-hot">人类设计约束</span>
-          <span class="ha-shift-arrow">→</span>
-          <span class="ha-chip">智能体写代码</span>
-          <span class="ha-shift-arrow">→</span>
-          <span class="ha-chip">机器执行代码</span>
+        <div v-for="row in c.shift.rows" :key="row.label" class="ha-shift-row">
+          <span class="ha-shift-label" :class="{ 'ha-shift-label-hot': row.hot }">{{ row.label }}</span>
+          <template v-for="(chip, i) in row.chips" :key="chip">
+            <span v-if="i > 0" class="ha-shift-arrow">→</span>
+            <span class="ha-chip" :class="{ 'ha-chip-hot': row.hot && i === 0 }">{{ chip }}</span>
+          </template>
         </div>
       </div>
       <p class="ha-shift-note">
-        核心转变：工程师的产出，从「代码」变成了<em>「约束系统」</em>——AGENTS.md、架构规则、自定义 linter、反馈回路。
+        {{ c.shift.noteLead }}<em>{{ c.shift.noteEm }}</em>{{ c.shift.noteTail }}
       </p>
     </section>
 
     <!-- § 02 六大核心概念 -->
     <section class="ha-sec">
       <header class="ha-sec-head">
-        <h2 class="ha-sec-title"><span class="ha-sec-num">§ 02</span>六大核心概念</h2>
-        <span class="ha-sec-en">SIX CORE CONCEPTS</span>
+        <h2 class="ha-sec-title"><span class="ha-sec-num">§ 02</span>{{ c.conceptsSection.title }}</h2>
+        <span class="ha-sec-en">{{ c.conceptsSection.en }}</span>
       </header>
-      <p class="ha-sec-intro">像档案卡一样编号归档——每一张都指向仓库里一篇可追溯的概念笔记。</p>
+      <p class="ha-sec-intro">{{ c.conceptsSection.intro }}</p>
       <div class="ha-grid">
         <a v-for="c in concepts" :key="c.num" class="ha-card" :href="c.link">
           <span class="ha-card-top"><span class="ha-card-num">{{ c.num }}</span><span class="ha-card-tag">{{ c.tag }}</span></span>
@@ -131,12 +94,10 @@ const phases = [
     <!-- § 03 档案总目 -->
     <section class="ha-sec" id="ledger">
       <header class="ha-sec-head">
-        <h2 class="ha-sec-title"><span class="ha-sec-num">§ 03</span>档案总目</h2>
-        <span class="ha-sec-en">BUILD-TIME · 自动清点</span>
+        <h2 class="ha-sec-title"><span class="ha-sec-num">§ 03</span>{{ c.ledgerSection.title }}</h2>
+        <span class="ha-sec-en">{{ c.ledgerSection.en }}</span>
       </header>
-      <p class="ha-sec-intro">
-        导航与下面每一个数字，都在构建时由脚本从仓库文件系统清点生成，再由 C1–C{{ data.checks }} 一致性检查守护，不随文档腐烂而漂移。这不是营销数据，是一座档案馆的总目。
-      </p>
+      <p class="ha-sec-intro">{{ c.ledgerSection.intro }}</p>
       <div class="ha-ledger">
         <a v-for="row in ledger" :key="row.title" class="ha-ledger-row" :href="row.link">
           <span class="ha-ledger-main">
@@ -153,10 +114,10 @@ const phases = [
     <section class="ha-band">
       <div class="ha-band-in">
         <header class="ha-sec-head">
-          <h2 class="ha-sec-title ha-sec-title-dark"><span class="ha-sec-num">§ 04</span>仓库即 harness · 自我指涉</h2>
-          <span class="ha-sec-en ha-sec-en-dark">THE ARCHIVE RUNS ON WHAT IT RECORDS</span>
+          <h2 class="ha-sec-title ha-sec-title-dark"><span class="ha-sec-num">§ 04</span>{{ c.band.title }}</h2>
+          <span class="ha-sec-en ha-sec-en-dark">{{ c.band.en }}</span>
         </header>
-        <p class="ha-band-title">这个仓库，<em>开始策展自己了</em>。</p>
+        <p class="ha-band-title">{{ c.band.leadLead }}<em>{{ c.band.leadEm }}</em>{{ c.band.leadTail }}</p>
         <div class="ha-band-grid">
           <div v-for="p in pillars" :key="p.tag" class="ha-band-card">
             <span class="ha-band-tag">{{ p.tag }}</span>
@@ -165,7 +126,7 @@ const phases = [
           </div>
         </div>
         <p class="ha-band-note">
-          于是约束本身成了产品——正是<a href="/concepts/07-spec-as-product">「约束即产品」</a>讲的东西，只不过这一次，实验的对象是仓库自己。
+          {{ c.band.noteLead }}<a :href="c.band.noteLink">{{ c.band.noteLinkText }}</a>{{ c.band.noteTail }}
         </p>
         <span class="ha-seal" aria-hidden="true">驭缰</span>
       </div>
@@ -174,8 +135,8 @@ const phases = [
     <!-- § 05 从哪里开始 -->
     <section class="ha-sec ha-last">
       <header class="ha-sec-head">
-        <h2 class="ha-sec-title"><span class="ha-sec-num">§ 05</span>从哪里开始</h2>
-        <span class="ha-sec-en">A READING ROUTE · 5 PHASES</span>
+        <h2 class="ha-sec-title"><span class="ha-sec-num">§ 05</span>{{ c.routeSection.title }}</h2>
+        <span class="ha-sec-en">{{ c.routeSection.en }}</span>
       </header>
       <div class="ha-route">
         <a v-for="p in phases" :key="p.n" class="ha-phase" :href="p.link">

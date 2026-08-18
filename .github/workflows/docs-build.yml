@@ -1,0 +1,42 @@
+name: docs-build
+
+# PR 上的只读构建门：完整 VitePress 构建（死链检查随构建执行）+ 侧栏完整性
+# + 产物契约（html ↔ .md 副本一一对应、副本自足、无 symlink）。
+# 部署仍只走 deploy-docs.yml（合并到 main 之后）；本工作流不持有任何写权限。
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+# 同一 PR 连续 push 时取消上一次未完成的构建，不浪费 runner。
+concurrency:
+  group: docs-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # gitDate/lastUpdated 需要完整历史，与部署构建保持同参
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify sidebar completeness (C14)
+        run: npm run docs:verify
+
+      - name: Build site
+        run: npm run docs:build
+
+      - name: Verify dist contract (page ↔ markdown-copy parity)
+        run: npm run docs:verify:dist

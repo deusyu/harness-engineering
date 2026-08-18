@@ -47,13 +47,17 @@
 #         it already self-declares as unaudited.
 #   C14 — docs-site harness integrity. The VitePress site must derive its
 #         sidebar and every displayed count from the filesystem at build time
-#         (.vitepress/sidebar.mjs), never from hand-written config. Two
+#         (.vitepress/sidebar.mjs), never from hand-written config. Three
 #         invariants: (a) site sources (index.md, .vitepress/) must not
 #         hardcode library counts ("N 篇") — numbers belong to computeStats();
 #         (b) every first-class content file must appear in the generated
-#         sidebar exactly once (node .vitepress/sidebar.mjs --verify). SKIPs
-#         when the site scaffold is absent; the verify half additionally SKIPs
-#         when node is unavailable.
+#         sidebar exactly once; (c) no symlink may exist anywhere in the repo
+#         — Vite dereferences symlinks under public/ and the markdown image
+#         pipeline follows link targets, so a single symlink can leak files
+#         from outside the repo into the published artifact. (b) and (c) run
+#         via node .vitepress/sidebar.mjs --verify. SKIPs when the site
+#         scaffold is absent; the verify half additionally SKIPs when node is
+#         unavailable.
 #
 # Locale pitfall (do NOT reintroduce): bracket expressions containing multibyte
 # characters — e.g. [├└] or [^。] — silently break under LC_ALL=C with BSD grep:
@@ -527,7 +531,9 @@ if [ ! -f .vitepress/sidebar.mjs ]; then
   echo "  $(yellow SKIP) — no .vitepress/sidebar.mjs (docs site scaffold not present)"
 else
   c14_ok=1
-  c14_hits=$(grep -rnE '[0-9]+ ?篇' index.md .vitepress/config.ts .vitepress/sidebar.mjs .vitepress/theme 2>/dev/null || true)
+  # 扫描整个 .vitepress/（AGENTS.md 的约定范围），构建产物与缓存除外——
+  # 新增任何站点源码文件都自动落入裸计数检查，无需回来改这行。
+  c14_hits=$(grep -rnE --exclude-dir=dist --exclude-dir=cache --exclude-dir=.temp '[0-9]+ ?篇' index.md .vitepress 2>/dev/null || true)
   if [ -n "$c14_hits" ]; then
     while IFS= read -r c14_hit; do
       [ -z "$c14_hit" ] && continue

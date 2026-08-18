@@ -241,7 +241,7 @@ harness-engineering/
 - **C11** — markdown 表格形状：受检文件里每行表格的单元格数须与表头一致
 - **C12** — `references/articles.md` 每个编号条目必须带 **作者：** 与 **日期：** 字段
 - **C13** — 零插图声明须留痕。C10 只能证伪"多报"，`sourceFigureCount: 0` 在本地永远无法被证伪——2026-07-27 就是这个洞放行了一个假 0（原文实有 4 张图）。因此声明 0 的译文必须同时带 `sourceFigureAudit`，值里要有 `YYYY-MM-DD` 核对日期，写清怎么核对、结论是什么
-- **C14** — 文档站驭缰完整性：站点侧边栏与所有展示计数必须由 `.vitepress/sidebar.mjs` 构建时从文件系统派生，站点源码（`index.md`、`.vitepress/**`）不得手写计数；`node .vitepress/sidebar.mjs --verify` 断言每个一等内容页在生成的侧边栏中恰好出现一次。构建产物侧另有 `scripts/verify-dist.mjs` 断言发布页面与 `.md` 副本一一对应
+- **C14** — 文档站驭缰完整性：站点侧边栏与所有展示计数必须由 `.vitepress/sidebar.mjs` 构建时从文件系统派生，站点源码（`index.md`、`.vitepress/**`）不得手写计数；`node .vitepress/sidebar.mjs --verify` 断言每个一等内容页在生成的侧边栏中恰好出现一次，并拒绝仓库内出现任何 symlink（软链会把仓库外文件带进公开产物）。构建产物侧另有 `scripts/verify-dist.mjs` 断言发布页面与 `.md` 副本一一对应、副本内相对链接与图片可达、dist 无 symlink
 
 **首次 clone 后启用 pre-commit hook：**
 

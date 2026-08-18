@@ -25,6 +25,9 @@ import { fileURLToPath } from 'node:url'
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const REAL_ROOT = fs.realpathSync(ROOT)
 
+/** 站点对外域名——config.ts（页面渲染/llms 输出）与 verify-dist（副本校验）同源。 */
+export const SITE_HOST = 'https://harness.dyu.sh'
+
 /**
  * 站点不发布的源文件（VitePress srcExclude 的唯一事实源，config.ts 直接 import）。
  * collectPublishedFiles() 的排除规则与此保持同构；两者的最终一致性由
@@ -88,6 +91,85 @@ function subdirReadmes(dir) {
     if (st?.isFile()) out.push(rel)
   }
   return out.sort()
+}
+
+/**
+ * 遍历 Markdown 源里「真实导航」位置的链接——行内链接、图片、引用式定义——
+ * 跳过围栏代码块（含 4+ 反引号嵌套围栏）与行内代码里的语法示例。
+ * fn(kind, href) 返回字符串则把该链接目标替换为返回值，返回 null 保持原样。
+ * config.ts 的副本改写与 scripts/verify-dist.mjs 的副本校验共用本函数，
+ * 保证「改写什么」与「校验什么」永远是同一套解析，不会各自漂移。
+ */
+export function mapMarkdownLinks(raw, fn) {
+  const IMG_RE = /!\[([^\]]*)\]\(([^)\s]+?)( +("[^"]*"|'[^']*'))?\)/g
+  // 链接文本允许嵌套一个图片（徽章形态 [![alt](img)](target)）；(?<!!) 防止把
+  // 图片语法自身再当链接匹配一次。
+  const LINK_RE = /(?<!!)\[((?:[^[\]]|!\[[^\]]*\]\([^()]*\))*)\]\(([^)\s]+?)( +("[^"]*"|'[^']*'))?\)/g
+  // 引用式链接定义 [ref]: target（排除脚注 [^n]:）。
+  const DEF_RE = /^(\s*\[(?!\^)[^\]]+\]:\s*)(\S+)(.*)$/
+  const mapSeg = (seg) =>
+    seg
+      .replace(IMG_RE, (m, text, href, titlePart) => {
+        const r = fn('image', href)
+        return r == null ? m : `![${text}](${r}${titlePart ?? ''})`
+      })
+      .replace(LINK_RE, (m, text, href, titlePart) => {
+        const r = fn('link', href)
+        return r == null ? m : `[${text}](${r}${titlePart ?? ''})`
+      })
+  let fence = null
+  return raw
+    .split('\n')
+    .map((line) => {
+      if (fence) {
+        const close = line.match(/^\s*(`{3,}|~{3,})\s*$/)
+        if (close && close[1][0] === fence[0] && close[1].length >= fence.length) fence = null
+        return line
+      }
+      const open = line.match(/^\s*(`{3,}|~{3,})/)
+      if (open) {
+        fence = open[1]
+        return line
+      }
+      const def = line.match(DEF_RE)
+      if (def) {
+        const r = fn('link', def[2])
+        return r == null ? line : `${def[1]}${r}${def[3]}`
+      }
+      // 行内代码保护：`...` 里的链接是语法示例，不是导航。
+      return line
+        .split(/(`+[^`]*`+)/)
+        .map((part, i) => (i % 2 === 1 ? part : mapSeg(part)))
+        .join('')
+    })
+    .join('\n')
+}
+
+/**
+ * 全仓库禁止 symlink（构建产物与依赖目录除外）：Vite 会解引用 public/ 下的
+ * symlink，Markdown 图片管线会读取链接目标，随后整个 dist 被原样发布——
+ * 一条恶意或失误的软链即可把仓库外文件带进公开站点。本仓库没有任何合法
+ * symlink，因此一律拒绝，而不是逐目录白名单。
+ */
+export function findForbiddenSymlinks() {
+  const found = []
+  const SKIP = new Set(['.git', 'node_modules'])
+  const SKIP_REL = new Set(['.vitepress/dist', '.vitepress/cache', '.vitepress/.temp'])
+  const walk = (dir) => {
+    for (const ent of fs.readdirSync(path.join(ROOT, dir || '.'), { withFileTypes: true })) {
+      const rel = dir ? path.join(dir, ent.name) : ent.name
+      if (ent.isSymbolicLink()) {
+        found.push(rel)
+        continue
+      }
+      if (ent.isDirectory()) {
+        if (SKIP.has(ent.name) || SKIP_REL.has(rel)) continue
+        walk(rel)
+      }
+    }
+  }
+  walk('')
+  return found.sort()
 }
 
 /** SRC_EXCLUDE 的谓词形式：collectPublishedFiles 用它判断一个文件是否被站点排除。 */
@@ -298,11 +380,14 @@ export function verify() {
   // 侧栏页必须是发布全集的子集——srcExclude 误伤侧栏页会在这里现形。
   const published = new Set(collectPublishedFiles())
   const unpublished = files.filter((f) => !published.has(f))
+  const symlinks = findForbiddenSymlinks()
   const problems = []
   if (missing.length) problems.push(`missing from generated sidebar: ${missing.join(', ')}`)
   if (dups.length) problems.push(`duplicated in generated sidebar: ${dups.join(', ')}`)
   if (orphans.length) problems.push(`sidebar links to nonexistent files: ${orphans.join(', ')}`)
   if (unpublished.length) problems.push(`sidebar links to files excluded from the site: ${unpublished.join(', ')}`)
+  if (symlinks.length)
+    problems.push(`symlinks are forbidden in this repo (they can leak external files into the published site): ${symlinks.join(', ')}`)
   return {
     ok: problems.length === 0,
     problems,
