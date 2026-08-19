@@ -289,7 +289,7 @@ Contributions via Issues and PRs are welcome:
 
 If you find this project helpful, please consider giving it a Star ⭐!
 
-[![Star History Chart](https://api.star-history.com/svg?repos=deusyu/harness-engineering&type=Date)](https://star-history.com/#deusyu/harness-engineering&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=deusyu/harness-engineering&type=Date)](https://star-history.dera.page/#deusyu/harness-engineering&Date)
 
 ## 💛 Sponsor
 

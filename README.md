@@ -288,7 +288,7 @@ git config core.hooksPath .githooks
 
 如果这个项目对您有帮助，请考虑为其点亮一颗 Star ⭐！
 
-[![Star History Chart](https://api.star-history.com/svg?repos=deusyu/harness-engineering&type=Date)](https://star-history.com/#deusyu/harness-engineering&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=deusyu/harness-engineering&type=Date)](https://star-history.dera.page/#deusyu/harness-engineering&Date)
 
 ## 💛 赞助支持
 
