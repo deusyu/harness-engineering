@@ -1,8 +1,8 @@
 中文 | [English](README.en.md)
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
-![Articles](https://img.shields.io/badge/articles-74-green)
-![Translations](https://img.shields.io/badge/translations-34-orange)
+![Articles](https://img.shields.io/badge/articles-79-green)
+![Translations](https://img.shields.io/badge/translations-40-orange)
 [![在线阅读](https://img.shields.io/badge/在线阅读-harness.dyu.sh-c2481d)](https://harness.dyu.sh)
 
 # Harness Engineering 学习指南
@@ -116,10 +116,10 @@ harness-engineering/
 ├── thinking/              # Phase 2：独立思考与质疑（11 篇）
 ├── practice/              # Phase 3：小项目实验（1 个 Ralph Demo）
 ├── feedback/              # Phase 4：踩坑与迭代心得（1 篇）
-├── works/                 # Phase 5：可展示的作品（34 篇翻译 + 1 篇原创 + 2 篇外部中文收录）
+├── works/                 # Phase 5：可展示的作品（40 篇翻译 + 1 篇原创 + 2 篇外部中文收录）
 ├── tools/                 # 工具具像化：降低 6 维复杂度的杠杆库
 ├── prompts/               # 验证有效的提示词积累
-└── references/            # 外部资源索引（74 篇文章深度摘要）
+└── references/            # 外部资源索引（79 篇文章深度摘要）
 ```
 
 每个子目录都有自己的 `AGENTS.md`，说明该目录的用途和写作约定。这本身就是原文「渐进式披露」的实践。
@@ -130,15 +130,15 @@ harness-engineering/
 - [x] **Phase 2：形成自己的观点** — 11 篇独立思考（持续中）
 - [x] **Phase 3：选一个小项目实践** — Ralph Demo 完成（321 秒，$0.31）
 - [x] **Phase 4：记录反馈迭代** — 1 篇（持续中）
-- [x] **Phase 5：输出可展示的作品** — 34 篇专业翻译 + 1 篇原创综合分析 + 2 篇外部中文收录
+- [x] **Phase 5：输出可展示的作品** — 40 篇专业翻译 + 1 篇原创综合分析 + 2 篇外部中文收录
 
 ## 📚 研究资料库
 
-跨三条知识脉络 74 篇文章 + 2 篇延伸阅读：
+跨三条知识脉络 79 篇文章 + 2 篇延伸阅读：
 
 | 脉络 | 覆盖 | 核心视角 |
 |------|------|---------|
-| AI 时代的 Harness Engineering | 70 篇 | OpenAI → Fowler → Anthropic → LangChain → Stanford → Claude Code 逆向与源码实锤 → Subagent runtime → 传感器/SPDD/ADLC → 越界·安全审计·质量复盘 → 评测三部曲 → 动态工作流 → 起源考据（Ralph / Hashimoto）与学科汇流 → Codex harness 解剖 → Loop Engineering 三部曲 → 自演化 harness 与 RSI → 形式化验证 → 多智能体并行规模化（Cursor / C compiler）→ 遏制与评测官方方法论 → 行为地图 / DSL / 本地模型 / 外环问责 → 工业级机械移植（Bun）与 harness-模型共演化（HarnessX）→ 长时 harness 奠基与评测环境混杂（Anthropic 存量）→ harness 运维度量与奖励作弊（Cursor 存量）→ 工具 schema 不中立 → 软件工厂之争（Dex Horthy / Osmani）→ 智能体蜂群成本经济学 → 删掉 80% 系统提示词 → 代码评审传感器基准（ReviewBench） |
+| AI 时代的 Harness Engineering | 75 篇 | OpenAI → Fowler → Anthropic → LangChain → Stanford → Claude Code 逆向与源码实锤 → Subagent runtime → 传感器/SPDD/ADLC → 越界·安全审计·质量复盘 → 评测三部曲 → 动态工作流 → 起源考据（Ralph / Hashimoto）与学科汇流 → Codex harness 解剖 → Loop Engineering 三部曲 → 自演化 harness 与 RSI → 形式化验证 → 多智能体并行规模化（Cursor / C compiler）→ 遏制与评测官方方法论 → 行为地图 / DSL / 本地模型 / 外环问责 → 工业级机械移植（Bun）与 harness-模型共演化（HarnessX）→ 长时 harness 奠基与评测环境混杂（Anthropic 存量）→ harness 运维度量与奖励作弊（Cursor 存量）→ 工具 schema 不中立 → 软件工厂之争（Dex Horthy / Osmani）→ 智能体蜂群成本经济学 → 删掉 80% 系统提示词 → 代码评审传感器基准（ReviewBench）→ TDD 过程实证否定与结果度量（Böckeler）→ loop 日常落地（Osmani）→ 组织级采纳快照（Zalando）→ 开放中立 harness 与 compaction 白盒（Pi 双篇）→ 冻结工件跨模型迁移（StarHarness） |
 | 云原生 Harness.io | 2 篇 | CI/CD 平台架构（同名不同义的参照） |
 | 效率悖论与能力进化 | 2 篇 | YDD 系统性拆解 + METR 实验后续（测量方法论危机） |
 | 延伸阅读 | 2 篇 | Context Engineering、人机协作 |
@@ -148,12 +148,18 @@ harness-engineering/
 ## 📖 翻译作品
 
 <details>
-<summary><b>34 篇核心文章的中文翻译</b>（点击展开）</summary>
+<summary><b>40 篇核心文章的中文翻译</b>（点击展开）</summary>
 
 | 作品 | 原作者 | 来源 |
 |------|--------|------|
 | ⭐ [渴望了八年，用 AI 三个月造出来](works/maganti-eight-years-building-ai-translation.md) | Lalit Maganti | 个人博客 |
 | [用 ReviewBench 评测代码评审智能体](works/langchain-reviewbench-translation.md) | Nick Hollon | LangChain |
+| [agent loop 里的 TDD：走形式还是真价值？](works/fowler-tdd-in-agent-loop-translation.md) | Birgitta Böckeler | martinfowler.com |
+| [Practical Loop Engineering（循环的日常落地）](works/osmani-practical-loop-engineering-translation.md) | Addy Osmani | AddyOsmani.com |
+| [Zalando 的 Agentic 工程快照](works/zalando-agentic-engineering-translation.md) | Bartosz Ocytko | Zalando Engineering |
+| [What Is a Harness?（harness 是什么）](works/pi-what-is-a-harness-translation.md) | Earendil / Pi 团队 | earendil.com |
+| [Compaction 在 Pi 里如何工作](works/pi-compaction-translation.md) | Earendil / Pi 团队 | earendil.com |
+| [StarHarness：分层搜索演化企业环境 harness](works/arxiv-starharness-translation.md) | ServiceNow / Mila 等 | arXiv |
 | [Claude 5 世代模型的上下文工程新规则](works/anthropic-context-engineering-claude5-translation.md) | Thariq Shihipar | Anthropic / Claude |
 | [更好的模型：更差的工具](works/ronacher-better-models-worse-tools-translation.md) | Armin Ronacher | 个人博客 |
 | [用 Rust 重写 Bun](works/bun-in-rust-translation.md) | Jarred Sumner | Bun Blog |

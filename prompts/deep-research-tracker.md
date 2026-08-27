@@ -61,11 +61,11 @@
 > 它必须自包含，因为搜索器无法访问 `references/articles.md`。
 >
 > **维护纪律：** 当 `references/articles.md` 新增/删除条目时，**同一次提交中**必须同步更新本节。两份内容的口径（脉络划分、篇数、产品/项目清单）应保持完全一致。
-> 本节最近一次同步：2026-08-05（与 `articles.md` 当前内容对齐：74 篇文章 + 1 项已跟踪产品）。
+> 本节最近一次同步：2026-08-27（与 `articles.md` 当前内容对齐：79 篇文章 + 1 项已跟踪产品）。
 
-**核心文章 74 篇，分布于三条脉络：**
+**核心文章 79 篇，分布于三条脉络：**
 
-- **脉络一 — AI 时代 Harness Engineering（70 篇）：**
+- **脉络一 — AI 时代 Harness Engineering（75 篇）：**
   - OpenAI "Harness engineering"（原点，2026-02-11）/ "An open-source spec for Codex orchestration: Symphony"（2026-04-27，任务跟踪器作为控制平面）
   - Fowler/Böckeler "Harness engineering for coding agent users"（2026-04-02）+ 前传备忘录（2026-02-17）
   - LangChain "The Anatomy of an Agent Harness"（2026-03）/ "Continual Learning for AI Agents"（2026-04-05）/ "Agent Evaluation Readiness Checklist"
@@ -132,6 +132,11 @@
   - Rethinking Harness Evolution 论文（arXiv 2607.12227，自动 harness 演化的第一份系统性负面结果：同等预算下不稳定优于 test-time scaling、泛化有限）
   - LangChain "How We Benchmark Deep Agents"（2026-07-23）+ "IssueBench"（2026-07-20）——Harbor 评测栈：Harbor-Index 82 任务 / lite 冻结子集 / capability suite；IssueBench 15 类失败分类法与 issue 集层面判分
   - LangChain / Nick Hollon "Evaluating code review agents with ReviewBench"（2026-07-31，真实 PR 评审意见策展成 59 任务 / 64 基线问题；裸 harness 最强召回 ~30%，prompt-only 调优 Luna 0.13→0.32 反超 Opus/Kimi）
+  - Fowler / Birgitta Böckeler "TDD inside the agent loop - theater or actual value?"（2026-08-10，agent loop 内 TDD 实证否定：盲评质量无差异、mutation score 无差异、token 3–8.5 倍；别规定过程，度量结果）
+  - Addy Osmani "Practical Loop Engineering"（2026-08-14，loop 系列日常落地环：踩坑实录 + 80K star 仓库分诊循环 + fine print 运维细则）
+  - Zalando / Bartosz Ocytko "Agentic Engineering at Zalando: A Snapshot"（2026-08-14，250+ 团队非供应商组织级快照：事故分析→PR 风险分级→33% 自动放行→lead time -20~40%）
+  - Earendil / Pi 团队双篇 "What Is a Harness?" + "How Compaction Works in Pi"（2026-08-20 / 08-13，harness 定义+用户侧中立主张 / compaction 白盒实现，与 Codex 端点化对照）
+  - StarHarness 论文（arXiv 2608.24804，ServiceNow/Mila，2026-08-25，冻结 harness 工件跨 GPT/Qwen 迁移 12 行全正 +10.7~+46.3pp；跨模型可移植性首个正面证据）
 - **脉络二 — 云原生 Harness.io（2 篇）：** Harness.io 官方全局架构 / Google Cloud 集成场景
 - **脉络三 — 效率悖论（2 篇）：** YDD/Miss-you "效率悖论的系统性拆解"（2026-03-03）/ METR 实验后续 + 自报调查（2026-02-24 + 2026-05-11，"慢 19%"的官方后续：弱证据转向加速 + RCT 方法论危机）
 
@@ -326,7 +331,8 @@
 | 2026-07-21 | （教训来源，未做系统回扫） | 事后补收 #48 / #49 / #50 / #47 |
 | 2026-07-27 | ① anthropic.com/engineering 全量列表 ② cursor.com/blog 全量 slug 清单 | #58 Effective harnesses（2025-11）、#59 基础设施噪声（2026-02）、#60 持续改进 agent harness（2026-04）、#61 奖励作弊（2026-06）——四篇均为 harness 主题正中靶心却漏网数月 |
 | 2026-08-03 | ① openai.com/sitemap.xml/engineering 全量 URL+lastmod ② martinfowler.com/feed.atom（GenAI 归档） | 无漏网存量：OpenAI Engineering 分类的 harness 主题件（harness-engineering / unrolling / unlocking / symphony / windows-sandbox / core-dump / websockets / how-agents-transforming-work）均已在编号正文或观察项；其余 gpt-5.6 / atlas / sora-android / tax-agents / data-agent 为产品·基建，非 harness。Fowler 侧捞出的是增量而非存量（重构经济效益 / Conductor Developer / Fragments 07-21 / Orchestrator's Tax 草稿）——已进本批观察项 |
+| 2026-08-27 | ① langchain.com/blog sitemap 全量（507 slug）② claude.com/blog sitemap 全量（228 slug，去 locale 变体） | **非零星漏网而是系统性缺口**：langchain 相关约 115 篇/此前仅收 19（漏网详查 48，含 12 篇标题直接带 harness/loop 的核心文：improving-deep-agents-with-harness-engineering、better-harness、the-art-of-loop-engineering、deep-agents 开山文等）；claude.com 相关约 80/仅收 9（漏网详查 41：skills 全系列、subagent 系列、Lessons from building Claude Code 双篇等）。处置：不逐篇消化，观察项表加 2 个"信源级"合并行，完整清单留档 translate/2026-08-27/candidates.md。方法论教训：两站列表页对 curl 均不完整**必须走 sitemap.xml**；claude.com 的 lastmod 批量刷新不可作发布日期，需逐页取 JSON-LD datePublished |
 
-> 下一轮建议轮换：langchain.com/blog（Observability & Evals 分类）+ claude.com/blog（全量 slug）。openai.com/index 用 `curl https://openai.com/sitemap.xml/engineering/` 拿到带 lastmod 的全量 URL 最省事（2026-08-03 验证有效，比抓列表页首屏可靠）。
+> 下一轮建议轮换：addyosmani.com/blog + simonwillison.net 月归档（个人博客侧尚未系统回扫过）；cursor.com/blog 可顺带复扫（本批已全量取 sitemap 115 slug 逐页核过日期，短期内干净）。openai.com/index 用 `curl https://openai.com/sitemap.xml/engineering/` 拿到带 lastmod 的全量 URL 最省事（2026-08-03 验证有效，比抓列表页首屏可靠）。
 > 回扫技巧（2026-07-27 验证有效）：列表页只渲染最近若干条时，直接抓 `curl <blog>|grep -oE '/blog/[a-z0-9-]+'|sort -u` 拿全量 slug，
 > 再逐个取 `datePublished` 与标题——Cursor 那四条里有两条（`continually-improving-agent-harness`、`reward-hacking-coding-benchmarks`）就是这样发现的，它们不在列表页首屏。

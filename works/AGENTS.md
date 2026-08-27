@@ -78,6 +78,12 @@ sourceFigureAudit: # 仅当 sourceFigureCount 为 0 时必填：核对留痕，�
 | [ronacher-better-models-worse-tools-translation.md](ronacher-better-models-worse-tools-translation.md) | Better Models: Worse Tools | Armin Ronacher / 个人博客 |
 | [anthropic-context-engineering-claude5-translation.md](anthropic-context-engineering-claude5-translation.md) | The new rules of context engineering for Claude 5 generation models | Anthropic / Claude · Thariq Shihipar |
 | [langchain-reviewbench-translation.md](langchain-reviewbench-translation.md) | Evaluating code review agents with ReviewBench | LangChain / Nick Hollon |
+| [fowler-tdd-in-agent-loop-translation.md](fowler-tdd-in-agent-loop-translation.md) | TDD inside the agent loop - theater or actual value? | Birgitta Böckeler |
+| [osmani-practical-loop-engineering-translation.md](osmani-practical-loop-engineering-translation.md) | Practical Loop Engineering | Addy Osmani |
+| [zalando-agentic-engineering-translation.md](zalando-agentic-engineering-translation.md) | Agentic Engineering at Zalando: A Snapshot | Bartosz Ocytko |
+| [pi-what-is-a-harness-translation.md](pi-what-is-a-harness-translation.md) | What Is a Harness? | Earendil / Pi 团队 |
+| [pi-compaction-translation.md](pi-compaction-translation.md) | How Compaction Works in Pi | Earendil / Pi 团队 |
+| [arxiv-starharness-translation.md](arxiv-starharness-translation.md) | StarHarness: Evolving Harnesses with Stratified Search for Enterprise Environments | ServiceNow / Mila 等 |
 
 ### 中文转译 / 二手资料
 

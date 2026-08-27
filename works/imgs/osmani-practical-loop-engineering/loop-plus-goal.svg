@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img">
+<title>Loop schedules the check. Goal solves the problem.</title>
+<defs>
+<style>
+  .kicker { font-family: Menlo, 'SF Mono', monospace; font-size: 19px; letter-spacing: 2.5px;
+            fill: #63635D; text-transform: uppercase; }
+  .badge  { font-family: Menlo, 'SF Mono', monospace; font-size: 21px; font-weight: 700; fill: #0A0A0A; }
+  .foot   { font-family: Menlo, 'SF Mono', monospace; font-size: 17px; letter-spacing: 1.2px; fill: #4A4A45; }
+  .h1     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 46px; font-weight: 700; fill: #F5F3ED; }
+  .h2     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 27px; font-weight: 700; fill: #F5F3ED; }
+  .h3     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #F5F3ED; }
+  .lede   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 24px; fill: #9A9A92; }
+  .body   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 21px; fill: #C9C7BF; }
+  .small  { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 19px; fill: #9A9A92; }
+  .tag    { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #63635D; }
+  .tagA   { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #FFD644; }
+  .code   { font-family: Menlo, 'SF Mono', monospace; font-size: 20px; fill: #E8E6DF; }
+  .codesm { font-family: Menlo, 'SF Mono', monospace; font-size: 18px; fill: #C9C7BF; }
+  .acc    { fill: #FFD644; }
+  .good   { fill: #7ED9A6; }
+  .warn   { fill: #FF9E64; }
+  .b      { font-weight: 700; }
+</style>
+<radialGradient id="glow" cx="0.82" cy="0.05" r="0.75">
+  <stop offset="0%" stop-color="#4A3C10" stop-opacity="0.5"/>
+  <stop offset="55%" stop-color="#201B08" stop-opacity="0.18"/>
+  <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0"/>
+</radialGradient>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#63635D"/>
+</marker>
+<marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FFD644"/>
+</marker>
+<marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FF9E64"/>
+</marker>
+</defs>
+<rect width="1600" height="940" fill="#0A0A0A"/>
+<rect width="1600" height="940" fill="url(#glow)"/>
+<text x="70" y="62" class="kicker">Practical loop engineering &#183; addyosmani.com</text>
+<rect x="1468" y="38" width="62" height="34" rx="17" fill="#FFD644"/>
+<text x="1499" y="62" class="badge" text-anchor="middle">08</text>
+<text x="70" y="902" class="foot">addyosmani.com</text>
+<text x="70" y="160" class="h1">Loop schedules the check. Goal solves the problem.</text><text x="70" y="226" class="lede">The combination is where this stops being a toy and starts taking work off your desk.</text>
+<rect x="70" y="275" width="690" height="250" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="98" y="313" class="tagA">The heartbeat &#8212; /loop</text><text x="98" y="356" class="small">Wakes on a cadence. Looks.</text><text x="98" y="386" class="small">Decides whether there is anything</text><text x="98" y="416" class="small">to do at all. Cheap when idle.</text><rect x="98" y="452" width="140" height="36" rx="7" fill="#1B1B18" stroke="#30302B"/><text x="112" y="476" class="codesm">every 24h</text><rect x="840" y="275" width="690" height="250" rx="14" fill="#1A1608" stroke="#7A6820" stroke-width="1.5"/><text x="868" y="313" class="tagA">The hands &#8212; /goal</text><text x="868" y="356" class="small">Spawned only when there is work.</text><text x="868" y="386" class="small">Runs until a real exit condition</text><text x="868" y="416" class="small">holds, then stops.</text><rect x="868" y="452" width="200" height="36" rx="7" fill="#1B1B18" stroke="#30302B"/><text x="882" y="476" class="codesm">until tests pass</text><line x1="760" y1="400" x2="830" y2="400" stroke="#FFD644" stroke-width="2" marker-end="url(#arA)"/><text x="795" y="378" class="tag" text-anchor="middle">if a match</text><rect x="70" y="566" width="1460" height="116" rx="14" fill="#1B1B18" stroke="#30302B" stroke-width="1.5"/><text x="98" y="606" class="code"><tspan fill="#FFD644">/loop every 24h</tspan> <tspan fill="#F5F3ED">&#8220;Check GitHub for issues labeled &#8216;bug&#8217;. If one exists, use</tspan></text><text x="98" y="644" class="code"><tspan fill="#F5F3ED">/goal to implement a fix until all local tests pass and push the branch.&#8221;</tspan></text><rect x="70" y="706" width="1460" height="64" rx="14" fill="#1A1608" stroke="#7A6820" stroke-width="1.5"/><rect x="70" y="706" width="5" height="64" rx="2.5" fill="#FFD644"/><text x="96" y="746.0" class="body b" fill="#F5F3ED">One clear objective, one measurable exit per goal. Stuff four unrelated outcomes in and the evaluator has nothing sharp to check.</text><rect x="70" y="794" width="1460" height="66" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="98" y="835" class="small">Loop notices. Goal finishes. Neither one is asked to do the other&#8217;s job &#8212; which is why the pattern holds up unattended.</text>
+</svg>

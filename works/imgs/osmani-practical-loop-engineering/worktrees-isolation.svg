@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="880" viewBox="0 0 1600 880" role="img">
+<title>One clean checkout per parallel run</title>
+<defs>
+<style>
+  .kicker { font-family: Menlo, 'SF Mono', monospace; font-size: 19px; letter-spacing: 2.5px;
+            fill: #63635D; text-transform: uppercase; }
+  .badge  { font-family: Menlo, 'SF Mono', monospace; font-size: 21px; font-weight: 700; fill: #0A0A0A; }
+  .foot   { font-family: Menlo, 'SF Mono', monospace; font-size: 17px; letter-spacing: 1.2px; fill: #4A4A45; }
+  .h1     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 46px; font-weight: 700; fill: #F5F3ED; }
+  .h2     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 27px; font-weight: 700; fill: #F5F3ED; }
+  .h3     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #F5F3ED; }
+  .lede   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 24px; fill: #9A9A92; }
+  .body   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 21px; fill: #C9C7BF; }
+  .small  { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 19px; fill: #9A9A92; }
+  .tag    { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #63635D; }
+  .tagA   { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #FFD644; }
+  .code   { font-family: Menlo, 'SF Mono', monospace; font-size: 20px; fill: #E8E6DF; }
+  .codesm { font-family: Menlo, 'SF Mono', monospace; font-size: 18px; fill: #C9C7BF; }
+  .acc    { fill: #FFD644; }
+  .good   { fill: #7ED9A6; }
+  .warn   { fill: #FF9E64; }
+  .b      { font-weight: 700; }
+</style>
+<radialGradient id="glow" cx="0.82" cy="0.05" r="0.75">
+  <stop offset="0%" stop-color="#4A3C10" stop-opacity="0.5"/>
+  <stop offset="55%" stop-color="#201B08" stop-opacity="0.18"/>
+  <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0"/>
+</radialGradient>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#63635D"/>
+</marker>
+<marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FFD644"/>
+</marker>
+<marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FF9E64"/>
+</marker>
+</defs>
+<rect width="1600" height="880" fill="#0A0A0A"/>
+<rect width="1600" height="880" fill="url(#glow)"/>
+<text x="70" y="62" class="kicker">Practical loop engineering &#183; addyosmani.com</text>
+<rect x="1468" y="38" width="62" height="34" rx="17" fill="#FFD644"/>
+<text x="1499" y="62" class="badge" text-anchor="middle">07</text>
+<text x="70" y="842" class="foot">addyosmani.com</text>
+<text x="70" y="160" class="h1">One clean checkout per parallel run</text><text x="70" y="226" class="lede">This is the thing that makes five to ten at once possible rather than chaotic.</text>
+<rect x="70" y="262" width="715" height="260" rx="14" fill="#1C1209" stroke="#5A3A1E" stroke-width="1.5"/><text x="98" y="300" class="tag" fill="#FF9E64">Without isolation</text><circle cx="112" cy="333" r="5" fill="#FF9E64"/><text x="134" y="340" class="small">agent 1</text><line x1="240" y1="333" x2="470" y2="333" stroke="#5A3A1E" stroke-width="2"/><circle cx="112" cy="379" r="5" fill="#FF9E64"/><text x="134" y="386" class="small">agent 2</text><line x1="240" y1="379" x2="470" y2="379" stroke="#5A3A1E" stroke-width="2"/><circle cx="112" cy="425" r="5" fill="#FF9E64"/><text x="134" y="432" class="small">agent 3</text><line x1="240" y1="425" x2="470" y2="425" stroke="#5A3A1E" stroke-width="2"/><rect x="470" y="320" width="250" height="130" rx="14" fill="#131312" stroke="#5A3A1E" stroke-width="1.5"/><text x="595" y="392" class="body b" fill="#FF9E64" text-anchor="middle">one tree</text><text x="98" y="490" class="small">Same files, same branch, edits landing on top of each other.</text><rect x="815" y="262" width="715" height="260" rx="14" fill="#0E1A14" stroke="#2A5140" stroke-width="1.5"/><text x="843" y="300" class="tag" fill="#7ED9A6">With a worktree each</text><circle cx="857" cy="333" r="5" fill="#7ED9A6"/><text x="879" y="340" class="small">agent 1</text><line x1="985" y1="333" x2="1180" y2="333" stroke="#2A5140" stroke-width="2"/><rect x="1180" y="313" width="320" height="38" rx="8" fill="#131312" stroke="#2A5140" stroke-width="1"/><text x="1200" y="340" class="codesm">worktree-api</text><circle cx="857" cy="379" r="5" fill="#7ED9A6"/><text x="879" y="386" class="small">agent 2</text><line x1="985" y1="379" x2="1180" y2="379" stroke="#2A5140" stroke-width="2"/><rect x="1180" y="359" width="320" height="38" rx="8" fill="#131312" stroke="#2A5140" stroke-width="1"/><text x="1200" y="386" class="codesm">worktree-docs</text><circle cx="857" cy="425" r="5" fill="#7ED9A6"/><text x="879" y="432" class="small">agent 3</text><line x1="985" y1="425" x2="1180" y2="425" stroke="#2A5140" stroke-width="2"/><rect x="1180" y="405" width="320" height="38" rx="8" fill="#131312" stroke="#2A5140" stroke-width="1"/><text x="1200" y="432" class="codesm">worktree-perf</text><text x="843" y="490" class="small">Clean checkout, own branch, no collisions.</text><rect x="70" y="556" width="715" height="176" rx="14" fill="#1B1B18" stroke="#30302B" stroke-width="1.5"/><text x="98" y="592" class="tag">On the CLI</text><text x="98" y="632" class="code"><tspan fill="#FFD644">claude --worktree</tspan> <tspan fill="#F5F3ED">perf</tspan>   <tspan fill="#63635D">(or -w)</tspan></text><text x="98" y="672" class="small">Lands in .claude/worktrees/perf/</text><text x="98" y="700" class="small">on a branch named worktree-perf.</text><rect x="815" y="556" width="715" height="176" rx="14" fill="#1B1B18" stroke="#30302B" stroke-width="1.5"/><text x="843" y="592" class="tag">Or per sub-agent, in frontmatter</text><text x="843" y="632" class="code"><tspan fill="#FFD644">isolation:</tspan> <tspan fill="#F5F3ED">worktree</tspan></text><text x="843" y="672" class="small">In .claude/agents/&lt;name&gt;.md &#8212; the sub-agent</text><text x="843" y="700" class="small">runs in a temporary tree of its own.</text><rect x="70" y="754" width="1460" height="64" rx="14" fill="#1A1608" stroke="#7A6820" stroke-width="1.5"/><rect x="70" y="754" width="5" height="64" rx="2.5" fill="#FFD644"/><text x="96" y="794.0" class="body b" fill="#F5F3ED">Cleanup has a condition: the temporary worktree is removed automatically only if the sub-agent made no changes.</text>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="930" viewBox="0 0 1600 930" role="img">
+<title>What the triage system actually does</title>
+<defs>
+<style>
+  .kicker { font-family: Menlo, 'SF Mono', monospace; font-size: 19px; letter-spacing: 2.5px;
+            fill: #63635D; text-transform: uppercase; }
+  .badge  { font-family: Menlo, 'SF Mono', monospace; font-size: 21px; font-weight: 700; fill: #0A0A0A; }
+  .foot   { font-family: Menlo, 'SF Mono', monospace; font-size: 17px; letter-spacing: 1.2px; fill: #4A4A45; }
+  .h1     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 46px; font-weight: 700; fill: #F5F3ED; }
+  .h2     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 27px; font-weight: 700; fill: #F5F3ED; }
+  .h3     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #F5F3ED; }
+  .lede   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 24px; fill: #9A9A92; }
+  .body   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 21px; fill: #C9C7BF; }
+  .small  { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 19px; fill: #9A9A92; }
+  .tag    { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #63635D; }
+  .tagA   { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #FFD644; }
+  .code   { font-family: Menlo, 'SF Mono', monospace; font-size: 20px; fill: #E8E6DF; }
+  .codesm { font-family: Menlo, 'SF Mono', monospace; font-size: 18px; fill: #C9C7BF; }
+  .acc    { fill: #FFD644; }
+  .good   { fill: #7ED9A6; }
+  .warn   { fill: #FF9E64; }
+  .b      { font-weight: 700; }
+</style>
+<radialGradient id="glow" cx="0.82" cy="0.05" r="0.75">
+  <stop offset="0%" stop-color="#4A3C10" stop-opacity="0.5"/>
+  <stop offset="55%" stop-color="#201B08" stop-opacity="0.18"/>
+  <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0"/>
+</radialGradient>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#63635D"/>
+</marker>
+<marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FFD644"/>
+</marker>
+<marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FF9E64"/>
+</marker>
+</defs>
+<rect width="1600" height="930" fill="#0A0A0A"/>
+<rect width="1600" height="930" fill="url(#glow)"/>
+<text x="70" y="62" class="kicker">Practical loop engineering &#183; addyosmani.com</text>
+<rect x="1468" y="38" width="62" height="34" rx="17" fill="#FFD644"/>
+<text x="1499" y="62" class="badge" text-anchor="middle">09</text>
+<text x="70" y="892" class="foot">addyosmani.com</text>
+<text x="70" y="160" class="h1">What the triage system actually does</text><text x="70" y="226" class="lede">Agent Skills, 80,000+ stars. The loop does not review for me. It shrinks what I review.</text>
+<rect x="70" y="268" width="460" height="150" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="98" y="306" class="tag">Every day, before</text><text x="98" y="352" class="h2">80&#8211;90 PRs</text><text x="98" y="388" class="small">reviewed by hand, one at a time</text><line x1="530" y1="343" x2="600" y2="343" stroke="#FFD644" stroke-width="2" marker-end="url(#arA)"/><rect x="620" y="268" width="910" height="150" rx="14" fill="#1A1608" stroke="#7A6820" stroke-width="1.5"/><text x="648" y="306" class="tagA">A scheduled pass first</text><text x="648" y="348" class="small">Summarise what is new and how urgent it is. Close what clearly</text><text x="648" y="378" class="small">does not fit. Leave a smaller, real pile for a person.</text><text x="70" y="478" class="tagA">The stopping condition that does the most work</text><rect x="70" y="500" width="715" height="220" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="98" y="538" class="tag">Written down once, in the guidelines</text><text x="98" y="580" class="small">&#8220;We currently do not accept translations.&#8221;</text><text x="98" y="610" class="small"></text><text x="98" y="640" class="small">Not because we do not care &#8212; because we</text><text x="98" y="670" class="small">cannot maintain languages we do not speak.</text><rect x="815" y="500" width="715" height="220" rx="14" fill="#1A1608" stroke="#7A6820" stroke-width="1.5"/><text x="843" y="538" class="tagA">Becomes a rule the routine can run</text><text x="843" y="580" class="small">Close any PR that touches that part of</text><text x="843" y="610" class="small">the contribution guidelines.</text><text x="843" y="640" class="small"></text><text x="843" y="670" class="small">The batch a human has to read gets smaller.</text><rect x="70" y="746" width="1460" height="64" rx="14" fill="#1A1608" stroke="#7A6820" stroke-width="1.5"/><rect x="70" y="746" width="5" height="64" rx="2.5" fill="#FFD644"/><text x="96" y="786.0" class="body b" fill="#F5F3ED">Cross-referencing is the real win: &#8220;we are reworking this area &#8212; close what it supersedes, and flag anything that would step on someone&#8217;s toes.&#8221;</text><text x="70" y="856" class="small">A constraint you can state in one sentence is a constraint an agent can enforce a hundred times a week.</text>
+</svg>

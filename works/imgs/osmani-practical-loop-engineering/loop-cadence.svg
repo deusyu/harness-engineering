@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="955" viewBox="0 0 1600 955" role="img">
+<title>/loop &#8212; a cron with an agent on the far end</title>
+<defs>
+<style>
+  .kicker { font-family: Menlo, 'SF Mono', monospace; font-size: 19px; letter-spacing: 2.5px;
+            fill: #63635D; text-transform: uppercase; }
+  .badge  { font-family: Menlo, 'SF Mono', monospace; font-size: 21px; font-weight: 700; fill: #0A0A0A; }
+  .foot   { font-family: Menlo, 'SF Mono', monospace; font-size: 17px; letter-spacing: 1.2px; fill: #4A4A45; }
+  .h1     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 46px; font-weight: 700; fill: #F5F3ED; }
+  .h2     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 27px; font-weight: 700; fill: #F5F3ED; }
+  .h3     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #F5F3ED; }
+  .lede   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 24px; fill: #9A9A92; }
+  .body   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 21px; fill: #C9C7BF; }
+  .small  { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 19px; fill: #9A9A92; }
+  .tag    { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #63635D; }
+  .tagA   { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #FFD644; }
+  .code   { font-family: Menlo, 'SF Mono', monospace; font-size: 20px; fill: #E8E6DF; }
+  .codesm { font-family: Menlo, 'SF Mono', monospace; font-size: 18px; fill: #C9C7BF; }
+  .acc    { fill: #FFD644; }
+  .good   { fill: #7ED9A6; }
+  .warn   { fill: #FF9E64; }
+  .b      { font-weight: 700; }
+</style>
+<radialGradient id="glow" cx="0.82" cy="0.05" r="0.75">
+  <stop offset="0%" stop-color="#4A3C10" stop-opacity="0.5"/>
+  <stop offset="55%" stop-color="#201B08" stop-opacity="0.18"/>
+  <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0"/>
+</radialGradient>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#63635D"/>
+</marker>
+<marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FFD644"/>
+</marker>
+<marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FF9E64"/>
+</marker>
+</defs>
+<rect width="1600" height="955" fill="#0A0A0A"/>
+<rect width="1600" height="955" fill="url(#glow)"/>
+<text x="70" y="62" class="kicker">Practical loop engineering &#183; addyosmani.com</text>
+<rect x="1468" y="38" width="62" height="34" rx="17" fill="#FFD644"/>
+<text x="1499" y="62" class="badge" text-anchor="middle">05</text>
+<text x="70" y="917" class="foot">addyosmani.com</text>
+<text x="70" y="160" class="h1">/loop &#8212; a cron with an agent on the far end</text><text x="70" y="226" class="lede">Best for watching something rather than pushing it to a finish.</text>
+<rect x="70" y="262" width="715" height="108" rx="14" fill="#1B1B18" stroke="#30302B" stroke-width="1.5"/><text x="98" y="304" class="tag">Interval leads</text><text x="98" y="345" class="code"><tspan fill="#FFD644">/loop</tspan> <tspan fill="#FF9E64">30m</tspan> <tspan fill="#F5F3ED">&#8220;check CI and fix what broke&#8221;</tspan></text><rect x="815" y="262" width="715" height="108" rx="14" fill="#1B1B18" stroke="#30302B" stroke-width="1.5"/><text x="843" y="304" class="tag">or trails</text><text x="843" y="345" class="code"><tspan fill="#FFD644">/loop</tspan> <tspan fill="#F5F3ED">&#8220;triage new issues&#8221;</tspan> <tspan fill="#FF9E64">every 2 hours</tspan></text><text x="70" y="428" class="tag">Units</text><rect x="70" y="446" width="52" height="36" rx="7" fill="#1B1B18" stroke="#30302B"/><text x="84" y="470" class="codesm">s</text><text x="136" y="470" class="small">seconds &#8212; round up</text><rect x="320" y="446" width="52" height="36" rx="7" fill="#1B1B18" stroke="#30302B"/><text x="334" y="470" class="codesm">m</text><text x="386" y="470" class="small">minutes</text><rect x="570" y="446" width="52" height="36" rx="7" fill="#1B1B18" stroke="#30302B"/><text x="584" y="470" class="codesm">h</text><text x="636" y="470" class="small">hours</text><rect x="820" y="446" width="52" height="36" rx="7" fill="#1B1B18" stroke="#30302B"/><text x="834" y="470" class="codesm">d</text><text x="886" y="470" class="small">days</text><line x1="70" y1="560" x2="1530" y2="560" stroke="#282826" stroke-width="2"/><circle cx="70" cy="560" r="8" fill="#FFD644"/><text x="70" y="606" class="h3" text-anchor="start">Created</text><text x="70" y="636" class="small" text-anchor="start">first fire</text><circle cx="490" cy="560" r="8" fill="#63635D"/><text x="490" y="606" class="h3" text-anchor="start">Fires every N</text><text x="490" y="636" class="small" text-anchor="start">while the session is open</text><circle cx="1010" cy="560" r="8" fill="#FFD644"/><text x="1010" y="606" class="h3" text-anchor="start">Day 7</text><text x="1010" y="636" class="small" text-anchor="start">one final fire</text><circle cx="1440" cy="560" r="8" fill="#63635D"/><text x="1426" y="606" class="h3" text-anchor="end">Deletes itself</text><rect x="70" y="676" width="470" height="118" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="98" y="712" class="tag">Minimum cadence</text><text x="98" y="754" class="h2">1 minute</text><rect x="565" y="676" width="470" height="118" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="593" y="712" class="tag">Lifetime</text><text x="593" y="754" class="h2">Session-scoped</text><text x="593" y="782" class="small">new conversation ends it</text><rect x="1060" y="676" width="470" height="118" rx="14" fill="#1A1608" stroke="#7A6820" stroke-width="1.5"/><text x="1088" y="712" class="tagA">Auto-expiry</text><text x="1088" y="754" class="h2">7 days</text><text x="1088" y="782" class="small">not three &#8212; I had this wrong</text><rect x="70" y="814" width="1460" height="62" rx="14" fill="#1A1608" stroke="#7A6820" stroke-width="1.5"/><rect x="70" y="814" width="5" height="62" rx="2.5" fill="#FFD644"/><text x="96" y="853.0" class="body b" fill="#F5F3ED">Match the interval to how fast the thing actually changes. A one-minute loop on a repo that sees one PR a day is paying to check an empty inbox.</text>
+</svg>

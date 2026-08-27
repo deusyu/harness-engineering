@@ -1,0 +1,381 @@
+
+<svg class = 'nodearc' id = '' version = '1.1' viewBox = '0 0 900 430' xmlns = 'http://www.w3.org/2000/svg'>
+<style>@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,300,400,600,700,800);
+
+svg.nodearc {
+  --default-fill: #F7F8FE;
+  --default-stroke: #0f1872;
+  --legend: #ef5ba1;
+  --dash-stroke: 3,3;
+  path {
+    stroke: var(--default-stroke);
+    fill: none; 
+    stroke-width: 1.5;
+  }
+  .na-node {
+    * {
+      fill: var(--default-fill);
+      stroke: var(--default-stroke);
+      stroke-width: 2;
+    }
+  }
+
+  
+  foreignObject {
+    overflow: visible;
+    line-height: 1.1;
+    font-family: Open Sans, sans-serif;
+    font-size: 8pt;
+  }
+  
+  p {
+    margin: 0;
+  }
+
+  .na-node .label-center &gt; div {
+    display: table;
+    height: 100%;
+    width: 100%;
+    &amp; &gt; * {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+      padding: 2px;
+    }
+  }
+
+  .na-surround {
+    rect {
+      fill: #eeeeee;
+      stroke: grey;
+      stroke-width: 1.5;
+    }
+    div {
+      padding: 3px;
+      font-size: 7pt;
+    }
+  }
+
+
+  .legend {
+    font-style: italic;
+    color: var(--legend);
+  }
+
+  path.legend-line {
+    stroke: var(--legend)
+  }
+}
+svg.nodearc {
+
+  .tdd {
+    path {stroke: lightgray; fill: none}
+    rect {stroke: lightgray; fill: lightgray}
+  }
+
+  .trace {
+    path {stroke: lightseagreen;
+      fill: none
+    }
+  }
+
+  .output {
+    path {fill: none}
+  }
+
+  .solution {
+    path {stroke: plum; fill: none}
+    
+  }
+
+
+
+}
+</style>
+
+<g class = 'na-node' nid = 'specs'>
+<rect class = '' height = '50' width = '100' x = '5' y = '200'></rect>
+
+<foreignObject class = 'label-center' height = '50' width = '100' x = '5' y = '200'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>Task Specs<br/>(small / medium / large)</p></div>
+</foreignObject>
+</g>
+
+<g class = 'na-node' nid = 'r_1'>
+<rect class = '' height = '50' width = '100' x = '255' y = '110.0'></rect>
+
+<foreignObject class = 'label-center' height = '50' width = '100' x = '255' y = '110.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>1. Run with TDD</p></div>
+</foreignObject>
+</g>
+
+<g class = 'na-arc'>
+<path class = 'na-arc line' d = 'M 105 225.0 L 180 225.0 L 180 135.0 L 255 135.0'></path>
+
+<path class = 'na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 255, 135.0)translate(255 135.0)'></path>
+</g>
+
+<g class = 'na-node' nid = 'r_2'>
+<rect class = '' height = '50' width = '100' x = '255.0' y = '190.0'></rect>
+
+<foreignObject class = 'label-center' height = '50' width = '100' x = '255.0' y = '190.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>1. Run with TDD</p></div>
+</foreignObject>
+</g>
+
+<g class = 'na-arc'>
+<path class = 'na-arc line' d = 'M 105 225.0 L 180.0 225.0 L 180.0 215.0 L 255.0 215.0'></path>
+
+<path class = 'na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 255.0, 215.0)translate(255.0 215.0)'></path>
+</g>
+
+<g class = 'na-node' nid = 'r_3'>
+<rect class = '' height = '50' width = '100' x = '255.0' y = '270.0'></rect>
+
+<foreignObject class = 'label-center' height = '50' width = '100' x = '255.0' y = '270.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>1. Run without TDD</p></div>
+</foreignObject>
+</g>
+
+<g class = 'na-arc'>
+<path class = 'na-arc line' d = 'M 105 225.0 L 180.0 225.0 L 180.0 295.0 L 255.0 295.0'></path>
+
+<path class = 'na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 255.0, 295.0)translate(255.0 295.0)'></path>
+</g>
+
+<g class = 'na-node' nid = 'r_4'>
+<rect class = '' height = '50' width = '100' x = '255.0' y = '350.0'></rect>
+
+<foreignObject class = 'label-center' height = '50' width = '100' x = '255.0' y = '350.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>1. Run without TDD</p></div>
+</foreignObject>
+</g>
+
+<g class = 'na-arc'>
+<path class = 'na-arc line' d = 'M 105 225.0 L 180.0 225.0 L 180.0 375.0 L 255.0 375.0'></path>
+
+<path class = 'na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 255.0, 375.0)translate(255.0 375.0)'></path>
+</g>
+
+<g class = 'tdd na-node' nid = 'tdd_ins'>
+<rect class = 'tdd' height = '50' width = '100' x = '55.0' y = '30'></rect>
+
+<foreignObject class = 'label-center' height = '50' width = '100' x = '55.0' y = '30'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>TDD instructions</p></div>
+</foreignObject>
+</g>
+
+<g class = 'tdd na-arc'>
+<path class = 'tdd na-arc line' d = 'M 155.0 55.0 L 205.0 55.0 L 205.0 122.5 L 255 122.5'></path>
+
+<path class = 'tdd na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 255, 122.5)translate(255 122.5)'></path>
+</g>
+
+<g class = 'tdd na-arc'>
+<path class = 'tdd na-arc line' d = 'M 155.0 55.0 L 205.0 55.0 L 205.0 202.5 L 255.0 202.5'></path>
+
+<path class = 'tdd na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 255.0, 202.5)translate(255.0 202.5)'></path>
+</g>
+
+<g class = 'tdd na-node' nid = 'check_tdd'>
+<rect class = 'tdd' height = '50' width = '100' x = '405.0' y = '30.0'></rect>
+
+<foreignObject class = 'label-center' height = '50' width = '100' x = '405.0' y = '30.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>Check that TDD instructions were followed</p></div>
+</foreignObject>
+</g>
+
+<g class = 'tdd na-arc'>
+<path class = 'tdd na-arc line' d = 'M 355 122.5 L 380.0 122.5 L 380.0 55.0 L 405.0 55.0'></path>
+
+<path class = 'tdd na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 405.0, 55.0)translate(405.0 55.0)'></path>
+</g>
+
+<g class = 'tdd na-arc'>
+<path class = 'tdd na-arc line' d = 'M 355.0 202.5 L 380.0 202.5 L 380.0 55.0 L 405.0 55.0'></path>
+
+<path class = 'tdd na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 405.0, 55.0)translate(405.0 55.0)'></path>
+</g>
+
+<g class = 'na-node' nid = 'judge'>
+<rect class = '' height = '60' width = '140' x = '655.0' y = '185.0'></rect>
+
+<foreignObject class = 'label-center' height = '60' width = '140' x = '655.0' y = '185.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>2. Opus: judgement of the 4 solutions (no knowledge of which used TDD)</p></div>
+</foreignObject>
+</g>
+
+<g class = 'na-node' nid = 'hypo'>
+<rect class = '' height = '60' width = '140' x = '725.0' y = '275.0'></rect>
+
+<foreignObject class = 'label-center' height = '60' width = '140' x = '725.0' y = '275.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>3. Opus: Hypothesize relationships between judgement and workflow</p></div>
+</foreignObject>
+</g>
+
+<g class = 'na-arc'>
+<path class = 'na-arc line' d = 'M 760.0 245.0 L 760.0 275.0'></path>
+
+<path class = 'na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(90.0, 760.0, 275.0)translate(760.0 275.0)'></path>
+</g>
+
+<g class = 'solution na-node' nid = 's_1'>
+<path d = 'M 405 125.0 M 405 135.0 L 410.0 125.0 L 500.0 125.0 L 505 135.0 L 500.0 145.0 L 410.0 145.0 Z'></path>
+
+<foreignObject class = 'label-center' height = '20' width = '100' x = '405' y = '125.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>Solution 1</p></div>
+</foreignObject>
+</g>
+
+<g class = 'solution na-arc'>
+<path class = 'solution na-arc line' d = 'M 355 135.0 L 405 135.0'></path>
+
+<path class = 'solution na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 405, 135.0)translate(405 135.0)'></path>
+</g>
+
+<g class = 'solution na-arc'>
+<path class = 'solution na-arc line' d = 'M 505 135.0 L 580.0 135.0 L 580.0 215.0 L 655.0 215.0'></path>
+
+<path class = 'solution na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 655.0, 215.0)translate(655.0 215.0)'></path>
+</g>
+
+<g class = 'trace na-node' nid = 't_1'>
+<path d = 'M 430.0 157.0 M 430.0 167.0 L 435.0 157.0 L 525.0 157.0 L 530.0 167.0 L 525.0 177.0 L 435.0 177.0 Z'></path>
+
+<foreignObject class = 'label-center' height = '20' width = '100' x = '430.0' y = '157.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>Session Traces 1</p></div>
+</foreignObject>
+</g>
+
+<g class = 'trace na-arc'>
+<path class = 'trace na-arc line' d = 'M 330.0 160.0 L 330.0 167.0 L 430.0 167.0'></path>
+
+<path class = 'trace na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 430.0, 167.0)translate(430.0 167.0)'></path>
+</g>
+
+<g class = 'trace na-arc'>
+<path class = 'trace na-arc line' d = 'M 530.0 167.0 L 627.5 167.0 L 627.5 305.0 L 725.0 305.0'></path>
+
+<path class = 'trace na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 725.0, 305.0)translate(725.0 305.0)'></path>
+</g>
+
+<g class = 'solution na-node' nid = 's_2'>
+<path d = 'M 405.0 205.0 M 405.0 215.0 L 410.0 205.0 L 500.0 205.0 L 505.0 215.0 L 500.0 225.0 L 410.0 225.0 Z'></path>
+
+<foreignObject class = 'label-center' height = '20' width = '100' x = '405.0' y = '205.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>Solution 2</p></div>
+</foreignObject>
+</g>
+
+<g class = 'solution na-arc'>
+<path class = 'solution na-arc line' d = 'M 355.0 215.0 L 405.0 215.0'></path>
+
+<path class = 'solution na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 405.0, 215.0)translate(405.0 215.0)'></path>
+</g>
+
+<g class = 'solution na-arc'>
+<path class = 'solution na-arc line' d = 'M 505.0 215.0 L 655.0 215.0'></path>
+
+<path class = 'solution na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 655.0, 215.0)translate(655.0 215.0)'></path>
+</g>
+
+<g class = 'trace na-node' nid = 't_2'>
+<path d = 'M 430.0 237.0 M 430.0 247.0 L 435.0 237.0 L 525.0 237.0 L 530.0 247.0 L 525.0 257.0 L 435.0 257.0 Z'></path>
+
+<foreignObject class = 'label-center' height = '20' width = '100' x = '430.0' y = '237.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>Session Traces 2</p></div>
+</foreignObject>
+</g>
+
+<g class = 'trace na-arc'>
+<path class = 'trace na-arc line' d = 'M 330.0 240.0 L 330.0 247.0 L 430.0 247.0'></path>
+
+<path class = 'trace na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 430.0, 247.0)translate(430.0 247.0)'></path>
+</g>
+
+<g class = 'trace na-arc'>
+<path class = 'trace na-arc line' d = 'M 530.0 247.0 L 627.5 247.0 L 627.5 305.0 L 725.0 305.0'></path>
+
+<path class = 'trace na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 725.0, 305.0)translate(725.0 305.0)'></path>
+</g>
+
+<g class = 'solution na-node' nid = 's_3'>
+<path d = 'M 405.0 285.0 M 405.0 295.0 L 410.0 285.0 L 500.0 285.0 L 505.0 295.0 L 500.0 305.0 L 410.0 305.0 Z'></path>
+
+<foreignObject class = 'label-center' height = '20' width = '100' x = '405.0' y = '285.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>Solution 3</p></div>
+</foreignObject>
+</g>
+
+<g class = 'solution na-arc'>
+<path class = 'solution na-arc line' d = 'M 355.0 295.0 L 405.0 295.0'></path>
+
+<path class = 'solution na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 405.0, 295.0)translate(405.0 295.0)'></path>
+</g>
+
+<g class = 'solution na-arc'>
+<path class = 'solution na-arc line' d = 'M 505.0 295.0 L 580.0 295.0 L 580.0 215.0 L 655.0 215.0'></path>
+
+<path class = 'solution na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 655.0, 215.0)translate(655.0 215.0)'></path>
+</g>
+
+<g class = 'trace na-node' nid = 't_3'>
+<path d = 'M 430.0 317.0 M 430.0 327.0 L 435.0 317.0 L 525.0 317.0 L 530.0 327.0 L 525.0 337.0 L 435.0 337.0 Z'></path>
+
+<foreignObject class = 'label-center' height = '20' width = '100' x = '430.0' y = '317.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>Session Traces 3</p></div>
+</foreignObject>
+</g>
+
+<g class = 'trace na-arc'>
+<path class = 'trace na-arc line' d = 'M 330.0 320.0 L 330.0 327.0 L 430.0 327.0'></path>
+
+<path class = 'trace na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 430.0, 327.0)translate(430.0 327.0)'></path>
+</g>
+
+<g class = 'trace na-arc'>
+<path class = 'trace na-arc line' d = 'M 530.0 327.0 L 627.5 327.0 L 627.5 305.0 L 725.0 305.0'></path>
+
+<path class = 'trace na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 725.0, 305.0)translate(725.0 305.0)'></path>
+</g>
+
+<g class = 'solution na-node' nid = 's_4'>
+<path d = 'M 405.0 365.0 M 405.0 375.0 L 410.0 365.0 L 500.0 365.0 L 505.0 375.0 L 500.0 385.0 L 410.0 385.0 Z'></path>
+
+<foreignObject class = 'label-center' height = '20' width = '100' x = '405.0' y = '365.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>Solution 4</p></div>
+</foreignObject>
+</g>
+
+<g class = 'solution na-arc'>
+<path class = 'solution na-arc line' d = 'M 355.0 375.0 L 405.0 375.0'></path>
+
+<path class = 'solution na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 405.0, 375.0)translate(405.0 375.0)'></path>
+</g>
+
+<g class = 'solution na-arc'>
+<path class = 'solution na-arc line' d = 'M 505.0 375.0 L 580.0 375.0 L 580.0 215.0 L 655.0 215.0'></path>
+
+<path class = 'solution na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 655.0, 215.0)translate(655.0 215.0)'></path>
+</g>
+
+<g class = 'trace na-node' nid = 't_4'>
+<path d = 'M 430.0 397.0 M 430.0 407.0 L 435.0 397.0 L 525.0 397.0 L 530.0 407.0 L 525.0 417.0 L 435.0 417.0 Z'></path>
+
+<foreignObject class = 'label-center' height = '20' width = '100' x = '430.0' y = '397.0'>
+<div xmlns = 'http://www.w3.org/1999/xhtml'><p>Session Traces 4</p></div>
+</foreignObject>
+</g>
+
+<g class = 'trace na-arc'>
+<path class = 'trace na-arc line' d = 'M 330.0 400.0 L 330.0 407.0 L 430.0 407.0'></path>
+
+<path class = 'trace na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 430.0, 407.0)translate(430.0 407.0)'></path>
+</g>
+
+<g class = 'trace na-arc'>
+<path class = 'trace na-arc line' d = 'M 530.0 407.0 L 627.5 407.0 L 627.5 305.0 L 725.0 305.0'></path>
+
+<path class = 'trace na-arc end-marker' d = 'M 0 0 l -12 -5 m 12 5 l -12 5' transform = 'rotate(0.0, 725.0, 305.0)translate(725.0 305.0)'></path>
+</g>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img">
+<title>Anatomy of a loop</title>
+<defs>
+<style>
+  .kicker { font-family: Menlo, 'SF Mono', monospace; font-size: 19px; letter-spacing: 2.5px;
+            fill: #63635D; text-transform: uppercase; }
+  .badge  { font-family: Menlo, 'SF Mono', monospace; font-size: 21px; font-weight: 700; fill: #0A0A0A; }
+  .foot   { font-family: Menlo, 'SF Mono', monospace; font-size: 17px; letter-spacing: 1.2px; fill: #4A4A45; }
+  .h1     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 46px; font-weight: 700; fill: #F5F3ED; }
+  .h2     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 27px; font-weight: 700; fill: #F5F3ED; }
+  .h3     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #F5F3ED; }
+  .lede   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 24px; fill: #9A9A92; }
+  .body   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 21px; fill: #C9C7BF; }
+  .small  { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 19px; fill: #9A9A92; }
+  .tag    { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #63635D; }
+  .tagA   { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #FFD644; }
+  .code   { font-family: Menlo, 'SF Mono', monospace; font-size: 20px; fill: #E8E6DF; }
+  .codesm { font-family: Menlo, 'SF Mono', monospace; font-size: 18px; fill: #C9C7BF; }
+  .acc    { fill: #FFD644; }
+  .good   { fill: #7ED9A6; }
+  .warn   { fill: #FF9E64; }
+  .b      { font-weight: 700; }
+</style>
+<radialGradient id="glow" cx="0.82" cy="0.05" r="0.75">
+  <stop offset="0%" stop-color="#4A3C10" stop-opacity="0.5"/>
+  <stop offset="55%" stop-color="#201B08" stop-opacity="0.18"/>
+  <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0"/>
+</radialGradient>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#63635D"/>
+</marker>
+<marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FFD644"/>
+</marker>
+<marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FF9E64"/>
+</marker>
+</defs>
+<rect width="1600" height="940" fill="#0A0A0A"/>
+<rect width="1600" height="940" fill="url(#glow)"/>
+<text x="70" y="62" class="kicker">Practical loop engineering &#183; addyosmani.com</text>
+<rect x="1468" y="38" width="62" height="34" rx="17" fill="#FFD644"/>
+<text x="1499" y="62" class="badge" text-anchor="middle">02</text>
+<text x="70" y="902" class="foot">addyosmani.com</text>
+<text x="70" y="160" class="h1">Anatomy of a loop</text><text x="70" y="226" class="lede">Set a goal, act, evaluate, feed the errors back, repeat until a stop condition holds.</text>
+<rect x="200" y="300" width="300" height="210" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="226" y="340" class="tag">GOAL</text><text x="226" y="384" class="small">State &#8220;done&#8221; as a</text><text x="226" y="413" class="small">condition a machine</text><text x="226" y="442" class="small">can evaluate.</text><line x1="500" y1="405" x2="552" y2="405" stroke="#63635D" stroke-width="2" marker-end="url(#ar)"/><rect x="560" y="300" width="300" height="210" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="586" y="340" class="tag">ACT</text><text x="586" y="384" class="small">The agent makes</text><text x="586" y="413" class="small">a change, runs the</text><text x="586" y="442" class="small">build, edits again.</text><line x1="860" y1="405" x2="912" y2="405" stroke="#63635D" stroke-width="2" marker-end="url(#ar)"/><rect x="920" y="300" width="300" height="210" rx="14" fill="#1A1608" stroke="#7A6820" stroke-width="1.5"/><text x="946" y="340" class="tagA">EVALUATE</text><text x="946" y="384" class="small">Compiler, linter,</text><text x="946" y="413" class="small">tests &#8212; plus a separate</text><text x="946" y="442" class="small">model reading the goal.</text><path d="M1220 405 H1290" stroke="#7ED9A6" stroke-width="2" marker-end="url(#ar)" fill="none"/><rect x="1290" y="355" width="220" height="100" rx="14" fill="#0E1A14" stroke="#2A5140" stroke-width="1.5"/><text x="1316" y="393" class="tag" fill="#7ED9A6">Condition holds</text><text x="1316" y="428" class="body b" fill="#7ED9A6">Stop.</text><path d="M1070 510 V596 H500 V440" stroke="#FF9E64" stroke-width="2" fill="none" marker-end="url(#arW)"/><text x="790" y="628" class="tag" fill="#FF9E64" text-anchor="middle">Fails &#8212; errors go back in as the next input</text><rect x="200" y="690" width="1310" height="64" rx="14" fill="#1A1608" stroke="#7A6820" stroke-width="1.5"/><rect x="200" y="690" width="5" height="64" rx="2.5" fill="#FFD644"/><text x="226" y="730.0" class="body b" fill="#F5F3ED">The evaluate step is the whole game. A loop is only as good as the check that decides it is done.</text><rect x="200" y="782" width="1310" height="78" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="226" y="812" class="tag">A strong check is</text><text x="226" y="843" class="small">Deterministic (same input, same verdict) &#183; fast enough to run every turn &#183; independent of whoever made the change.</text>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="970" viewBox="0 0 1600 970" role="img">
+<title>Choosing between goal, loop and schedule</title>
+<defs>
+<style>
+  .kicker { font-family: Menlo, 'SF Mono', monospace; font-size: 19px; letter-spacing: 2.5px;
+            fill: #63635D; text-transform: uppercase; }
+  .badge  { font-family: Menlo, 'SF Mono', monospace; font-size: 21px; font-weight: 700; fill: #0A0A0A; }
+  .foot   { font-family: Menlo, 'SF Mono', monospace; font-size: 17px; letter-spacing: 1.2px; fill: #4A4A45; }
+  .h1     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 46px; font-weight: 700; fill: #F5F3ED; }
+  .h2     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 27px; font-weight: 700; fill: #F5F3ED; }
+  .h3     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #F5F3ED; }
+  .lede   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 24px; fill: #9A9A92; }
+  .body   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 21px; fill: #C9C7BF; }
+  .small  { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 19px; fill: #9A9A92; }
+  .tag    { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #63635D; }
+  .tagA   { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #FFD644; }
+  .code   { font-family: Menlo, 'SF Mono', monospace; font-size: 20px; fill: #E8E6DF; }
+  .codesm { font-family: Menlo, 'SF Mono', monospace; font-size: 18px; fill: #C9C7BF; }
+  .acc    { fill: #FFD644; }
+  .good   { fill: #7ED9A6; }
+  .warn   { fill: #FF9E64; }
+  .b      { font-weight: 700; }
+</style>
+<radialGradient id="glow" cx="0.82" cy="0.05" r="0.75">
+  <stop offset="0%" stop-color="#4A3C10" stop-opacity="0.5"/>
+  <stop offset="55%" stop-color="#201B08" stop-opacity="0.18"/>
+  <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0"/>
+</radialGradient>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#63635D"/>
+</marker>
+<marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FFD644"/>
+</marker>
+<marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FF9E64"/>
+</marker>
+</defs>
+<rect width="1600" height="970" fill="#0A0A0A"/>
+<rect width="1600" height="970" fill="url(#glow)"/>
+<text x="70" y="62" class="kicker">Practical loop engineering &#183; addyosmani.com</text>
+<rect x="1468" y="38" width="62" height="34" rx="17" fill="#FFD644"/>
+<text x="1499" y="62" class="badge" text-anchor="middle">11</text>
+<text x="70" y="932" class="foot">addyosmani.com</text>
+<text x="70" y="160" class="h1">Choosing between goal, loop and schedule</text><text x="70" y="226" class="lede">Three primitives, three different jobs. Most confusion comes from using one for another&#8217;s work.</text>
+<line x1="70" y1="292" x2="1530" y2="292" stroke="#282826" stroke-width="1.5"/><text x="560" y="278" class="h3" fill="#FFD644" font-family="Menlo, monospace">/goal</text><text x="900" y="278" class="h3" fill="#F5F3ED" font-family="Menlo, monospace">/loop</text><text x="1240" y="278" class="h3" fill="#F5F3ED" font-family="Menlo, monospace">/schedule</text><text x="70" y="340" class="tag">What it is for</text><line x1="70" y1="368" x2="1530" y2="368" stroke="#1D1D1B" stroke-width="1.5"/><text x="560" y="340" class="body b">one task, to a finish line</text><text x="900" y="340" class="body">watching on a cadence</text><text x="1240" y="340" class="body">routines that outlive you</text><text x="70" y="422" class="tag">Runs until</text><line x1="70" y1="450" x2="1530" y2="450" stroke="#1D1D1B" stroke-width="1.5"/><text x="560" y="422" class="body b">a condition holds</text><text x="900" y="422" class="body">you stop it, or day 7</text><text x="1240" y="422" class="body">you delete it</text><text x="70" y="504" class="tag">Needs an open session</text><line x1="70" y1="532" x2="1530" y2="532" stroke="#1D1D1B" stroke-width="1.5"/><text x="560" y="504" class="body">yes</text><text x="900" y="504" class="body">yes</text><text x="1240" y="504" class="body">no &#8212; in the cloud</text><text x="70" y="586" class="tag">Expires</text><line x1="70" y1="614" x2="1530" y2="614" stroke="#1D1D1B" stroke-width="1.5"/><text x="560" y="586" class="body">when it stops</text><text x="900" y="586" class="body">7 days</text><text x="1240" y="586" class="body">never</text><text x="70" y="668" class="tag">Minimum cadence</text><line x1="70" y1="696" x2="1530" y2="696" stroke="#1D1D1B" stroke-width="1.5"/><text x="560" y="668" class="body">n/a &#8212; it is not timed</text><text x="900" y="668" class="body">1 minute</text><text x="1240" y="668" class="body">1 hour</text><text x="70" y="750" class="tag">Reach for it when</text><text x="560" y="750" class="body">&#8220;done&#8221; is a real check</text><text x="900" y="750" class="body">inputs change, task stays put</text><text x="1240" y="750" class="body">it must outlive the session</text><rect x="70" y="792" width="1460" height="100" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="98" y="823" class="tagA">Rule of thumb</text><text x="98" y="853" class="small">Goal is a finish line. Loop is a heartbeat. Schedule is a heartbeat that keeps beating after you close the laptop.</text><text x="98" y="879" class="small" fill="#63635D">Routines are in research preview, need a Claude subscription login, and have a per-account daily run cap.</text>
+</svg>

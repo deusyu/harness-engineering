@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img">
+<title>/goal &#8212; drive one task to a finish line</title>
+<defs>
+<style>
+  .kicker { font-family: Menlo, 'SF Mono', monospace; font-size: 19px; letter-spacing: 2.5px;
+            fill: #63635D; text-transform: uppercase; }
+  .badge  { font-family: Menlo, 'SF Mono', monospace; font-size: 21px; font-weight: 700; fill: #0A0A0A; }
+  .foot   { font-family: Menlo, 'SF Mono', monospace; font-size: 17px; letter-spacing: 1.2px; fill: #4A4A45; }
+  .h1     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 46px; font-weight: 700; fill: #F5F3ED; }
+  .h2     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 27px; font-weight: 700; fill: #F5F3ED; }
+  .h3     { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #F5F3ED; }
+  .lede   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 24px; fill: #9A9A92; }
+  .body   { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 21px; fill: #C9C7BF; }
+  .small  { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 19px; fill: #9A9A92; }
+  .tag    { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #63635D; }
+  .tagA   { font-family: Menlo, 'SF Mono', monospace; font-size: 16px; letter-spacing: 2px;
+            text-transform: uppercase; fill: #FFD644; }
+  .code   { font-family: Menlo, 'SF Mono', monospace; font-size: 20px; fill: #E8E6DF; }
+  .codesm { font-family: Menlo, 'SF Mono', monospace; font-size: 18px; fill: #C9C7BF; }
+  .acc    { fill: #FFD644; }
+  .good   { fill: #7ED9A6; }
+  .warn   { fill: #FF9E64; }
+  .b      { font-weight: 700; }
+</style>
+<radialGradient id="glow" cx="0.82" cy="0.05" r="0.75">
+  <stop offset="0%" stop-color="#4A3C10" stop-opacity="0.5"/>
+  <stop offset="55%" stop-color="#201B08" stop-opacity="0.18"/>
+  <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0"/>
+</radialGradient>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#63635D"/>
+</marker>
+<marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FFD644"/>
+</marker>
+<marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#FF9E64"/>
+</marker>
+</defs>
+<rect width="1600" height="940" fill="#0A0A0A"/>
+<rect width="1600" height="940" fill="url(#glow)"/>
+<text x="70" y="62" class="kicker">Practical loop engineering &#183; addyosmani.com</text>
+<rect x="1468" y="38" width="62" height="34" rx="17" fill="#FFD644"/>
+<text x="1499" y="62" class="badge" text-anchor="middle">03</text>
+<text x="70" y="902" class="foot">addyosmani.com</text>
+<text x="70" y="160" class="h1">/goal &#8212; drive one task to a finish line</text><text x="70" y="226" class="lede">If you cannot state &#8220;done&#8221; as a check a machine can run, you are not ready to loop.</text>
+<rect x="70" y="268" width="1460" height="110" rx="14" fill="#1B1B18" stroke="#30302B" stroke-width="1.5"/><text x="100" y="332" class="code"><tspan fill="#FFD644">/goal</tspan> <tspan fill="#F5F3ED">all tests in test/auth pass and the lint step is clean</tspan> <tspan fill="#FF9E64">or stop after 20 turns</tspan></text><line x1="128" y1="392" x2="128" y2="424" stroke="#7A6820" stroke-width="1.5"/><text x="100" y="450" class="tag" fill="#7A6820">the command</text><line x1="600" y1="392" x2="600" y2="424" stroke="#63635D" stroke-width="1.5"/><text x="470" y="450" class="tag">a condition a machine can evaluate</text><line x1="1290" y1="392" x2="1290" y2="424" stroke="#5A3A1E" stroke-width="1.5"/><text x="1180" y="450" class="tag" fill="#FF9E64">the bound &#8212; always set one</text><rect x="70" y="496" width="715" height="268" rx="14" fill="#0E1A14" stroke="#2A5140" stroke-width="1.5"/><text x="98" y="534" class="tag" fill="#7ED9A6">Checkable &#8212; loop it</text><text x="98" y="576" class="codesm">all tests in test/auth pass</text><text x="98" y="613" class="codesm">the lint step is clean</text><text x="98" y="650" class="codesm">p95 latency is under 300ms</text><text x="98" y="687" class="codesm">Lighthouse score is 90 or above</text><text x="98" y="724" class="codesm">the build has no type errors</text><rect x="815" y="496" width="715" height="268" rx="14" fill="#1C1209" stroke="#5A3A1E" stroke-width="1.5"/><text x="843" y="534" class="tag" fill="#FF9E64">Not checkable &#8212; keep it</text><text x="843" y="576" class="codesm">make the code cleaner</text><text x="843" y="613" class="codesm">improve the user experience</text><text x="843" y="650" class="codesm">make it feel faster</text><text x="843" y="687" class="codesm">refactor this properly</text><text x="843" y="724" class="codesm">make the copy more engaging</text><rect x="70" y="786" width="1460" height="74" rx="14" fill="#131312" stroke="#282826" stroke-width="1.5"/><text x="98" y="817" class="tag">How the check works</text><text x="98" y="847" class="small">After each turn the condition goes to a small fast model (Haiku by default), which answers yes or no with a short reason. Needs Claude Code v2.1.139+.</text>
+</svg>
