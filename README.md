@@ -281,14 +281,17 @@ git config core.hooksPath .githooks
 
 ## 📞 联系方式
 
+内容勘误、补充或资源推荐，请按上一节提 [Issue](https://github.com/deusyu/harness-engineering/issues) 或 PR。交流讨论或其他事情，可以通过下面这些方式找到我：
+
 | 渠道 | 链接 |
 |------|------|
-| GitHub | [@deusyu](https://github.com/deusyu) |
 | X (Twitter) | [@0xdeusyu](https://x.com/0xdeusyu) |
 | Telegram | [@DeusThink](https://t.me/DeusThink) |
 | Telegram 交流群 | [@talkdeusyu](https://t.me/talkdeusyu) |
 | Telegram 频道 | [@lovedesuyu](https://t.me/lovedesuyu) |
 | Email | [rainman.deus@gmail.com](mailto:rainman.deus@gmail.com) |
+
+频道「婴宁」记录我的见闻，以及和 AI 碰撞出的思考；交流群是它的讨论区，也欢迎来聊 Harness Engineering。
 
 ## Star History
 

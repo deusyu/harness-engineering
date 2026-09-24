@@ -282,14 +282,17 @@ Contributions via Issues and PRs are welcome:
 
 ## 📞 Contact
 
+For corrections, additions, or resource suggestions, please open an [issue](https://github.com/deusyu/harness-engineering/issues) or PR as described above. For discussion or anything else, you can reach me here:
+
 | Channel | Link |
 |---------|------|
-| GitHub | [@deusyu](https://github.com/deusyu) |
 | X (Twitter) | [@0xdeusyu](https://x.com/0xdeusyu) |
 | Telegram | [@DeusThink](https://t.me/DeusThink) |
-| Telegram Group | [@talkdeusyu](https://t.me/talkdeusyu) |
-| Telegram Channel | [@lovedesuyu](https://t.me/lovedesuyu) |
+| Telegram Group (Chinese) | [@talkdeusyu](https://t.me/talkdeusyu) |
+| Telegram Channel (Chinese) | [@lovedesuyu](https://t.me/lovedesuyu) |
 | Email | [rainman.deus@gmail.com](mailto:rainman.deus@gmail.com) |
+
+The channel is my running log of thinking alongside AI; the group is its discussion space, and Harness Engineering discussion is welcome there too.
 
 ## Star History
 
