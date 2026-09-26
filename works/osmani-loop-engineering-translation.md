@@ -88,7 +88,7 @@ Skills 也是"意图不再反复收费"的地方。我在"意图债"（[the inte
 
 Codex 只在你要求时才派生 subagent，并行运行它们，然后把结果折叠回一个答案。你在 `.codex/agents/` 里用 TOML 文件定义自己的智能体，各有名字、描述、指令，以及可选的模型和推理力度（reasoning effort）——你的安全审查员可以是高力度的强模型，而你的探索者可以是某个只读的快模型。Claude Code 用 `.claude/agents/` 里的 subagents 和互相传递工作的 agent teams 做同样的事。两边常见的分工都是：一个探索、一个实现、一个对照 spec 验证。
 
-这个论点我已经讲过两次：一次是"代码智能体交响乐团"（[the code agent orchestra](https://addyosmani.com/blog/code-agent-orchestra/)），一次是"对抗式代码审查"（[adversarial code review](https://addyosmani.com/blog/adversarial-code-review/)）。它在循环里格外要紧的原因是：**循环在你不看着的时候跑**，一个你真正信任的验证者，是你敢走开的唯一理由。Subagents 确实更烧 token——每个都要自己跑模型和工具——所以把它们花在值得买第二意见的地方。这其实也是 Claude Code 的 `/goal` 在底下做的事：由一个新鲜的模型来判定循环是否完成，而不是干活的那个——"做与查分离"应用到了停止条件本身。
+这个论点我已经讲过两次：一次是"代码智能体交响乐团"（[the code agent orchestra](https://addyosmani.com/blog/code-agent-orchestra/)），一次是"智能体代码审查"（[agentic code review](https://addyosmani.com/blog/agentic-code-review/)）。它在循环里格外要紧的原因是：**循环在你不看着的时候跑**，一个你真正信任的验证者，是你敢走开的唯一理由。Subagents 确实更烧 token——每个都要自己跑模型和工具——所以把它们花在值得买第二意见的地方。这其实也是 Claude Code 的 `/goal` 在底下做的事：由一个新鲜的模型来判定循环是否完成，而不是干活的那个——"做与查分离"应用到了停止条件本身。
 
 ## 一个循环长什么样
 

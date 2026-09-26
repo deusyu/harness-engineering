@@ -1,7 +1,7 @@
 ---
 title: "为每个任务配一套 harness：Claude Code 中的动态工作流"
 sourceTitle: "A harness for every task: dynamic workflows in Claude Code"
-sourceUrl: "https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code"
+sourceUrl: "https://claude.dev/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code/"
 sourceAuthor: "Thariq Shihipar, Sid Bidasaria (Anthropic, Claude Code 团队)"
 sourcePublishedAt: "2026-06-02"
 sourceSiteName: "Claude by Anthropic"

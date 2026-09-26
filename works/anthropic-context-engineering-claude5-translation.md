@@ -1,7 +1,7 @@
 ---
 title: "Claude 5 世代模型的上下文工程新规则（删掉 80% 系统提示词）"
 sourceTitle: "The new rules of context engineering for Claude 5 generation models"
-sourceUrl: "https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models"
+sourceUrl: "https://claude.dev/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models/"
 sourceAuthor: "Thariq Shihipar（Anthropic 技术团队成员）"
 sourcePublishedAt: "2026-07-24"
 sourceSiteName: "Claude by Anthropic"
@@ -84,7 +84,7 @@ sourceFigureCount: 4
 
 但渐进式披露不只用于 skills，我们也把它用在**工具**上。我们的一部分工具是"延迟加载"的，意味着智能体必须先用 ToolSearch 搜索到它们的完整定义才能使用。这让我们可以拥有更多工具（比如 Task 系列工具）而**不在需要之前占用上下文**。
 
-同样的做法也适用于你自己的 CLAUDE.md 与 Skill.md 文件。一个常见的迷思是：你想把这些文件做成一个中央仓库，把所有可能遇到的实践统统写进去，因为你觉得 Claude 否则就找不到。相反，[考虑做一棵可以在正确时间被加载的文件树](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code)。
+同样的做法也适用于你自己的 CLAUDE.md 与 Skill.md 文件。一个常见的迷思是：你想把这些文件做成一个中央仓库，把所有可能遇到的实践统统写进去，因为你觉得 Claude 否则就找不到。相反，[考虑做一棵可以在正确时间被加载的文件树](https://claude.dev/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code/)。
 
 ### 过去：重复自己 → 现在：简单的工具描述
 
@@ -104,7 +104,7 @@ sourceFigureCount: 4
 
 你也可以**以代码的形式**给 Claude 引用。**一份 spec 也可以是一套详细的测试套件，或者另一个代码库里、Claude 可能要移植过来的一个函数。**
 
-**Rubric（评分表）是另一种形式的引用。** Rubric 让 Claude 可以借助[动态工作流](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code)、带着这些 rubric 起若干验证者智能体，去尝试核对你在某个领域里的品味（比如：什么才算好的 API 设计）。
+**Rubric（评分表）是另一种形式的引用。** Rubric 让 Claude 可以借助[动态工作流](https://claude.dev/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code/)、带着这些 rubric 起若干验证者智能体，去尝试核对你在某个领域里的品味（比如：什么才算好的 API 设计）。
 
 ## 把它用到你自己的上下文上
 
