@@ -1001,7 +1001,7 @@
 ### 36. Anthropic / Claude — 动态工作流：模型现场写自己的 harness
 
 - **标题：** A harness for every task: dynamic workflows in Claude Code
-- **链接：** [claude.com/blog](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code)
+- **链接：** [claude.dev/blog](https://claude.dev/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code/)
 - **翻译：** [works/anthropic-dynamic-workflows-translation.md](../works/anthropic-dynamic-workflows-translation.md)
 - **作者：** Thariq Shihipar, Sid Bidasaria（Anthropic Claude Code 团队） | **日期：** 2026-06-02（功能随 Claude Code 2.1.154 + Opus 4.8 于 2026-05-28 发布）
 - **核心：** harness 本体论的转折点——Claude 现在**为任务现场编写自己的 JavaScript 编排脚本**，即一次性定制 harness。默认 Claude Code harness 要在同一个上下文窗口里既规划又执行，在长时运行、大规模并行、高度结构化、对抗性任务上会崩；dynamic workflows 把编排逻辑放进代码（在 token 上近乎免费），单会话扇出数十到数百个并行 subagent，各自在隔离上下文窗口内执行聚焦目标。
@@ -1796,7 +1796,7 @@
 ### 66. Anthropic / Thariq Shihipar — Claude 5 世代的上下文工程新规则（删掉 80% 系统提示词）
 
 - **标题：** The new rules of context engineering for Claude 5 generation models
-- **链接：** [claude.com](https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models)
+- **链接：** [claude.dev](https://claude.dev/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models/)
 - **翻译：** [works/anthropic-context-engineering-claude5-translation.md](../works/anthropic-context-engineering-claude5-translation.md)
 - **作者：** Thariq Shihipar（Anthropic 技术团队） | **日期：** 2026-07-24
 - **核心：** #4 提出的"harness 瘦身"、#31 讲的"约束加减法纪律"，在这里第一次有了官方的量化落地：**为 Claude Opus 5 / Claude Fable 5 这一代模型，Claude Code 的系统提示词被删掉了 80% 以上，编码评测上没有可测量的损失。** 自陈的病因是"我们在过度约束 Claude"——读内部转录时能看到同一个请求里系统提示词、skill 与用户请求互相打架（"适当留文档"对上"不要写注释"），模型必须先想清楚这些冲突再决定做什么。
@@ -2282,11 +2282,11 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 | Thoughtworks Technology Radar Vol.34 | 行业雷达 | ⚪ | Ralph loop 列为 Assess、Team of coding agents 列为 Assess、Coding agent swarms 列为 Caution（2026-04-15）——#28 Ralph 的行业采纳信号；雷达条目体裁，一行即可 | [thoughtworks](https://www.thoughtworks.com/radar/techniques/ralph-loop) |
 | OpenAI：ChatGPT Work + Codex 应用合并 | 产品动态 | ⚪ | 2026-07-09：Codex 独立应用并入 ChatGPT 桌面端（Chat/Work/Codex 三模式、全计划可用），GPT-5.6 同日 GA，Atlas 浏览器开始退役——"编码智能体 runtime 正在变成通用智能体 runtime"，#40 HaaS 线索的产品化里程碑；发布稿体裁 | [digitalapplied 汇总](https://www.digitalapplied.com/blog/chatgpt-work-openai-agent-launch-2026) |
 | LangChain：Prompt Caching with Deep Agents | 工程文 | ⚪ | 跨厂商缓存中间件：harness 自动按 provider 委派缓存策略、结构化提示词与显式缓存点收窄失效爆炸半径（记忆更新仍能命中前缀子集）；真实轨迹实测省 49–80% token——#39 Codex 缓存工程的框架侧对应，2026-06-26 | [langchain](https://www.langchain.com/blog/deep-agents-prompt-caching) |
-| Osmani：Don't Outsource the Learning | 随笔 | ⚪ | 脉络三新数据点：Anthropic 技能形成 RCT——AI 组完成同速但理解测验 50% vs 67%，组内"问概念的 >65%、粘代码的 <40%（姿势决定结果）"；另引 MIT "Your Brain on ChatGPT"、CHI 2026 的 LLM 先行锚定效应，2026-07-06 | [addyosmani.com](https://addyosmani.com/blog/dont-outsource-learning/) |
+| Osmani：Don't Outsource the Learning | 随笔 | ⚪ | 脉络三新数据点：Anthropic 技能形成 RCT——AI 组完成同速但理解测验 50% vs 67%，组内"问概念的 >65%、粘代码的 <40%（姿势决定结果）"；另引 MIT "Your Brain on ChatGPT"、CHI 2026 的 LLM 先行锚定效应，2026-05-16 | [addyosmani.com](https://addyosmani.com/blog/dont-outsource-learning/) |
 | Fowler 站：The Archaeologist's Copilot | 实践文 | ⚪ | Java 1.5 遗留系统现代化：早期 LLM 给出"在代码库里站不住的貌似合理答案"，转机是把过程锚定在证据上——AI 辅助分析 + 稳定 Docker 环境验证 + 测试保护下渐进重构；"AI 被证据、清晰角色与分步策略约束时最有用"，2026-07-16 | [martinfowler](https://martinfowler.com/articles/archaeologist-copilot.html) |
 | Simon Willison：llm-coding-agent 0.1a0 | 实验 | ⚪ | 给 Fable 一份 spec.md 就造出 Claude Code 风格最小 harness（读/写/搜文件 + 执行命令 + `--allow` 权限模式 + Python API）——"最小 harness 有多小"的又一实证，配 #17 的 300 行工作坊说法看，2026-07-02 | [simonwillison.net](https://simonwillison.net/2026/jul/2/llm-coding-agent/) |
 | donggeking/harness_engineering_guide | 中文教材/仓库 | 🔵 | 中文社区的体系化 Harness 教程书（GitBook + 从零实现的 MiniHarness：运行时→工具层→记忆→输出治理→编排→MCP→生产化加固→安全层），剖析 Codex/Claude Code/OpenClaw 真实实现；基于 2026-04 技术现状；待实测其 MiniHarness 后再定去向 | [github](https://github.com/donggeking/harness_engineering_guide) |
-| Osmani：Long-running Agents | 综述/定调 | ⚪ | 长时智能体三义拆分（长时推理 / 长时执行 / 持久代理）+ 三堵墙（有限上下文 / 无持久状态 / 无独立自验）；论据已被 #4/#7/#28/#48 覆盖，价值在地图与词汇；#41 曾反向引用本文，2026-07 | [addyosmani.com](https://addyosmani.com/blog/long-running-agents/) |
+| Osmani：Long-running Agents | 综述/定调 | ⚪ | 长时智能体三义拆分（长时推理 / 长时执行 / 持久代理）+ 三堵墙（有限上下文 / 无持久状态 / 无独立自验）；论据已被 #4/#7/#28/#48 覆盖，价值在地图与词汇；#41 曾反向引用本文，2026-04-28 | [addyosmani.com](https://addyosmani.com/blog/long-running-agents/) |
 | Iusztin：What's Harness Engineering | 科普 | ⚪ | "模型商品化 → harness 是你该拥有的那层" + build/buy/customize 三分与开源中间地带（Pydantic AI Harness / Pi / Deep Agents）；面向非工程读者的定调文，论点已被 #1/#3/#31 覆盖，2026-07-21 | [read.technically.dev](https://read.technically.dev/p/whats-harness-engineering) |
 | Sparsh Agarwal：Control Surface | 工程随笔 | ⚪ | Scaffolding（首条消息前装配）vs Harness（会话中运行）二分 + "allowed claim / proof" 治理词汇 + 开工前六问清单；术语有用、无一手数据，2026-07-09 | [medium](https://medium.com/recohut-ai-labs/harness-engineering-the-control-surface-around-coding-agents-a907bc310eee) |
 | OpenAI Agents SDK 演进 | 产品文 | ⚪ | 官方 SDK 侧的"harness 与 compute 分离"定式：凭据不进模型代码执行环境 + snapshot/rehydration 断点续跑 + Manifest 工作区契约；与 #7 brain/hands、#40 HaaS、#50 遏制互证；发布稿体裁，2026-04-15（存量回扫补录），配套 [Claude→OpenAI SDK 迁移指南](https://developers.openai.com/cookbook/examples/agents_sdk/migrate-from-claude-agent-sdk/readme) 的两套架构对照表最清晰 | [openai](https://openai.com/index/the-next-evolution-of-the-agents-sdk/) |
@@ -2356,7 +2356,7 @@ Harness Engineering（AI 护栏）     Harness.io（交付管线）
 | 自演化安全攻击群（4 篇合并） | 论文群 | ⚪ | SkillJack 持久技能后门（[2608.03509](https://arxiv.org/abs/2608.03509)）/ 轨迹投毒 91.0% SER（[2608.05563](https://arxiv.org/abs/2608.05563)）/ harness 提取攻击——harness 视为 IP（[2607.28147](https://arxiv.org/abs/2607.28147) v4）/ 金融 agent 自演化能力与风险同增（[2608.17684](https://arxiv.org/abs/2608.17684)）——自演化×安全攻防谱系，配 HarnessRisk 看 | （见左） |
 | MCP vs CLI + DCAS | 论文 | ⚪ | 7 scaffold×5 模型可复现实验：主导效应是 scaffold 而非工具接口（[2608.08654](https://arxiv.org/abs/2608.08654)）+ 开源微调数据几乎全采自 OpenHands 导致模型 scaffold 锁定、基模型无此分歧（[2608.06113](https://arxiv.org/abs/2608.06113)，Queen's）；可移植性双证 | （见左） |
 | LangChain harness/loop 核心系列（存量回扫，12 篇合并） | 信源级 | ⚪ | 2026-08-27 回扫发现的系统性缺口：improving-deep-agents-with-harness-engineering（02-17，TB Top30→Top5）、better-harness（04-08，evals 爬山）、the-art-of-loop-engineering（06-16）、how-to-build-a-custom-agent-harness（06-03）、middleware 两篇、frameworks-runtimes-harnesses（2025-10）、tuning-the-harness-not-the-model（07-08，开源模型 ~8x 低成本追平 Opus 4.8）、your-harness-your-memory（04-11）、deep-agents 开山文（2025-07）、tuning-deep-agents-different-models（04-29）、Candidly 案例（06-29）——完整清单见 translate/2026-08-27/candidates.md 留档；某篇被引用或需要时再单独升格 | [入口](https://www.langchain.com/blog/improving-deep-agents-with-harness-engineering) |
-| claude.com 机制文系列（存量回扫，合并） | 信源级 | ⚪ | 同批回扫缺口：skills 全系列（Introducing Agent Skills 2025-10-16 起 8 篇）、subagent/multi-agent 系列 4 篇、Lessons from building Claude Code 双篇（skills 06-03 / prompt caching 04-30）、dynamic workflows 发布文、hooks/plugins/CLAUDE.md/session 管理等机制文——完整清单见 translate/2026-08-27/candidates.md；同上处理 | [入口](https://claude.com/blog/lessons-from-building-claude-code-prompt-caching-is-everything) |
+| claude.com 机制文系列（存量回扫，合并） | 信源级 | ⚪ | 同批回扫缺口：skills 全系列（Introducing Agent Skills 2025-10-16 起 8 篇）、subagent/multi-agent 系列 4 篇、Lessons from building Claude Code 双篇（skills 06-03 / prompt caching 04-30）、dynamic workflows 发布文、hooks/plugins/CLAUDE.md/session 管理等机制文——完整清单见 translate/2026-08-27/candidates.md；同上处理 | [入口](https://claude.dev/blog/lessons-from-building-claude-code-prompt-caching-is-everything/) |
 
 > 三篇短 bliki / 随笔（Vibe Coding、Interrogatory LLM、Genie Tarpit）若日后要收，建议合并成一个「概念定义 / 上下文工程 pattern」小专题，别各开条目稀释精品信号。
 >
