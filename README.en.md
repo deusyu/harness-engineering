@@ -231,6 +231,7 @@ The "Ralph Wiggum Loop" is the core implementation pattern of Harness Engineerin
 |----------|-------------|
 | [vibe-coding-cn](https://github.com/tukuaiai/vibe-coding-cn) | Chinese Vibe Coding community guide |
 | [Mitchell Hashimoto: Engineer the Harness](https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness) | Where "harness engineering" got its name (now indexed as article #29 in references/articles.md) |
+| [OrcaPromptVault](https://github.com/Continuum-AI-Corp/OrcaPromptVault) | Archive of the system prompts and tool schemas shipped harnesses actually send, one directory per product, dated, with a reproduce command — read what a real harness carries instead of relying on second-hand accounts |
 
 ## 🛠️ Development Notes
 
