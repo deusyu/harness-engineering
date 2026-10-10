@@ -230,6 +230,7 @@ harness-engineering/
 |------|------|
 | [vibe-coding-cn](https://github.com/tukuaiai/vibe-coding-cn) | 中文 Vibe Coding 社区指南 |
 | [Mitchell Hashimoto: Engineer the Harness](https://mitchellh.com/writing/my-ai-adoption-journey#step-5-engineer-the-harness) | "harness engineering" 命名出处（已收录为文章 #29，深度摘要见 references/articles.md） |
+| [OrcaPromptVault](https://github.com/Continuum-AI-Corp/OrcaPromptVault) | Continuum AI 维护的第三方系统提示词与工具 schema 归档，区分本地代理采集与继承的转录材料；部分采集条目附复现命令，供比较 harness 的提示与工具设计（[采集说明](https://github.com/Continuum-AI-Corp/OrcaPromptVault/blob/main/docs/CAPTURES.md)、[来源索引](https://github.com/Continuum-AI-Corp/OrcaPromptVault/blob/main/docs/UPSTREAM.md)） |
 
 ## 🛠️ 开发须知
 
