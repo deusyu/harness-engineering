@@ -85,6 +85,8 @@ git log origin/main..HEAD --format='%B' | grep -i co-authored-by   # 应无输�
 git log origin/main..HEAD --format='%ae %ce'                       # 只应出现 noreply 地址
 ```
 
+第一条与维护者合并前用的检查相同，匹配提交信息里任何位置出现的这个词，所以提交信息正文也不要提到它（需要描述时写"署名尾注"）。
+
 **4. 不写入个人信息。** 提交内容、提交信息和分支名里不得出现个人真实姓名、个人邮箱或本机绝对路径。提交前至少对暂存 diff 扫一遍绝对路径（`/home/`、`/Users/`）和邮箱地址。
 
 **5. 一致性检查要手动跑。** 云端 VM 的 `core.hooksPath` 指向 Cursor 自己的钩子目录，所以上文"启用 pre-commit 阻断"那条命令在云端不要执行，仓库的 `.githooks/pre-commit` 也不会自动触发。提交前在仓库根目录手动运行 `bash scripts/check-consistency.sh`。
