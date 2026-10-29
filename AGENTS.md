@@ -78,6 +78,8 @@ FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f \
 
 `origin/main` 换成 PR 的实际基分支。已经干净的提交会原样重建、哈希不变，所以分支推送过之后再跑，推送仍是快进；只有改写了已推送的提交才需要 `git push --force-with-lease`，且仅限自己的 PR 分支。每次新提交后、推送前都要重跑。
 
+代价是这样产生的提交不带签名：云端的签名密钥只对 Cursor Agent 身份有效，`filter-branch` 也不会重新签名，所以 GitHub 上显示 unsigned，和维护者本机的提交一样。PR 用 squash 合并，主干上的提交由 GitHub 签名。不要为了显示 Verified 改回 Cursor Agent 身份。
+
 **3. 推送前核对，两条都必须干净：**
 
 ```bash
