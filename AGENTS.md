@@ -59,36 +59,26 @@
 
 ## Cursor Cloud specific instructions
 
-只适用于 Cursor 云端 agent。仓库维护者明确要求：git 历史里的作者和提交者只能是 `deusyu <deusyu@users.noreply.github.com>`，提交信息里不能有任何 `Co-authored-by` 尾注。云端环境默认两条都不满足，按下面的步骤处理。
+只适用于 Cursor 云端 agent。
 
-**1. 用环境变量指定提交身份。** 云端 VM 的全局 git 身份是 `Cursor Agent <cursoragent@cursor.com>`。不要改 git 配置，每次提交时临时指定：
+**一致性检查要手动跑。** 云端 VM 的 `core.hooksPath` 指向 Cursor 自己的钩子目录，仓库的 `.githooks/pre-commit` 不会自动触发。上文"启用 pre-commit 阻断"那条命令在云端不要执行，它会顶掉 Cursor 的密钥扫描钩子。提交前在仓库根目录手动运行 `bash scripts/check-consistency.sh`。
 
-```bash
-GIT_AUTHOR_NAME=deusyu GIT_AUTHOR_EMAIL=deusyu@users.noreply.github.com \
-GIT_COMMITTER_NAME=deusyu GIT_COMMITTER_EMAIL=deusyu@users.noreply.github.com \
-git commit -m "..."
-```
+**提交卫生（只管推到本仓库的分支，fork 不受限）。** 作者和提交者只能用 GitHub noreply 地址，提交信息不带 `Co-authored-by` 尾注。这类 PR 由 `commit-hygiene / check` 检查；推送前在本地运行 `bash scripts/check-commit-hygiene.sh`（默认检查 `origin/main..HEAD`）。云端默认两条都不满足：
 
-**2. 推送前剥掉尾注。** Cursor 的署名钩子会给每个提交追加 `Co-authored-by:` 行。`--no-verify` 去不掉它（同一脚本也挂在 `prepare-commit-msg` 上），还会跳过 Cursor 的密钥扫描；改 `core.hooksPath` 能去掉尾注，但同样会停掉密钥扫描。两种都不要用。正确做法是在工作区干净时改写本分支的提交信息：
+1. 云端的全局 git 身份是 `Cursor Agent <cursoragent@cursor.com>`。不要改 git 配置，提交时用环境变量指定启动你的人在其 agent 规则里给出的 noreply 身份。没有给出时不要猜，也不要照搬仓库历史里别人的身份，在总结里说明即可：
 
-```bash
-FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f \
-  --msg-filter "sed '/^[Cc]o-[Aa]uthored-[Bb]y:/d' | git stripspace" -- origin/main..HEAD
-```
+   ```bash
+   GIT_AUTHOR_NAME=<名字> GIT_AUTHOR_EMAIL=<noreply 地址> \
+   GIT_COMMITTER_NAME=<名字> GIT_COMMITTER_EMAIL=<noreply 地址> git commit -m "..."
+   ```
 
-`origin/main` 换成 PR 的实际基分支。已经干净的提交会原样重建、哈希不变，所以分支推送过之后再跑，推送仍是快进；只有改写了已推送的提交才需要 `git push --force-with-lease`，且仅限自己的 PR 分支。每次新提交后、推送前都要重跑。
+2. Cursor 的署名钩子会给每个提交追加尾注。`--no-verify` 去不掉它（同一脚本也挂在 `prepare-commit-msg` 上），还会跳过密钥扫描，不要用。推送前在工作区干净时改写本分支的提交信息：
 
-代价是这样产生的提交不带签名：云端的签名密钥只对 Cursor Agent 身份有效，`filter-branch` 也不会重新签名，所以 GitHub 上显示 unsigned，和维护者本机的提交一样。PR 用 squash 合并，主干上的提交由 GitHub 签名。不要为了显示 Verified 改回 Cursor Agent 身份。
+   ```bash
+   FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f \
+     --msg-filter "sed '/^[Cc]o-[Aa]uthored-[Bb]y:/d' | git stripspace" -- origin/main..HEAD
+   ```
 
-**3. 推送前核对，两条都必须干净：**
+   `origin/main` 换成 PR 的实际基分支。已经合规的提交会原样重建、哈希不变，推送过的分支再跑仍是快进推送。如果提交时已经用了错误身份，在同一条命令里加上 `--env-filter 'export GIT_AUTHOR_NAME=… GIT_AUTHOR_EMAIL=… GIT_COMMITTER_NAME=… GIT_COMMITTER_EMAIL=…'` 一并改掉（只对你自己的提交这样做）。
 
-```bash
-git log origin/main..HEAD --format='%B' | grep -i co-authored-by   # 应无输出
-git log origin/main..HEAD --format='%ae %ce'                       # 只应出现 noreply 地址
-```
-
-第一条与维护者合并前用的检查相同，匹配提交信息里任何位置出现的这个词，所以提交信息正文也不要提到它（需要描述时写"署名尾注"）。
-
-**4. 不写入个人信息。** 提交内容、提交信息和分支名里不得出现个人真实姓名、个人邮箱或本机绝对路径。提交前至少对暂存 diff 扫一遍绝对路径（`/home/`、`/Users/`）和邮箱地址。
-
-**5. 一致性检查要手动跑。** 云端 VM 的 `core.hooksPath` 指向 Cursor 自己的钩子目录，所以上文"启用 pre-commit 阻断"那条命令在云端不要执行，仓库的 `.githooks/pre-commit` 也不会自动触发。提交前在仓库根目录手动运行 `bash scripts/check-consistency.sh`。
+按这个流程产生的提交不带签名：云端的签名密钥只对 Cursor Agent 身份有效，`filter-branch` 也不会重新签名，所以 GitHub 上显示 unsigned。PR 用 squash 合并后，主干提交由 GitHub 签名。不要为了显示 Verified 改回 Cursor Agent 身份。

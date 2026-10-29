@@ -68,7 +68,7 @@ description: 把一批 Harness Engineering 调研候选（文章/论文/工具�
 
 ### ⑤ 校验 + 提交
 - 跑 `bash scripts/check-consistency.sh`，C1–C13 必须全绿再提交。
-- commit 匿名：无 `Co-Authored-By`，作者用 noreply `deusyu@users.noreply.github.com`（本机依赖全局 git 配置，勿覆盖；Cursor 云端的全局身份不是它，按根目录 AGENTS.md「Cursor Cloud specific instructions」处理）。
+- commit 匿名：作者用 GitHub noreply 身份、不带 `Co-Authored-By`（本机依赖全局 git 配置，勿覆盖；Cursor 云端按根目录 AGENTS.md「Cursor Cloud specific instructions」处理）；推送前用 `bash scripts/check-commit-hygiene.sh` 自检。
 - push 仅在用户要求时。
 
 ### ⑥ 清理
