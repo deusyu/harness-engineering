@@ -56,3 +56,35 @@
 
 **CI 兜底**：`.github/workflows/consistency.yml` 在每次 push / PR 时跑同一脚本（不做路径过滤，保证必需检查总能上报）。job 显示名固定为 `consistency / check`——分支保护按 check run 名匹配必需检查，改名会让所有 PR 重新被 "Expected" 卡住。
 本地 hook 是开发反馈，CI 是合并门——两层独立，本地未启用 hook 不会绕过检查。
+
+## Cursor Cloud specific instructions
+
+只适用于 Cursor 云端 agent。仓库维护者明确要求：git 历史里的作者和提交者只能是 `deusyu <deusyu@users.noreply.github.com>`，提交信息里不能有任何 `Co-authored-by` 尾注。云端环境默认两条都不满足，按下面的步骤处理。
+
+**1. 用环境变量指定提交身份。** 云端 VM 的全局 git 身份是 `Cursor Agent <cursoragent@cursor.com>`。不要改 git 配置，每次提交时临时指定：
+
+```bash
+GIT_AUTHOR_NAME=deusyu GIT_AUTHOR_EMAIL=deusyu@users.noreply.github.com \
+GIT_COMMITTER_NAME=deusyu GIT_COMMITTER_EMAIL=deusyu@users.noreply.github.com \
+git commit -m "..."
+```
+
+**2. 推送前剥掉尾注。** Cursor 的署名钩子会给每个提交追加 `Co-authored-by:` 行。`--no-verify` 去不掉它（同一脚本也挂在 `prepare-commit-msg` 上），还会跳过 Cursor 的密钥扫描；改 `core.hooksPath` 能去掉尾注，但同样会停掉密钥扫描。两种都不要用。正确做法是在工作区干净时改写本分支的提交信息：
+
+```bash
+FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f \
+  --msg-filter "sed '/^[Cc]o-[Aa]uthored-[Bb]y:/d' | git stripspace" -- origin/main..HEAD
+```
+
+`origin/main` 换成 PR 的实际基分支。已经干净的提交会原样重建、哈希不变，所以分支推送过之后再跑，推送仍是快进；只有改写了已推送的提交才需要 `git push --force-with-lease`，且仅限自己的 PR 分支。每次新提交后、推送前都要重跑。
+
+**3. 推送前核对，两条都必须干净：**
+
+```bash
+git log origin/main..HEAD --format='%B' | grep -i co-authored-by   # 应无输出
+git log origin/main..HEAD --format='%ae %ce'                       # 只应出现 noreply 地址
+```
+
+**4. 不写入个人信息。** 提交内容、提交信息和分支名里不得出现个人真实姓名、个人邮箱或本机绝对路径。提交前至少对暂存 diff 扫一遍绝对路径（`/home/`、`/Users/`）和邮箱地址。
+
+**5. 一致性检查要手动跑。** 云端 VM 的 `core.hooksPath` 指向 Cursor 自己的钩子目录，所以上文"启用 pre-commit 阻断"那条命令在云端不要执行，仓库的 `.githooks/pre-commit` 也不会自动触发。提交前在仓库根目录手动运行 `bash scripts/check-consistency.sh`。
