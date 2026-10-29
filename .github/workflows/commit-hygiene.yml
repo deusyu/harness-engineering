@@ -1,0 +1,36 @@
+name: commit-hygiene
+
+# 同仓分支 PR 的提交元数据检查（规则见 scripts/check-commit-hygiene.sh）：
+# 作者与提交者只能是 GitHub noreply 地址，提交信息不带 Co-authored-by 尾注。
+#
+# 只检查 head 分支在本仓库里的 PR，也就是维护者和他的 agent 推上来的分支。
+# fork 来的外部 PR 跳过：它们的分支提交本来就不会原样进入主干（squash 合并时
+# 由维护者写提交信息），不该因为贡献者自己的 git 身份被拦。
+# 被 if 跳过的 job 按成功上报，所以即使把本检查设为必需，也不会卡住 fork PR。
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: commit-hygiene-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: "commit-hygiene / check"
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Check commits in this PR
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: bash scripts/check-commit-hygiene.sh "$BASE_SHA..$HEAD_SHA"
