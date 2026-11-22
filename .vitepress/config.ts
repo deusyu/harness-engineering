@@ -23,8 +23,8 @@ const REPO_URL = 'https://github.com/deusyu/harness-engineering'
 const RAW_URL = 'https://raw.githubusercontent.com/deusyu/harness-engineering/main'
 const SITE_TITLE = 'Harness Engineering'
 const SITE_DESC = '驭缰工程中文学习档案——概念笔记、独立思考、系统性翻译与实践记录'
-// 全站默认分享图：public/og.png 是 works/harness-engineering-intro-deck/cover.jpg
-// 补边到 1200×630 的真实拷贝（C14 禁 symlink）。
+// 全站默认分享图：public/og.png 由 works/harness-engineering-intro-deck/deck 封面页
+// 渲染（分享版挪开起点标签、去掉快照日期）后补边到 1200×630，是真实文件（C14 禁 symlink）。
 const OG_IMAGE = `${HOST}/og.png`
 const OG_IMAGE_ALT = '驭缰工程 · Harness Engineering 学习档案——人类掌舵，智能体执行'
 const AUTHOR = { '@type': 'Person', name: 'deusyu', url: 'https://github.com/deusyu' }
@@ -226,6 +226,7 @@ export default defineConfig({
     ['meta', { property: 'og:image:height', content: '630' }],
     ['meta', { property: 'og:image:alt', content: OG_IMAGE_ALT }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:site', content: '@0xdeusyu' }],
     ['meta', { name: 'twitter:image', content: OG_IMAGE }],
     ['meta', { name: 'twitter:image:alt', content: OG_IMAGE_ALT }],
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: `${SITE_TITLE} RSS`, href: `${HOST}/feed.xml` }],
