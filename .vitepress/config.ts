@@ -23,6 +23,32 @@ const REPO_URL = 'https://github.com/deusyu/harness-engineering'
 const RAW_URL = 'https://raw.githubusercontent.com/deusyu/harness-engineering/main'
 const SITE_TITLE = 'Harness Engineering'
 const SITE_DESC = '驭缰工程中文学习档案——概念笔记、独立思考、系统性翻译与实践记录'
+// 全站默认分享图：public/og.png 是 works/harness-engineering-intro-deck/cover.jpg
+// 补边到 1200×630 的真实拷贝（C14 禁 symlink）。
+const OG_IMAGE = `${HOST}/og.png`
+const OG_IMAGE_ALT = '驭缰工程 · Harness Engineering 学习档案——人类掌舵，智能体执行'
+const AUTHOR = { '@type': 'Person', name: 'deusyu', url: 'https://github.com/deusyu' }
+const DESC_MAX = 160
+
+/** 每页描述：frontmatter.description → summary → sourceSummary → 全站描述，压成单行并截断。 */
+function pageDescription(fm: Record<string, unknown>): string {
+  const raw = [fm.description, fm.summary, fm.sourceSummary].find(
+    (v): v is string => typeof v === 'string' && v.trim() !== ''
+  )
+  if (!raw) return SITE_DESC
+  const text = raw.replace(/\s+/g, ' ').trim()
+  return text.length > DESC_MAX ? `${text.slice(0, DESC_MAX - 1)}…` : text
+}
+
+/** JSON-LD 内联进 <script>：转义 '<'，防止正文里的 </script> 提前闭合标签。 */
+const jsonLd = (data: object) =>
+  ['script', { type: 'application/ld+json' }, JSON.stringify(data).replace(/</g, '\\u003c')] as [
+    string,
+    Record<string, string>,
+    string,
+  ]
+
+const isTranslation = (rel: string) => /^works\/[^/]+-translation\.md$/.test(rel)
 
 // 门闩：config 一被加载（dev 与 build 皆然）就拒绝任何 symlink。Vite 会解引用
 // public/ 下的软链，Markdown 图片管线会读取链接目标——参与发布的每一个字节都
@@ -194,19 +220,73 @@ export default defineConfig({
     ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&display=swap' }],
     ['meta', { name: 'theme-color', content: '#f5f1e8' }],
     ['meta', { property: 'og:site_name', content: SITE_TITLE }],
-    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:locale', content: 'zh_CN' }],
+    ['meta', { property: 'og:image', content: OG_IMAGE }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { property: 'og:image:alt', content: OG_IMAGE_ALT }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: OG_IMAGE }],
+    ['meta', { name: 'twitter:image:alt', content: OG_IMAGE_ALT }],
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: `${SITE_TITLE} RSS`, href: `${HOST}/feed.xml` }],
   ],
 
   transformPageData(pageData) {
+    const fm = pageData.frontmatter
     const cleanPath = pageData.relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
-    pageData.frontmatter.head ??= []
-    pageData.frontmatter.head.push(
+    const url = pageUrl(`/${cleanPath}`)
+    const isHome = pageData.relativePath === 'index.md'
+    // 写回 pageData.description，<meta name="description"> 与 og:description 同源。
+    pageData.description = pageDescription(fm)
+    fm.head ??= []
+    fm.head.push(
+      // GitHub Pages 下 /x 与 /x.html 同时 200，只能靠 canonical 合并重复 URL。
+      ['link', { rel: 'canonical', href: url }],
       ['meta', { property: 'og:title', content: pageData.title ? `${pageData.title} | ${SITE_TITLE}` : `${SITE_TITLE} 学习档案` }],
-      ['meta', { property: 'og:description', content: pageData.description || SITE_DESC }],
-      ['meta', { property: 'og:url', content: pageUrl(`/${cleanPath}`) }],
-      ['meta', { name: 'twitter:card', content: 'summary' }],
+      ['meta', { property: 'og:description', content: pageData.description }],
+      ['meta', { property: 'og:url', content: url }],
+      ['meta', { property: 'og:type', content: isHome ? 'website' : 'article' }],
     )
+    if (isHome) {
+      fm.head.push(
+        jsonLd({
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: '驭缰工程 · Harness Engineering 中文学习档案',
+          alternateName: ['驭缰工程', SITE_TITLE],
+          url: `${HOST}/`,
+          description: SITE_DESC,
+          inLanguage: 'zh-CN',
+          image: OG_IMAGE,
+          publisher: AUTHOR,
+        })
+      )
+    } else if (isTranslation(pageData.relativePath)) {
+      const source: Record<string, unknown> = { '@type': 'CreativeWork' }
+      if (fm.sourceTitle) source.name = fm.sourceTitle
+      if (fm.sourceUrl) source.url = fm.sourceUrl
+      if (fm.sourceAuthor) source.author = { '@type': 'Person', name: fm.sourceAuthor }
+      if (fm.sourcePublishedAt) source.datePublished = String(fm.sourcePublishedAt)
+      if (fm.sourceLanguage) source.inLanguage = fm.sourceLanguage
+      fm.head.push(
+        jsonLd({
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: pageData.title,
+          description: pageData.description,
+          url,
+          mainEntityOfPage: url,
+          inLanguage: 'zh-CN',
+          image: OG_IMAGE,
+          ...(pageData.lastUpdated ? { dateModified: new Date(pageData.lastUpdated).toISOString() } : {}),
+          author: AUTHOR,
+          translator: AUTHOR,
+          publisher: AUTHOR,
+          isPartOf: { '@type': 'WebSite', name: SITE_TITLE, url: `${HOST}/` },
+          ...(source.name || source.url ? { isBasedOn: source } : {}),
+        })
+      )
+    }
     // 构建时估算阅读时长（中文按字数计），供 DocMeta 文档页头使用。
     if (pageData.relativePath !== 'index.md') {
       try {
