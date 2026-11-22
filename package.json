@@ -8,7 +8,8 @@
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
     "docs:verify": "node .vitepress/sidebar.mjs --verify",
-    "docs:verify:dist": "node scripts/verify-dist.mjs"
+    "docs:verify:dist": "node scripts/verify-dist.mjs",
+    "docs:verify:rein": "node scripts/verify-rein-labels.mjs"
   },
   "devDependencies": {
     "vitepress": "^1.6.4"

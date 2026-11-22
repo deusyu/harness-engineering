@@ -35,6 +35,9 @@ jobs:
       - name: Verify sidebar completeness (C14)
         run: npm run docs:verify
 
+      - name: Verify homepage rein labels clear the curve
+        run: npm run docs:verify:rein
+
       - name: Build site
         run: npm run docs:build
 
