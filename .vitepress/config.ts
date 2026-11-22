@@ -23,8 +23,9 @@ const REPO_URL = 'https://github.com/deusyu/harness-engineering'
 const RAW_URL = 'https://raw.githubusercontent.com/deusyu/harness-engineering/main'
 const SITE_TITLE = 'Harness Engineering'
 const SITE_DESC = '驭缰工程中文学习档案——概念笔记、独立思考、系统性翻译与实践记录'
-// 全站默认分享图：public/og.png 由 works/harness-engineering-intro-deck/deck 封面页
-// 渲染（分享版挪开起点标签、去掉快照日期）后补边到 1200×630，是真实文件（C14 禁 symlink）。
+// 全站默认分享图：public/og.png 按演示稿封面页（works/harness-engineering-intro-deck/deck）
+// 的版式在 1200×630 画布上原生重排（标签放在曲线不经过的一侧，去掉快照日期），
+// 是真实文件（C14 禁 symlink）。
 const OG_IMAGE = `${HOST}/og.png`
 const OG_IMAGE_ALT = '驭缰工程 · Harness Engineering 学习档案——人类掌舵，智能体执行'
 const AUTHOR = { '@type': 'Person', name: 'deusyu', url: 'https://github.com/deusyu' }
