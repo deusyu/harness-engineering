@@ -29,26 +29,28 @@ const phases = c.routeSection.phases
       </div>
 
       <!-- 语义化缰绳图（文案同源 home-copy.mjs）：从人类的约束设计到智能体的如约交付 -->
-      <svg class="ha-rein ha-reveal ha-d4" viewBox="0 0 960 250" fill="none" :aria-label="c.hero.rein.aria">
+      <!-- 节点圆心取曲线在该 x 处的坐标；标签一律放在点的右下方（曲线向右上升，
+           右下方恒为空白），与演示稿封面同一摆法，任何标签都不得与曲线相交。 -->
+      <svg class="ha-rein ha-reveal ha-d4" viewBox="0 0 960 266" fill="none" :aria-label="c.hero.rein.aria">
         <path d="M60 212 C 250 208, 460 180, 620 136 C 720 108, 800 86, 862 68"
           stroke="var(--he-rein)" stroke-width="3" stroke-linecap="round" />
         <path d="M874 64 l-26 -2 M874 64 l-10 22" stroke="var(--he-rein)" stroke-width="3.5" stroke-linecap="round" />
 
         <circle cx="60" cy="212" r="7" fill="var(--he-ink)" />
-        <text x="78" y="218" class="ha-rein-t">{{ c.hero.rein.start.title }}</text>
-        <text x="78" y="236" class="ha-rein-s">{{ c.hero.rein.start.sub }}</text>
+        <text x="78" y="240" class="ha-rein-t">{{ c.hero.rein.start.title }}</text>
+        <text x="78" y="258" class="ha-rein-s">{{ c.hero.rein.start.sub }}</text>
 
-        <circle cx="330" cy="199" r="4.5" fill="var(--he-rein)" />
-        <text x="322" y="182" class="ha-rein-s">{{ c.hero.rein.milestones[0] }}</text>
+        <circle cx="330" cy="192" r="4.5" fill="var(--he-rein)" />
+        <text x="339" y="214" class="ha-rein-s">{{ c.hero.rein.milestones[0] }}</text>
 
-        <circle cx="540" cy="161" r="4.5" fill="var(--he-rein)" />
-        <text x="532" y="144" class="ha-rein-s">{{ c.hero.rein.milestones[1] }}</text>
+        <circle cx="540" cy="156" r="4.5" fill="var(--he-rein)" />
+        <text x="549" y="178" class="ha-rein-s">{{ c.hero.rein.milestones[1] }}</text>
 
         <circle cx="700" cy="114" r="4.5" fill="var(--he-rein)" />
-        <text x="692" y="97" class="ha-rein-s">{{ c.hero.rein.milestones[2] }}</text>
+        <text x="709" y="136" class="ha-rein-s">{{ c.hero.rein.milestones[2] }}</text>
 
-        <text x="826" y="34" class="ha-rein-t ha-rein-end">{{ c.hero.rein.end.title }}</text>
-        <text x="826" y="52" class="ha-rein-s">{{ c.hero.rein.end.sub }}</text>
+        <text x="826" y="28" class="ha-rein-t ha-rein-end">{{ c.hero.rein.end.title }}</text>
+        <text x="826" y="46" class="ha-rein-s">{{ c.hero.rein.end.sub }}</text>
       </svg>
     </section>
 
@@ -253,6 +255,15 @@ const phases = c.routeSection.phases
   width: 100%;
   height: auto;
   margin: 30px 0 0;
+}
+
+/* 底色描边兜底：即便字体回退导致字宽变化，曲线也只会从字后穿过、不压字。
+   标签与曲线的间距由 scripts/verify-rein-labels.mjs 机械校验。 */
+.ha-rein text {
+  paint-order: stroke;
+  stroke: var(--he-paper);
+  stroke-width: 4px;
+  stroke-linejoin: round;
 }
 
 .ha-rein-t {

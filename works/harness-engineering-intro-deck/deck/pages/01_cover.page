@@ -52,7 +52,7 @@ elements:
 
   - elementId: anchor-label
     elementType: text
-    bounds: [138, 461, 220, 15]
+    bounds: [136, 473, 220, 15]
     content:
       style: "$caption"
       wrap: false
