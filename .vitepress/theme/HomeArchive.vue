@@ -22,7 +22,10 @@ const phases = c.routeSection.phases
     <!-- 卷首 -->
     <section class="ha-hero">
       <p class="ha-kicker ha-reveal ha-d0">{{ c.hero.kicker }}</p>
-      <h1 class="ha-title ha-reveal ha-d1">{{ c.hero.titleLead }}<em>{{ c.hero.titleEm }}</em></h1>
+      <h1 class="ha-title ha-reveal ha-d1">
+        <span class="ha-title-brand">{{ c.hero.titleBrand }}</span><span class="ha-sr">：</span>
+        <span class="ha-title-main">{{ c.hero.titleLead }}<em>{{ c.hero.titleEm }}</em></span>
+      </h1>
       <p class="ha-lede ha-reveal ha-d2">{{ c.hero.lede }}</p>
       <div class="ha-actions ha-reveal ha-d3">
         <a v-for="(a, i) in c.hero.actions" :key="a.text" class="ha-btn" :class="{ 'ha-btn-ghost': i > 0 }" :href="a.link">{{ a.text }}<sup v-if="a.sup != null"> {{ a.sup }}</sup></a>
@@ -191,6 +194,35 @@ const phases = c.routeSection.phases
 .ha-title em {
   font-style: normal;
   color: var(--he-rein);
+}
+
+.ha-title-brand {
+  display: block;
+  font-size: clamp(18px, 2.1vw, 26px);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  color: var(--he-ink-2);
+  margin-bottom: 12px;
+}
+
+.ha-title-main {
+  display: block;
+}
+
+/* 窄屏只在逗号后换行，不把「智能体执行」拆开。 */
+.ha-title-main em {
+  white-space: nowrap;
+}
+
+/* 视觉隐藏、保留给读屏与纯文本提取：两行 h1 读作一句「品牌：标语」。 */
+.ha-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .ha-lede {
