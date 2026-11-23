@@ -13,7 +13,9 @@ export const HOME_TITLE = '驭缰工程 · 中文学习档案'
 export function homeCopy(stats) {
   return {
     hero: {
-      kicker: 'HARNESS ENGINEERING —— 学习档案 · 中文',
+      kicker: '学习档案 · 中文',
+      // H1 分两行：小号品牌行承载搜索关键词，大号行是标语；两行同属一个 h1。
+      titleBrand: '驭缰工程 · Harness Engineering',
       titleLead: '人类掌舵，',
       titleEm: '智能体执行',
       lede: '一座从概念理解到独立实践的 Harness Engineering 深度学习档案。工程师不再逐行写代码——设计约束、明确意图、构建反馈回路，让智能体可靠地交付。',
@@ -116,7 +118,7 @@ export function homeMarkdown(stats, host) {
     link.startsWith('/') ? `${host}${link}` : link.startsWith('#') ? `${host}/${link}` : link
   const rein = c.hero.rein
   const lines = [
-    `# ${c.hero.titleLead}${c.hero.titleEm}`,
+    `# ${c.hero.titleBrand}：${c.hero.titleLead}${c.hero.titleEm}`,
     '',
     c.hero.kicker,
     '',
