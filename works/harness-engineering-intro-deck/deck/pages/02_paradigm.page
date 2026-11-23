@@ -141,13 +141,13 @@ elements:
 
   - elementId: he-n2-t
     elementType: text
-    bounds: [338, 264, 168, 30]
+    bounds: [338, 261, 168, 30]
     content: {fontSize: 17, bold: true, color: "$accent", fontFamily: "得意黑", align: [center, middle], wrap: false, text: 约束系统}
 
   - elementId: he-n2-sub
     elementType: text
-    bounds: [338, 296, 168, 26]
-    content: {fontSize: 10, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [center, top], lineHeight: 1.3, text: "AGENTS.md · 架构规则<br/>自定义 linter · 反馈回路"}
+    bounds: [338, 291, 168, 32]
+    content: {fontSize: 10, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [center, top], lineHeightPx: 16, text: "AGENTS.md · 架构规则<br/>自定义 linter · 反馈回路"}
 
   - elementId: he-a2
     elementType: line
@@ -246,8 +246,9 @@ elements:
 
   - elementId: definition
     elementType: text
-    bounds: [66, 454, 828, 36]
+    bounds: [66, 454, 828, 46]
     content:
+      lineHeightPx: 23
       style: "$body"
       fontSize: 12.5
       color: "$steel"

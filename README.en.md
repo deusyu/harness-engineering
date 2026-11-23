@@ -9,7 +9,7 @@
 
 > A deep-dive learning archive on Harness Engineering — from concept to practice
 
-[![Harness Engineering — humans steer, agents execute (intro deck cover, 2026-08 snapshot)](works/harness-engineering-intro-deck/cover.jpg)](works/harness-engineering-intro-deck/)
+[![Harness Engineering — humans steer, agents execute (intro deck cover, 2026-11 snapshot)](works/harness-engineering-intro-deck/cover.jpg)](works/harness-engineering-intro-deck/)
 
 <p align="center"><sub>Cover from the repo's own <a href="works/harness-engineering-intro-deck/">intro deck + poster</a> — generated with the open-kimi-ppt skill; editable PPTD sources live in this repo</sub></p>
 

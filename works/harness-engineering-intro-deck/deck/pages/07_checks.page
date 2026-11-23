@@ -2,7 +2,7 @@ pageType: content
 background:
   type: solid
   color: "$paper"
-notes: 机械化检查：两道门（本地 hook、CI）+ C1–C13 四族清单。
+notes: 机械化检查：两道门（本地 hook、CI）+ C1–C14 五族清单。
 elements:
   - elementId: kicker
     elementType: text
@@ -18,7 +18,7 @@ elements:
     content:
       style: "$title"
       wrap: false
-      text: 文档会腐烂，检查不会：13 层一致性守卫
+      text: 文档会腐烂，检查不会：14 层一致性守卫
 
   - elementId: title-rule
     elementType: shape
@@ -48,8 +48,8 @@ elements:
 
   - elementId: gate1-label
     elementType: text
-    bounds: [156, 232, 120, 30]
-    content: {fontSize: 11.5, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [center, top], lineHeight: 1.3, text: "pre-commit hook<br/>本地反馈"}
+    bounds: [156, 232, 120, 36]
+    content: {fontSize: 11.5, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [center, top], lineHeightPx: 18, text: "pre-commit hook<br/>本地反馈"}
 
   - elementId: g-a2
     elementType: line
@@ -80,8 +80,8 @@ elements:
 
   - elementId: gate2-label
     elementType: text
-    bounds: [330, 232, 140, 30]
-    content: {fontSize: 11.5, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [center, top], lineHeight: 1.3, text: "CI 必需检查<br/>consistency / check"}
+    bounds: [330, 232, 140, 36]
+    content: {fontSize: 11.5, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [center, top], lineHeightPx: 18, text: "CI 必需检查<br/>consistency / check"}
 
   - elementId: g-a4
     elementType: line
@@ -101,88 +101,108 @@ elements:
     elementType: text
     bounds: [606, 156, 288, 100]
     content:
+      lineHeightPx: 23
       style: "$body"
       fontSize: 12.5
       color: "$steel"
       text: |
         <p>两道门跑的是同一个脚本 scripts/check-consistency.sh：本地 hook 是开发期反馈，CI 才是合并门——不启用本地 hook，也绕不过检查。</p>
 
-  # ── C1–C13 四族 ──
+  # ── C1–C14 五族 ──
   - elementId: rows-rule-0
     elementType: shape
-    bounds: [66, 288, 828, 1]
+    bounds: [66, 280, 828, 1]
     shapeName: rect
     fill: {type: solid, color: "$hairline"}
 
   - elementId: r1-range
     elementType: text
-    bounds: [66, 302, 110, 24]
+    bounds: [66, 290, 110, 24]
     content: {fontSize: 16, bold: true, color: "$accent", fontFamily: "得意黑", wrap: false, text: "C1–C7"}
   - elementId: r1-name
     elementType: text
-    bounds: [190, 304, 110, 20]
+    bounds: [190, 292, 110, 20]
     content: {fontSize: 14, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 计数同步}
   - elementId: r1-desc
     elementType: text
-    bounds: [318, 305, 576, 20]
+    bounds: [318, 293, 576, 20]
     content: {fontSize: 12, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 文章编号连续；篇数、翻译数、结构树、三脉络计数与所有下游声明一致}
 
   - elementId: rows-rule-1
     elementType: shape
-    bounds: [66, 336, 828, 1]
+    bounds: [66, 320, 828, 1]
     shapeName: rect
     fill: {type: solid, color: "$hairline"}
 
   - elementId: r2-range
     elementType: text
-    bounds: [66, 350, 110, 24]
+    bounds: [66, 330, 110, 24]
     content: {fontSize: 16, bold: true, color: "$accent", fontFamily: "得意黑", wrap: false, text: "C8–C9"}
   - elementId: r2-name
     elementType: text
-    bounds: [190, 352, 110, 20]
+    bounds: [190, 332, 110, 20]
     content: {fontSize: 14, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 措辞守卫}
   - elementId: r2-desc
     elementType: text
-    bounds: [318, 353, 576, 20]
+    bounds: [318, 333, 576, 20]
     content: {fontSize: 12, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 过程稿与结论不自相矛盾；正文不裸写会腐烂的活计数，历史提法须带时点}
 
   - elementId: rows-rule-2
     elementType: shape
-    bounds: [66, 384, 828, 1]
+    bounds: [66, 360, 828, 1]
     shapeName: rect
     fill: {type: solid, color: "$hairline"}
 
   - elementId: r3-range
     elementType: text
-    bounds: [66, 398, 110, 24]
+    bounds: [66, 370, 110, 24]
     content: {fontSize: 16, bold: true, color: "$accent", fontFamily: "得意黑", wrap: false, text: "C10·C13"}
   - elementId: r3-name
     elementType: text
-    bounds: [190, 400, 110, 20]
+    bounds: [190, 372, 110, 20]
     content: {fontSize: 14, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 图片保真}
   - elementId: r3-desc
     elementType: text
-    bounds: [318, 401, 576, 20]
+    bounds: [318, 373, 576, 20]
     content: {fontSize: 12, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 译文嵌图数须可证伪；声明零插图必须留痕——写清核对方式与日期}
 
   - elementId: rows-rule-3
     elementType: shape
-    bounds: [66, 432, 828, 1]
+    bounds: [66, 400, 828, 1]
     shapeName: rect
     fill: {type: solid, color: "$hairline"}
 
   - elementId: r4-range
     elementType: text
-    bounds: [66, 446, 110, 24]
+    bounds: [66, 410, 110, 24]
     content: {fontSize: 16, bold: true, color: "$accent", fontFamily: "得意黑", wrap: false, text: "C11–C12"}
   - elementId: r4-name
     elementType: text
-    bounds: [190, 448, 110, 20]
+    bounds: [190, 412, 110, 20]
     content: {fontSize: 14, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 形状完整}
   - elementId: r4-desc
     elementType: text
-    bounds: [318, 449, 576, 20]
+    bounds: [318, 413, 576, 20]
     content: {fontSize: 12, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 表格行列与表头对齐；每条资料条目必须带作者与日期字段}
+
+  - elementId: rows-rule-4
+    elementType: shape
+    bounds: [66, 440, 828, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hairline"}
+
+  - elementId: r5-range
+    elementType: text
+    bounds: [66, 450, 110, 24]
+    content: {fontSize: 16, bold: true, color: "$accent", fontFamily: "得意黑", wrap: false, text: "C14"}
+  - elementId: r5-name
+    elementType: text
+    bounds: [190, 452, 110, 20]
+    content: {fontSize: 14, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 站点防漂移}
+  - elementId: r5-desc
+    elementType: text
+    bounds: [318, 453, 576, 20]
+    content: {fontSize: 12, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 文档站侧边栏与计数由文件系统生成、不手写；全仓禁 symlink；产物页与 .md 副本一一对应}
 
   - elementId: foot
     elementType: text
@@ -190,4 +210,4 @@ elements:
     content:
       style: "$caption"
       wrap: false
-      text: 启用本地门：git config core.hooksPath .githooks · CI 兜底：.github/workflows/consistency.yml
+      text: 启用本地门：git config core.hooksPath .githooks · CI：consistency（合并门）· docs-build（站点构建 + C14）· deploy-docs（发布 harness.dyu.sh）

@@ -26,40 +26,79 @@ elements:
     shapeName: rect
     fill: {type: solid, color: "$hairline"}
 
-  # 左：目录树（固定行高的双文本列，行行对齐）
-  - elementId: tree-names
+  # 左：目录树（固定行高的文本列，行行对齐）。树形符号单独成列：
+  # ├─ └─ 不在三种嵌入字体里，各渲染器回退字体宽度不同，名称列用固定缩进才不随之漂移
+  - elementId: tree-root
     elementType: text
-    bounds: [66, 150, 230, 312]
+    bounds: [66, 150, 230, 24]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      lineHeightPx: 24
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: harness-engineering/
+
+  - elementId: tree-glyphs
+    elementType: text
+    bounds: [66, 174, 24, 288]
     content:
       fontSize: 13
       color: "$ink"
-      lineHeightPx: 28
+      lineHeightPx: 24
       fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
       text: |
-        <p><strong>harness-engineering/</strong></p>
-        <p>├─ README.md</p>
-        <p><span style="color:$accent"><strong>├─ AGENTS.md</strong></span></p>
-        <p>├─ concepts/</p>
-        <p>├─ thinking/</p>
-        <p>├─ practice/</p>
-        <p>├─ feedback/</p>
-        <p>├─ works/</p>
-        <p>├─ tools/ · prompts/</p>
-        <p>├─ references/</p>
-        <p>└─ scripts/</p>
+        <p>├─</p>
+        <p><span style="color:$accent">├─</span></p>
+        <p>├─</p>
+        <p>├─</p>
+        <p>├─</p>
+        <p>├─</p>
+        <p>├─</p>
+        <p>├─</p>
+        <p>├─</p>
+        <p>├─</p>
+        <p>├─</p>
+        <p>└─</p>
+
+  - elementId: tree-names
+    elementType: text
+    bounds: [98, 174, 202, 288]
+    content:
+      fontSize: 13
+      color: "$ink"
+      lineHeightPx: 24
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: |
+        <p>README.md</p>
+        <p><span style="color:$accent"><strong>AGENTS.md</strong></span></p>
+        <p>concepts/</p>
+        <p>thinking/</p>
+        <p>practice/</p>
+        <p>feedback/</p>
+        <p>works/</p>
+        <p>tools/ · prompts/</p>
+        <p>references/</p>
+        <p>index.md · .vitepress/</p>
+        <p>.claude/skills/</p>
+        <p>scripts/</p>
 
   - elementId: tree-notes
     elementType: text
-    bounds: [312, 150, 258, 312]
+    bounds: [312, 150, 270, 312]
     content:
       fontSize: 12
       color: "$steel"
-      lineHeightPx: 28
+      lineHeightPx: 24
       fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
       text: |
         <p><span style="color:$faint">（仓库根）</span></p>
         <p>人类入口 · 学习路线与全景</p>
-        <p><span style="color:$accent">智能体入口 · ~100 行的目录页</span></p>
+        <p><span style="color:$accent">智能体入口 · 58 行的目录页</span></p>
         <p>概念笔记 · 拆解原文</p>
         <p>独立思考 · 质疑与延伸</p>
         <p>动手实践 · 小项目实验</p>
@@ -67,6 +106,8 @@ elements:
         <p>作品输出 · 翻译与原创</p>
         <p>工具杠杆库 · 提示词积累</p>
         <p>外部文章的深度摘要索引</p>
+        <p>文档站 harness.dyu.sh 的源</p>
+        <p>策展流水线 skill · curate-research</p>
         <p>一致性检查（机械护栏）</p>
 
   # 右：渐进式披露
@@ -85,6 +126,7 @@ elements:
     elementType: text
     bounds: [590, 210, 304, 84]
     content:
+      lineHeightPx: 23.5
       style: "$body"
       fontSize: 12.5
       color: "$steel"

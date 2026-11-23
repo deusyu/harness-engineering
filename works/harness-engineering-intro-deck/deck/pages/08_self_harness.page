@@ -141,7 +141,7 @@ elements:
       fontFamily: {latin: "Liter", ea: "MiSans"}
       align: [center, top]
       wrap: false
-      text: C1–C13 机械护栏全程在位：每一步落盘都要过同一套一致性检查
+      text: C1–C14 机械护栏全程在位：每一步落盘都要过同一套一致性检查
 
   # ── 三原则对位 ──
   - elementId: m1-term
@@ -169,7 +169,7 @@ elements:
   - elementId: m3-desc
     elementType: text
     bounds: [240, 414, 654, 20]
-    content: {fontSize: 13, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: check-consistency.sh 的 C1–C13 守住计数与保真，不靠自觉靠脚本}
+    content: {fontSize: 13, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: check-consistency.sh 的 C1–C14 守住计数与保真，不靠自觉靠脚本}
 
   - elementId: foot-rule
     elementType: shape
