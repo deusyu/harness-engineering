@@ -69,9 +69,15 @@
 #
 # Usage:  bash scripts/check-consistency.sh        (run from repo root)
 # Exits 0 on all-pass, 1 on any failure.
+#
+# Reuse by scripts/release-notes.sh (Release numbers must equal what the checks
+# guard, never a second count):
+#   CONSISTENCY_ROOT=<dir>    check that tree instead of this script's repo
+#   CONSISTENCY_EXPORT=<file> also write the authority values as KEY=VALUE
 
 set -u
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+SELF="$(cd "$(dirname "$0")" && pwd)/$(basename "$0")"
+ROOT="${CONSISTENCY_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 cd "$ROOT"
 
 FAIL=0
@@ -137,6 +143,7 @@ check_dir_count() {
   local dir="$1" claim_pattern="$2"
   local actual
   actual=$(find "$dir" -maxdepth 1 -type f -name '*.md' ! -name 'AGENTS.md' | wc -l | tr -d ' ')
+  DIR_ACTUAL="$actual"
   local claim
   claim=$(grep -oE "$claim_pattern" README.md | head -1 | grep -oE '[0-9]+' || true)
   if [ -z "$claim" ]; then
@@ -150,9 +157,9 @@ check_dir_count() {
   fi
 }
 
-check_dir_count "concepts" '概念笔记（[0-9]+ 篇'
-check_dir_count "thinking" '独立思考与质疑（[0-9]+ 篇'
-check_dir_count "feedback" '踩坑与迭代心得（[0-9]+ 篇'
+check_dir_count "concepts" '概念笔记（[0-9]+ 篇';     CONCEPTS_COUNT="$DIR_ACTUAL"
+check_dir_count "thinking" '独立思考与质疑（[0-9]+ 篇'; THINKING_COUNT="$DIR_ACTUAL"
+check_dir_count "feedback" '踩坑与迭代心得（[0-9]+ 篇'; FEEDBACK_COUNT="$DIR_ACTUAL"
 
 # ─── C4 ────────────────────────────────────────────────────────────────
 # Translation count: works/*-translation.md is the source of truth.
@@ -560,6 +567,22 @@ C14VEOF
   elif [ "$c14_ok" -eq 1 ]; then
     echo "  $(green PASS) — no hardcoded counts in site sources ($(yellow 'verify half SKIPped: node unavailable'))"
   fi
+fi
+
+# ─── Authority export ──────────────────────────────────────────────────
+if [ -n "${CONSISTENCY_EXPORT:-}" ]; then
+  {
+    echo "STATUS=$FAIL"
+    echo "CHECKS=$(grep -cE '^echo "\[C[0-9]+\]' "$SELF")"
+    echo "ARTICLES=$AUTHORITY"
+    echo "TRANSLATIONS=$TRANSLATIONS"
+    echo "CONCEPTS=$CONCEPTS_COUNT"
+    echo "THINKING=$THINKING_COUNT"
+    echo "FEEDBACK=$FEEDBACK_COUNT"
+    echo "TRACK1=$TRACK1"
+    echo "TRACK2=$TRACK2"
+    echo "TRACK3=$TRACK3"
+  } > "$CONSISTENCY_EXPORT"
 fi
 
 # ─── Summary ───────────────────────────────────────────────────────────
