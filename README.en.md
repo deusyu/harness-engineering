@@ -198,6 +198,10 @@ See [references/articles.md](references/articles.md) — each article includes c
 
 ## 🔗 Related Projects & Resources
 
+### Same Series
+
+- [translate-book](https://github.com/deusyu/translate-book) (project page: [translate.dyu.sh](https://translate.dyu.sh/)) — a Chinese reading-guide project by the same author
+
 ### Source Material
 
 | Resource | Description |

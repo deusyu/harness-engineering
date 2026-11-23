@@ -197,6 +197,10 @@ harness-engineering/
 
 ## 🔗 相关项目与资源
 
+### 同系列
+
+- [translate-book](https://github.com/deusyu/translate-book)（项目页：[translate.dyu.sh](https://translate.dyu.sh/)）— 同作者的中文导读项目
+
 ### 原始来源
 
 | 资源 | 说明 |

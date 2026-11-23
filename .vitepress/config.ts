@@ -339,7 +339,8 @@ export default defineConfig({
     socialLinks: [{ icon: 'github', link: 'https://github.com/deusyu/harness-engineering' }],
 
     footer: {
-      message: '人类掌舵，智能体执行 · Released under the MIT License',
+      message:
+        '人类掌舵，智能体执行 · Released under the MIT License<br>同系列：<a href="https://translate.dyu.sh/">translate-book 中文导读</a>',
       copyright: 'Copyright © 2026 deusyu',
     },
 
