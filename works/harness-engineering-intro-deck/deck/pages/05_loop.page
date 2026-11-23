@@ -122,7 +122,7 @@ elements:
   - elementId: p5-count
     elementType: text
     bounds: [754, 210, 140, 15]
-    content: {fontSize: 11, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: "works/ · 34 译 + 1 原创"}
+    content: {fontSize: 11, color: "$steel", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: "works/ · 40 译 + 1 原创"}
 
   # 回流曲线
   - elementId: return-loop
@@ -165,13 +165,14 @@ elements:
 
   - elementId: demo-body
     elementType: text
-    bounds: [66, 388, 620, 60]
+    bounds: [66, 388, 632, 60]
     content:
+      lineHeightPx: 23
       style: "$body"
       fontSize: 12.5
       color: "$steel"
       text: |
-        <p>用 ralph-orchestrator 跑通「帽子系统 + 背压门控 + 持久记忆」：4 轮迭代生成 CLI word counter，7 项测试全绿，产物归档于 practice/01-ralph-demo/ 可复验。</p>
+        <p>用 ralph-orchestrator 跑通「帽子系统 + 背压门控 + 持久记忆」：4 轮迭代生成 CLI word counter，7 项测试全绿，<br/>产物归档于 practice/01-ralph-demo/ 可复验。</p>
 
   - elementId: demo-n1
     elementType: text
@@ -197,4 +198,4 @@ elements:
     content:
       style: "$caption"
       wrap: false
-      text: 篇数为 2026-08 快照，最新进度以 README「学习路线」为准。
+      text: 篇数为 2026-11 快照，最新进度以 README「学习路线」为准。

@@ -294,7 +294,7 @@ elements:
     content:
       style: "$caption"
       wrap: false
-      text: 8 篇概念 · 11 篇思考 · 1 个 Ralph Demo · 34 篇翻译 + 1 篇原创（2026-08 快照）
+      text: 8 篇概念 · 11 篇思考 · 1 个 Ralph Demo · 40 篇翻译 + 1 篇原创（2026-11 快照）
 
   # ── 档案脚 ──
   - elementId: footer-band
@@ -310,8 +310,13 @@ elements:
 
   - elementId: footer-right
     elementType: text
-    bounds: [520, 916, 146, 16]
-    content: {fontSize: 11, color: "$paperdim", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [right, top], wrap: false, text: "MIT · @deusyu"}
+    bounds: [530, 915, 136, 20]
+    content: {fontSize: 14, bold: true, color: "$accent", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [right, top], wrap: false, text: harness.dyu.sh}
+
+  - elementId: footer-right2
+    elementType: text
+    bounds: [520, 938, 146, 13]
+    content: {fontSize: 10, color: "$paperdim", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [right, top], wrap: false, text: "MIT · @deusyu"}
 
   - elementId: footer-line2
     elementType: text

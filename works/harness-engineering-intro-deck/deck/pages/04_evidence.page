@@ -112,8 +112,9 @@ elements:
   # 来源脚注
   - elementId: source
     elementType: text
-    bounds: [66, 462, 828, 32]
+    bounds: [66, 462, 828, 37]
     content:
+      lineHeightPx: 18.5
       style: "$caption"
       text: |
         <p>数据：OpenAI 团队 2026-02 披露的内部实践；长时运行常发生在人类睡眠时段。来源：<a href="https://openai.com/zh-Hans-CN/index/harness-engineering/">openai.com/zh-Hans-CN/index/harness-engineering</a></p>

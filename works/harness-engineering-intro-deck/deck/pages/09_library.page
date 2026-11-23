@@ -2,7 +2,7 @@ pageType: content
 background:
   type: solid
   color: "$paper"
-notes: 研究资料库：比例横带 + 三脉络清单，右侧 34 篇翻译大数字。
+notes: 研究资料库：比例横带 + 三脉络清单，右侧 40 篇翻译大数字。
 elements:
   - elementId: kicker
     elementType: text
@@ -18,7 +18,7 @@ elements:
     content:
       style: "$title"
       wrap: false
-      text: 74 篇文章打底，34 篇全文中译
+      text: 79 篇文章打底，40 篇全文中译
 
   - elementId: title-rule
     elementType: shape
@@ -45,7 +45,7 @@ elements:
   - elementId: band-1-label
     elementType: text
     bounds: [80, 156, 300, 30]
-    content: {fontSize: 12, bold: true, color: "$paper", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [left, middle], wrap: false, text: 脉络一 · 70 篇}
+    content: {fontSize: 12, bold: true, color: "$paper", fontFamily: {latin: "Liter", ea: "MiSans"}, align: [left, middle], wrap: false, text: 脉络一 · 75 篇}
 
   # 三脉络清单
   - elementId: t1-chip
@@ -56,11 +56,11 @@ elements:
   - elementId: t1-name
     elementType: text
     bounds: [88, 220, 520, 20]
-    content: {fontSize: 14.5, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 脉络一 · AI 时代的 Harness Engineering —— 70 篇}
+    content: {fontSize: 14.5, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 脉络一 · AI 时代的 Harness Engineering —— 75 篇}
   - elementId: t1-desc
     elementType: text
-    bounds: [88, 244, 520, 34]
-    content: {fontSize: 12, color: "$steel", lineHeight: 1.4, fontFamily: {latin: "Liter", ea: "MiSans"}, text: "OpenAI → Fowler → Anthropic → LangChain → Cursor……从起源考据、逆向实锤到评测方法论，一条主线追到底"}
+    bounds: [88, 244, 520, 40]
+    content: {fontSize: 12, color: "$steel", lineHeightPx: 20, fontFamily: {latin: "Liter", ea: "MiSans"}, text: "OpenAI → Fowler → Anthropic → LangChain → Cursor……从起源考据、逆向实锤到评测方法论，一条主线追到底"}
 
   - elementId: t2-chip
     elementType: shape
@@ -106,18 +106,18 @@ elements:
   - elementId: tr-num
     elementType: text
     bounds: [668, 216, 226, 76]
-    content: {fontSize: 64, color: "$accent", fontFamily: "得意黑", wrap: false, text: "34"}
+    content: {fontSize: 64, color: "$accent", fontFamily: "得意黑", wrap: false, text: "40"}
   - elementId: tr-label
     elementType: text
     bounds: [668, 298, 226, 22]
     content: {fontSize: 15, bold: true, color: "$ink", fontFamily: {latin: "Liter", ea: "MiSans"}, wrap: false, text: 篇核心文章中文全译}
   - elementId: tr-extra
     elementType: text
-    bounds: [668, 328, 226, 40]
+    bounds: [668, 328, 226, 45]
     content:
       fontSize: 12
       color: "$steel"
-      lineHeight: 1.5
+      lineHeightPx: 22.5
       fontFamily: {latin: "Liter", ea: "MiSans"}
       text: |
         <p>+ 1 篇原创综合分析</p>
@@ -129,7 +129,7 @@ elements:
     content:
       fontSize: 11.5
       color: "$faint"
-      lineHeight: 1.45
+      lineHeightPx: 19.5
       fontFamily: {latin: "Liter", ea: "MiSans"}
       text: 每篇含核心论点、关键数据与跨文章关联，索引见 references/articles.md
 
@@ -139,4 +139,4 @@ elements:
     content:
       style: "$caption"
       wrap: false
-      text: 计数为 2026-08 快照；最新以 references/articles.md 与 README badge 为准。
+      text: 计数为 2026-11 快照；最新以 references/articles.md 与 README badge 为准。

@@ -54,6 +54,17 @@ elements:
       wrap: false
       text: github.com/deusyu/harness-engineering
 
+  - elementId: site
+    elementType: text
+    bounds: [66, 322, 660, 22]
+    content:
+      fontSize: 15
+      bold: true
+      color: "$accent"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 在线阅读 · harness.dyu.sh
+
   # 参与方式
   - elementId: join-rule
     elementType: shape
@@ -101,4 +112,4 @@ elements:
       color: "#8A8272"
       fontFamily: {latin: "Liter", ea: "MiSans"}
       wrap: false
-      text: 本演示由 open-kimi-ppt skill 生成 · PPTD 源文件与本档案同仓，可继续编辑 · MIT License
+      text: 本演示由 open-kimi-ppt skill 生成，此后直接修订 PPTX · PPTD 源文件与本档案同仓 · MIT License

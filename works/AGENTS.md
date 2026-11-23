@@ -112,7 +112,7 @@ sourceFigureAudit: # 仅当 sourceFigureCount 为 0 时必填：核对留痕，�
 
 | 目录 | 主题 | 说明 |
 |------|------|------|
-| [harness-engineering-intro-deck/](harness-engineering-intro-deck/) | 项目介绍 PPT + 竖版海报 | open-kimi-ppt skill 生成：10 页 deck 与 1 页海报，PPTD 可编辑源 + 嵌字体 PPTX 成品各一份，内容计数为 2026-08 快照 |
+| [harness-engineering-intro-deck/](harness-engineering-intro-deck/) | 项目介绍 PPT + 竖版海报 | open-kimi-ppt skill 生成：10 页 deck 与 1 页海报，PPTD 可编辑源 + 嵌字体 PPTX 成品各一份，内容计数为 2026-11 快照 |
 
 ## 作品方向参考
 
