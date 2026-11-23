@@ -1,0 +1,93 @@
+name: release-draft
+
+# Monthly Release reminder. On the 1st of every month, if any archive content
+# changed since the previous vYYYY.MM tag, open (or refresh) an issue titled
+# "Release 草稿：vYYYY.MM" carrying the numbers section printed by
+# scripts/release-notes.sh. No content change → nothing happens.
+#
+# This workflow never publishes. It drafts an issue rather than a draft
+# Release on purpose:
+#   - an issue notifies repo watchers, so it actually works as a reminder;
+#     a draft Release is silent and only visible on the Releases page;
+#   - the job needs only issues: write — with contents: read the token cannot
+#     create tags or Releases at all, so no bug here can publish anything;
+#   - numbers drift if PRs merge after the 1st; the issue says to re-run the
+#     script at publish time instead of freezing a body inside a pre-made draft.
+# Publishing stays manual: the maintainer re-runs the script locally and
+# publishes with `gh release create` from their own machine.
+
+on:
+  schedule:
+    - cron: "0 1 1 * *" # 01:00 UTC on the 1st = 09:00 Asia/Shanghai
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: release-draft
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    name: "release-draft / issue"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # tags + history: the diff and the previous-tag snapshot need them
+
+      - name: Generate Release numbers
+        id: notes
+        run: |
+          set +e
+          bash scripts/release-notes.sh --if-changed > "$RUNNER_TEMP/notes.md"
+          rc=$?
+          set -e
+          case "$rc" in
+            0) ;;
+            3) echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0 ;;
+            *) exit "$rc" ;;
+          esac
+          header=$(head -1 "$RUNNER_TEMP/notes.md")
+          tag=$(echo "$header" | sed -nE 's/.* tag=([^ ]+) .*/\1/p')
+          commit=$(echo "$header" | sed -nE 's/.* commit=([^ ]+) .*/\1/p')
+          [ -n "$tag" ] && [ -n "$commit" ] || { echo "cannot parse header: $header"; exit 1; }
+          {
+            echo "changed=true"
+            echo "tag=$tag"
+            echo "commit=$commit"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open or refresh the draft issue
+        if: steps.notes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.notes.outputs.tag }}
+          COMMIT: ${{ steps.notes.outputs.commit }}
+        run: |
+          title="Release 草稿：$TAG"
+          body="$RUNNER_TEMP/body.md"
+          {
+            echo "> **这是每月提醒，不会自动发布。** 由 \`release-draft\` workflow 在 $(date -u +%Y-%m-%d) 依据 \`$COMMIT\` 生成。"
+            echo
+            cat "$RUNNER_TEMP/notes.md"
+            echo
+            echo "---"
+            echo
+            echo "### 发布步骤（在维护者本机用 gh 执行）"
+            echo
+            echo "1. 更新到最新 \`main\`，在仓库根目录重跑 \`bash scripts/release-notes.sh\`——1 日之后合并的 PR 会改变计数，以发布当时的输出为准。"
+            echo "2. 以上一版 Release 正文为模板，用输出里的数字和新增清单写好 \`notes.md\`。"
+            echo "3. \`gh release create $TAG --target <输出里的目标提交> --title \"<输出里的建议标题>\" --notes-file notes.md\`"
+            echo "4. 发布后关闭本 issue。本月不发布也直接关闭即可。"
+          } > "$body"
+          num=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "\"$title\" in:title" \
+                  --json number,title --jq ".[] | select(.title == \"$title\") | .number" | head -1)
+          if [ -n "$num" ]; then
+            gh issue edit "$num" --repo "$GITHUB_REPOSITORY" --body-file "$body"
+            echo "refreshed issue #$num"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file "$body"
+          fi

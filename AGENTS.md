@@ -56,3 +56,10 @@
 
 **CI 兜底**：`.github/workflows/consistency.yml` 在每次 push / PR 时跑同一脚本（不做路径过滤，保证必需检查总能上报）。job 显示名固定为 `consistency / check`——分支保护按 check run 名匹配必需检查，改名会让所有 PR 重新被 "Expected" 卡住。
 本地 hook 是开发反馈，CI 是合并门——两层独立，本地未启用 hook 不会绕过检查。
+
+## Release（月度日期快照）
+
+- tag 用 `vYYYY.MM`，是档案某一时刻的快照，不是软件版本号；每月初有新内容才发一版。
+- 正文数字一律由 `bash scripts/release-notes.sh` 生成，不手数：脚本在目标提交的临时 worktree 里跑 `check-consistency.sh`（经 `CONSISTENCY_EXPORT` 导出权威值），检查不全绿就拒绝出数；另列自上一个 tag 以来新增的译文与编号条目。重算已发布版本：`--ref v2026.11`。
+- `.github/workflows/release-draft.yml` 每月 1 日检查：自上一个 tag 以来内容目录有变化，就开（或刷新）一个「Release 草稿：vYYYY.MM」issue。workflow 只有 `issues: write`，不能建 tag 或 Release；发布由维护者确认后在本机用 `gh release create` 完成。
+- 输出不带人名：条目只列主题（去掉「来源 / 作者 —」前缀），译文只列中文标题；存在 `RELEASE_NAME_GUARD` 指向的模式文件时，命中即拒绝输出。
