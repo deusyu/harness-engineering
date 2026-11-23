@@ -4,10 +4,15 @@
 ![Articles](https://img.shields.io/badge/articles-79-green)
 ![Translations](https://img.shields.io/badge/translations-40-orange)
 [![在线阅读](https://img.shields.io/badge/在线阅读-harness.dyu.sh-c2481d)](https://harness.dyu.sh)
+[![Mentioned in Awesome](https://img.shields.io/badge/mentioned%20in-awesome-fc60a8?logo=awesomelists)](https://github.com/ai-boost/awesome-harness-engineering#tutorials--educational)
 
 # Harness Engineering 学习指南
 
 > 一个从概念理解到独立实践的 Harness Engineering 深度学习档案
+
+**这个档案本身就是驭缰工程的实战案例**：每个目录都有 `AGENTS.md` 当地图；[`scripts/check-consistency.sh`](scripts/check-consistency.sh) 的 C1–C14 机械检查由 pre-commit 钩子和 CI（`consistency / check`）把关。
+
+已被 [awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering#tutorials--educational) 收录于 Tutorials & Educational 段，[维护者评语](https://github.com/ai-boost/awesome-harness-engineering/pull/460#issuecomment-7096382171)：译文档案加上仓库自己的 AGENTS.md / CI 一致性检查，是这一段的扎实实战案例。
 
 [![驭缰工程 —— 人类掌舵，智能体执行（项目介绍 PPT 封面 · 2026-11 快照）](works/harness-engineering-intro-deck/cover.jpg)](works/harness-engineering-intro-deck/)
 
