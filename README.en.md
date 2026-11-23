@@ -4,10 +4,15 @@
 ![Articles](https://img.shields.io/badge/articles-79-green)
 ![Translations](https://img.shields.io/badge/translations-40-orange)
 [![Read online](https://img.shields.io/badge/read%20online-harness.dyu.sh-c2481d)](https://harness.dyu.sh)
+[![Mentioned in Awesome](https://img.shields.io/badge/mentioned%20in-awesome-fc60a8?logo=awesomelists)](https://github.com/ai-boost/awesome-harness-engineering#tutorials--educational)
 
 # Harness Engineering Study Guide
 
 > A deep-dive learning archive on Harness Engineering — from concept to practice
+
+**This archive is itself a worked example of harness engineering**: every directory has an `AGENTS.md` as its map, and the C1–C14 mechanical checks in [`scripts/check-consistency.sh`](scripts/check-consistency.sh) are enforced by a pre-commit hook and CI (`consistency / check`).
+
+Listed in [awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering#tutorials--educational) under Tutorials & Educational — [maintainer's note](https://github.com/ai-boost/awesome-harness-engineering/pull/460#issuecomment-7096382171): "The translations archive plus the repo's own AGENTS.md/CI consistency checks make it a solid worked example for the section."
 
 [![Harness Engineering — humans steer, agents execute (intro deck cover, 2026-11 snapshot)](works/harness-engineering-intro-deck/cover.jpg)](works/harness-engineering-intro-deck/)
 
