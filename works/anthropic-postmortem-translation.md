@@ -60,7 +60,7 @@ sourceFigureCount: 3
 
 当 Claude 对任务进行推理时，这些推理通常会保存在对话历史中，这样在后续每一轮中，Claude 都能看到自己为什么做出了那些编辑和工具调用。
 
-3 月 26 日，我们发布了一个原本旨在提升该功能效率的变更。我们使用提示词缓存，让连续 API 调用对用户来说更便宜、更快。Claude 在发起 API 请求时会把输入 token 写入缓存；经过一段不活跃时间后，prompt 会从缓存中驱逐，为其他 prompt 腾出空间。缓存利用率是我们谨慎管理的内容（更多信息可见我们的[方法介绍](https://claude.com/blog/lessons-from-building-claude-code-prompt-caching-is-everything)）。
+3 月 26 日，我们发布了一个原本旨在提升该功能效率的变更。我们使用提示词缓存，让连续 API 调用对用户来说更便宜、更快。Claude 在发起 API 请求时会把输入 token 写入缓存；经过一段不活跃时间后，prompt 会从缓存中驱逐，为其他 prompt 腾出空间。缓存利用率是我们谨慎管理的内容（更多信息可见我们的[方法介绍](https://claude.dev/blog/lessons-from-building-claude-code-prompt-caching-is-everything/)）。
 
 设计本应很简单：如果一个会话已经空闲超过一小时，我们可以清理旧 thinking 区块，降低用户恢复该会话的成本。由于该请求无论如何都会缓存未命中，我们可以从请求中剪掉不必要的消息，以减少发送给 API 的未缓存 token 数量。之后，我们会恢复发送完整 reasoning 历史。为此，我们使用了 `clear_thinking_20251015` API header 和 `keep:1`。
 

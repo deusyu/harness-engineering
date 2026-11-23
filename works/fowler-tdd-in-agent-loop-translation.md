@@ -5,7 +5,7 @@ sourceUrl: "https://martinfowler.com/articles/exploring-gen-ai/tdd-in-the-agent-
 sourceAuthor: "Birgitta Böckeler"
 sourcePublishedAt: "2026-08-10"
 sourceSiteName: "martinfowler.com"
-summary: "Böckeler 用一个探索性 eval 检验「让 agent 在自己的循环里做 TDD」是否值得：Sonnet 4.6 生成方案、Opus 4.8 盲评，5 个批次下 TDD 无质量优势、mutation score 无差异，token 反而贵 3–8.5 倍。她逐条检视 TDD 六大目标在 agent loop 内的失效方式，主张放弃规定过程、转向 mutation testing、静态分析与 Approved Scenarios 等结果导向的反馈机制。"
+summary: "Böckeler 用一个探索性 eval 检验「让 agent 在自己的循环里做 TDD」是否值得：Sonnet 4.6 生成方案、Opus 4.8 盲评，5 个批次下 TDD 无质量优势、mutation score 无差异，token 反而贵 3–8.5 倍。她逐条检视 TDD 七大目标在 agent loop 内的失效方式，主张放弃规定过程、转向 mutation testing、静态分析与 Approved Scenarios 等结果导向的反馈机制。"
 sourceLanguage: "en"
 language: "zh-CN"
 translationMethod: "人工整理逐段翻译（cloud agent，对照原文全文）"

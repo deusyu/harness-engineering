@@ -51,7 +51,7 @@
 | 33 | [HarnessAudit 论文](https://arxiv.org/abs/2605.14271) | Chengzhi Liu 等 | harness 安全审计：中途轨迹违规是输出级评估的盲区 + 210 任务基准 |
 | 34 | [Harness-Bench 论文](https://arxiv.org/abs/2605.27922) | Yilun Yao 等 | 配置级 harness 效应测量（106 任务/5194 轨迹）+ 执行对齐失败分类 |
 | 35 | [How good is your harness? 论文](https://openreview.net/forum?id=QI8z3skBwt) | Jiwoo Han, Yuekai Sun | Terminal-Bench 2.0 榜单方差统计归因：harness 效应 ≈ 模型效应，且效应异质 |
-| 36 | [Dynamic workflows in Claude Code](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code) | Anthropic / Claude | 模型现场写自己的编排 harness + 对抗验证 + workflow 沉淀为 Skill |
+| 36 | [Dynamic workflows in Claude Code](https://claude.dev/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code/) | Anthropic / Claude | 模型现场写自己的编排 harness + 对抗验证 + workflow 沉淀为 Skill |
 | 37 | [Harness 才是产品](https://sotasync.com/reader/2026-06-09-dongxi-nlp-harness-is-the-product/) | 马东锡 NLP | "Model 在 loop 里，harness 拥有 loop" + 六组件 + 症状→组件 debug 对照表 |
 | 38 | [Position: 基准错位论文](https://arxiv.org/abs/2606.17799) | Maria I. Gorinova 等 | 基准把 model/harness/环境折叠进一个分数的三症状诊断 |
 | 39 | [Unrolling the Codex agent loop](https://openai.com/index/unrolling-the-codex-agent-loop/) | Michael Bolin (OpenAI) | Codex harness 解剖·上：prompt 构造 / 二次方问题与 prompt caching / compaction 端点化 |
@@ -81,7 +81,7 @@
 | 63 | [为什么软件工厂会失败](https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/wsff.md) | Dex Horthy (HumanLayer) | "harness engineering 还不够"：可维护性没有快 oracle，RL 不惩罚坏设计；熄灯工厂第一手失败实录 + 四阶段前移方案 |
 | 64 | [Software Factories, Light and Dark](https://addyosmani.com/blog/software-factories/) | Addy Osmani | loop→harness→factory 三层 + 唯一昂贵的评审闸门 + 背压规则 + "什么样的循环配得上熄灯"准入清单 |
 | 65 | [智能体蜂群与新的模型经济学](https://cursor.com/blog/agent-swarm-model-economics) | Wilson Lin (Cursor) | 从 835 页手册重造 SQLite：质量趋同、账单从 $1,339 到 $10,565；规划/执行分层、自建 VCS（1000 提交/秒）、去相关评审、Field Guide |
-| 66 | [Claude 5 世代的上下文工程新规则](https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models) | Thariq Shihipar (Anthropic) | 删掉 Claude Code 系统提示词 80%+ 而编码评测无可测损失；七组 then/now 对照 + `claude doctor` |
+| 66 | [Claude 5 世代的上下文工程新规则](https://claude.dev/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models/) | Thariq Shihipar (Anthropic) | 删掉 Claude Code 系统提示词 80%+ 而编码评测无可测损失；七组 then/now 对照 + `claude doctor` |
 | 67 | [Don't Blame the LLM 论文](https://arxiv.org/abs/2607.03691) | Oussama Ben Sghaier 等（Queen's） | 首个固定模型、只变 harness 的受控纵向研究：Qwen Code CLI 35 个连续版本 × 50 个 SWE-bench Verified 任务 |
 | 68 | [Rethinking Harness Evolution 论文](https://arxiv.org/abs/2607.12227) | Yike Wang 等 | 自动 harness 演化的第一份系统性负面结果：同等预算下不稳定优于简单 test-time scaling，泛化有限 |
 | 69 | [LangChain/Harbor 评测栈](https://www.langchain.com/blog/how-we-benchmark-deep-agents) | Nick Hollon, Harrison Chase 等 | 给 harness 建标尺（Harbor-Index 82 任务 / lite 子集 / capability suite），再给标尺建标尺（IssueBench 15 类失败分类法） |
